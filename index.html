@@ -8,13 +8,23 @@
   <title>Toy Garage Kids · Una nueva aventura</title>
   <link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14">
   <link rel="stylesheet" href="./css/radar.css?v=integrado-15">
+  <link rel="stylesheet" href="./css/mobile-nav.css?v=20261021-v1">
   <script defer src="./config.js"></script>
   <script type="module" src="./js/public.js"></script>
   <script defer src="./js/radar.js?v=integrado-15"></script>
 </head>
 <body>
 
-  <div class="top-strip">✨ JUGUETES CON HISTORIA · NUEVAS AVENTURAS ✨</div>
+  <div class="top-strip">
+    <span class="top-strip-message">✨ JUGUETES CON HISTORIA · NUEVAS AVENTURAS ✨</span>
+    <nav class="mobile-section-nav" aria-label="Navegación por secciones, versión móvil">
+      <a href="#inicio">🏠 Inicio</a>
+      <a href="#catalogo">🧸 Juguetes</a>
+      <a href="#radar">📡 Toy Radar</a>
+      <a href="#battle">⚡ Battle Arena</a>
+      <a href="#como-funciona">❔ Cómo funciona</a>
+    </nav>
+  </div>
   <div id="demoPublicBanner" class="demo-public-banner" hidden>🧪 CATÁLOGO DE EJEMPLO · Estos juguetes son ficticios y no están a la venta.</div>
   <header class="site-header">
     <a class="brand" href="#inicio" aria-label="Toy Garage Kids, inicio"><img class="brand-logo" src="./assets/toy-garage-kids-logo.webp" alt="Logotipo de Toy Garage Kids, proyecto de Cristóbal e Isidora" width="260" height="195"><span class="brand-words">TOY GARAGE <em>KIDS</em><small>PROYECTO DE CRISTÓBAL E ISIDORA</small></span></a>

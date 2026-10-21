@@ -1,0 +1,65 @@
+/* TGK: barra de navegación rápida solo para móvil.
+   La portada V1.4, el radar integrado, escritorio y administración permanecen intactos. */
+.mobile-section-nav{display:none}
+@media(max-width:760px){
+  body:not(.admin-body) .top-strip{
+    position:sticky;
+    top:0;
+    z-index:20;
+    height:48px;
+    padding:0;
+    text-align:left;
+    overflow:visible;
+  }
+  body:not(.admin-body) .top-strip-message{display:none}
+  body:not(.admin-body) .mobile-section-nav{
+    display:flex;
+    align-items:center;
+    height:48px;
+    gap:8px;
+    padding:6px 14px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    white-space:nowrap;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+  }
+  body:not(.admin-body) .mobile-section-nav::-webkit-scrollbar{display:none}
+  body:not(.admin-body) .mobile-section-nav a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    flex:0 0 auto;
+    min-height:34px;
+    padding:7px 12px;
+    border-radius:999px;
+    border:1px solid #e6ce71;
+    background:#fff;
+    color:#31235d;
+    font-size:12px;
+    line-height:1.15;
+    letter-spacing:0;
+    font-weight:1000;
+    scroll-snap-align:start;
+    text-decoration:none;
+  }
+  body:not(.admin-body) .mobile-section-nav a:focus-visible{
+    outline:3px solid #6f48da;
+    outline-offset:1px;
+  }
+  body:not(.admin-body) .mobile-section-nav a:active{
+    background:#f0e9ff;
+  }
+  body:not(.admin-body) .site-header{
+    top:48px;
+  }
+  body:not(.admin-body) #inicio,
+  body:not(.admin-body) #catalogo,
+  body:not(.admin-body) #battle,
+  body:not(.admin-body) #radar,
+  body:not(.admin-body) #como-funciona{
+    scroll-margin-top:137px;
+  }
+}
