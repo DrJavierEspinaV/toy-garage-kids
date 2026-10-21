@@ -34,6 +34,34 @@ export async function writeToy(toy){
   if(index>=0)all[index]=toy;else all.unshift(toy);
   LS.set(localKeys.toys,all);return toy;
 }
+export async function removeToy(toy){
+  if(!toy?.id)throw new Error('No se identificó el juguete.');
+  if(isLive()){
+    const client=await getClient();
+    const {data,error}=await client.from('toys').delete().eq('id',toy.id).select('id');
+    if(error)throw error;
+    if(!data?.length)throw new Error('No se pudo eliminar el juguete. Comprueba tu sesión y permisos.');
+    const paths=(toy.photos||[]).flatMap(src=>{
+      try{
+        const url=new URL(src);
+        if(url.origin!==new URL(CONFIG.supabaseUrl).origin)return [];
+        const prefix='/storage/v1/object/public/toy-photos/';
+        if(!url.pathname.startsWith(prefix))return [];
+        const path=decodeURIComponent(url.pathname.slice(prefix.length));
+        return path.startsWith(toy.id+'/')&&/\\.jpe?g$/i.test(path)?[path]:[];
+      }catch{return [];}
+    });
+    if(paths.length){
+      const {error:photoError}=await client.storage.from('toy-photos').remove(paths);
+      if(photoError)return {photoCleanupError:photoError.message};
+    }
+    return {};
+  }
+  const all=await readToys();
+  if(!all.some(item=>item.id===toy.id))throw new Error('El juguete ya no figura en el inventario.');
+  LS.set(localKeys.toys,all.filter(item=>item.id!==toy.id));
+  return {};
+}
 const defaultSettings={tagline:'Explora juguetes increíbles que buscan nuevos compañeros de juego. ¡Encuentra tu próximo tesoro!',whatsapp:''};
 export async function readSettings(){
   if(isLive()){

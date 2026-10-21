@@ -1,4 +1,4 @@
-import {readToys,readSettings,writeToy,writeSettings,getClient,isLive,newId,uploadPhoto,money,escapeHtml,drawToy,grades,statuses,toast,watchUpdates,safeImageUrl} from './common.js';
+import {readToys,readSettings,writeToy,removeToy,writeSettings,getClient,isLive,newId,uploadPhoto,money,escapeHtml,drawToy,grades,statuses,toast,watchUpdates,safeImageUrl} from './common.js';
 const $=id=>document.getElementById(id);
 let toys=[],settings={},selectedPhotos=[],incomingFiles=[],editingId=null,isSaving=false;
 const formFields=['toyTitle','toyCategory','toyGrade','toyDescription','toyConditionNote','toyPrice','toyStatus','toySaleMode','toyEmoji','battleBase','battleStep','battleEnds'];
@@ -23,7 +23,7 @@ function renderInventory(){
   const total=toys.length;
   const parts=[['Juguetes',total],['Disponibles',toys.filter(t=>t.status==='available').length],['Reservados',toys.filter(t=>t.status==='reserved').length],['Vendidos',toys.filter(t=>t.status==='sold').length]];
   $('adminStats').innerHTML=parts.map(([label,num])=>`<div class="admin-stat"><strong>${num}</strong><small>${label}</small></div>`).join('');
-  $('adminList').innerHTML=toys.length?toys.map(t=>`<article class="admin-row"><div class="admin-thumb">${drawToy(t)}</div><div><h3>${escapeHtml(t.title)}</h3><p>${money(t.price)} · Nivel ${escapeHtml(t.grade)} · ${escapeHtml(statuses[t.status]||t.status)}${t.sale_mode==='battle'?' · ⚡ Battle':''}</p></div><button type="button" data-edit="${escapeHtml(t.id)}">Editar</button></article>`).join(''):'<p>No hay juguetes aún. ¡Agrega el primero!</p>';
+  $('adminList').innerHTML=toys.length?toys.map(t=>`<article class="admin-row"><div class="admin-thumb">${drawToy(t)}</div><div><h3>${escapeHtml(t.title)}</h3><p>${money(t.price)} · Nivel ${escapeHtml(t.grade)} · ${escapeHtml(statuses[t.status]||t.status)}${t.sale_mode==='battle'?' · ⚡ Battle':''}</p></div><div class="admin-item-actions"><button type="button" data-edit="${escapeHtml(t.id)}">Editar</button><button class="admin-delete" type="button" data-delete="${escapeHtml(t.id)}" aria-label="Eliminar definitivamente ${escapeHtml(t.title)}">🗑 Eliminar</button></div></article>`).join(''):'<p>No hay juguetes aún. ¡Agrega el primero!</p>';
 }
 function fillSettings(){if(document.activeElement?.closest('#settingsForm'))return;$('storeTaglineInput').value=settings.tagline||'';$('whatsappInput').value=settings.whatsapp||'';}
 function resetForm(){
@@ -51,7 +51,25 @@ $('toyImages').addEventListener('change',event=>{
  incomingFiles.push(...files);event.target.value='';renderPreview();
 });
 $('toySaleMode').addEventListener('change',e=>{$('battleFields').hidden=e.target.value!=='battle';});
-$('adminList').addEventListener('click',event=>{const b=event.target.closest('[data-edit]');if(b)editToy(b.dataset.edit);});
+$('adminList').addEventListener('click',async event=>{
+  const deleteBtn=event.target.closest('[data-delete]');
+  if(!deleteBtn){const editBtn=event.target.closest('[data-edit]');if(editBtn)editToy(editBtn.dataset.edit);return;}
+  const toy=toys.find(t=>t.id===deleteBtn.dataset.delete);
+  if(!toy||isSaving)return;
+  const approved=window.confirm('¿Eliminar DEFINITIVAMENTE «'+toy.title+'»?\\n\\nSe quitará del catálogo y del inventario. También se intentarán borrar sus fotos almacenadas. Esta acción no se puede deshacer.\\n\\nSi solo quieres dejar de mostrarlo, edita el estado a «Oculto».');
+  if(!approved)return;
+  isSaving=true;deleteBtn.disabled=true;
+  try{
+    const result=await removeToy(toy);
+    toys=toys.filter(t=>t.id!==toy.id);
+    if(editingId===toy.id)resetForm();
+    renderInventory();
+    toast(result.photoCleanupError?'Juguete eliminado. Atención: no se pudieron borrar todas sus fotos.':'Juguete eliminado definitivamente.');
+  }catch(error){
+    console.error(error);toast('No fue posible eliminar el juguete: '+(error.message||'Error desconocido'));
+    deleteBtn.disabled=false;
+  }finally{isSaving=false;}
+});
 $('newToy').addEventListener('click',()=>{resetForm();$('toyTitle').focus();});
 $('resetToy').addEventListener('click',resetForm);
 $('toyForm').addEventListener('submit',async event=>{
