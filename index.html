@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#11173a">
+  <meta name="description" content="Toy Garage Kids: juguetes en busca de una nueva aventura. Catálogo familiar de segunda mano y Battle Arena.">
+  <title>Toy Garage Kids · Una nueva aventura</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <script defer src="./config.js"></script>
+  <script type="module" src="./js/public.js"></script>
+</head>
+<body>
+
+  <div class="top-strip">✨ JUGUETES CON HISTORIA · NUEVAS AVENTURAS ✨</div>
+  <div id="demoPublicBanner" class="demo-public-banner" hidden>🧪 CATÁLOGO DE EJEMPLO · Estos juguetes son ficticios y no están a la venta.</div>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Toy Garage Kids, inicio"><span class="brand-badge">TG<span>K</span></span><span class="brand-words">TOY GARAGE <em>KIDS</em><small>THE NEXT ADVENTURE</small></span></a>
+    <nav class="main-nav" aria-label="Navegación"><a href="#catalogo">Explorar</a><a href="#battle">⚡ Battle Arena</a><a href="#como-funciona">¿Cómo funciona?</a></nav>
+    <button id="basketBtn" class="basket-btn" type="button" aria-label="Abrir selección">🎒 Mi selección <span id="basketCount">0</span></button>
+  </header>
+  <main>
+    <section id="inicio" class="hero page-shell">
+      <div class="hero-text">
+        <span class="eyebrow">✦ FERIA DE JUGUETES · EDICIÓN KIDS ✦</span>
+        <h1>UN JUGUETE.<br><span class="highlight-text">¡MIL AVENTURAS!</span></h1>
+        <p id="storeTagline">Explora juguetes increíbles que buscan nuevos compañeros de juego. ¡Encuentra tu próximo tesoro!</p>
+        <div class="hero-actions"><a class="action action-primary" href="#catalogo">🎮 EXPLORAR JUGUETES</a><a class="action action-light" href="#battle">⚡ BATTLE ARENA</a></div>
+        <div class="hero-stats"><div><strong id="statTotal">—</strong><small>Juguetes</small></div><div><strong id="statAvailable">—</strong><small>Disponibles</small></div><div><strong id="statBattle">—</strong><small>Battles</small></div></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="big-star">★</div><div class="hero-capsule"><div class="capsule-glow">🚀</div></div><div class="floating-toy toy-a">🦖</div><div class="floating-toy toy-b">🧸</div><div class="floating-toy toy-c">🏎️</div><div class="hero-art-label">NUEVA MISIÓN<br><strong>DESBLOQUEADA!</strong></div></div>
+    </section>
+    <section class="trustbar page-shell" aria-label="Ventajas"><span>♻️ Segunda vida a cada juguete</span><span>🏅 Estado de conservación visible</span><span>🛡️ Compras coordinadas por adultos</span></section>
+    <section id="catalogo" class="catalog-section page-shell">
+      <div class="section-kicker">01 / LA COLECCIÓN</div>
+      <div class="section-heading"><div><h2>ELIGE TU <span>PRÓXIMA MISIÓN</span></h2><p>Explora nuestro inventario de pequeños grandes tesoros.</p></div><span id="catalogCounter" class="section-counter">Cargando...</span></div>
+      <div class="catalog-toolbar"><label class="search-field"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Buscar un juguete..." autocomplete="off" aria-label="Buscar juguetes"></label><label class="sort-field">Ordenar <select id="sortSelect" aria-label="Ordenar juguetes"><option value="newest">Más recientes</option><option value="cheap">Menor precio</option><option value="expensive">Mayor precio</option><option value="name">Nombre A-Z</option></select></label></div>
+      <div id="categoryFilters" class="filter-row" role="group" aria-label="Filtrar categorías"></div>
+      <div id="catalogGrid" class="catalog-grid" aria-live="polite"></div>
+      <p id="catalogEmpty" class="empty-state" hidden>🔎 No encontramos juguetes con ese filtro. ¡Prueba otra búsqueda!</p>
+    </section>
+    <section id="battle" class="battle-wrap"><div class="page-shell"><div class="section-kicker battle-kicker">02 / MODO DESAFÍO</div><div class="battle-heading"><div><h2>⚡ BATTLE <span>ARENA</span></h2><p>Algunos tesoros podrán participar en una subasta amistosa y supervisada.</p></div><span class="battle-pill">PRÓXIMA FASE</span></div><div class="battle-content"><div class="battle-info"><span class="battle-icon">🏆</span><h3>¡Una oferta puede cambiarlo todo!</h3><p>Cuando activemos este modo, cada juguete tendrá precio de salida, aumento mínimo y fecha de cierre. Las ofertas reales se habilitarán solo con controles de seguridad y validación de adultos.</p><div class="battle-rules"><span>🔒 Datos protegidos</span><span>👨‍👩‍👧 Supervisión adulta</span><span>⏱️ Cierre anunciado</span></div></div><div id="battleGrid" class="battle-preview"></div></div></div></section>
+    <section id="como-funciona" class="how-section page-shell"><div class="section-kicker">03 / JUGAR + REUTILIZAR</div><h2>¿CÓMO <span>FUNCIONA?</span></h2><div class="steps"><div class="step"><b>01</b><span>📱</span><h3>Escanea y explora</h3><p>Encuentra los juguetes disponibles en el catálogo.</p></div><div class="step"><b>02</b><span>💖</span><h3>Elige tus favoritos</h3><p>Agrégalos a tu selección para consultar por ellos.</p></div><div class="step"><b>03</b><span>🤝</span><h3>Coordina con un adulto</h3><p>Las reservas, pagos y entregas son supervisados.</p></div></div></section>
+  </main>
+  <footer class="site-footer"><div class="page-shell footer-in"><div><strong>🌟 TOY GARAGE KIDS</strong><p>Los juguetes no se despiden. ¡Cambian de aventura!</p></div><a href="./afiche.html">🖨️ Ver afiche QR</a></div><p class="footer-note">Proyecto familiar. Juguetes usados; revisa fotografías y estado antes de comprar.</p></footer>
+  <dialog id="toyModal" class="toy-dialog" aria-labelledby="modalTitle"><button class="close-modal" id="closeModal" aria-label="Cerrar">✕</button><div id="toyModalContent"></div></dialog>
+  <dialog id="basketDialog" class="basket-dialog" aria-labelledby="basketTitle"><div class="basket-header"><h2 id="basketTitle">🎒 Mi selección</h2><button class="close-modal-inline" id="closeBasket" aria-label="Cerrar">✕</button></div><div id="basketContent"></div><div class="basket-footer"><button type="button" class="action action-primary" id="shareBasket">📩 CONSULTAR DISPONIBILIDAD</button><p>Esto no realiza pagos ni confirma una reserva. Un adulto coordinará contigo.</p></div></dialog>
+  <div id="toast" role="status" aria-live="polite" class="toast"></div>
+</body>
+</html>
