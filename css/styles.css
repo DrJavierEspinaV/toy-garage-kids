@@ -11,10 +11,10 @@
 
 .demo-public-banner{text-align:center;background:#fff0c7;color:#784e00;padding:10px 14px;font-size:12px;font-weight:1000;border-bottom:1px solid #f3d07b}.admin-thumb .toy-emoji{font-size:32px}.admin-thumb img{display:block}
 /* Toy Garage Kids V1.3: identidad de Cristóbal e Isidora y gestión de inventario */
-.brand-logo{display:block;flex:0 0 auto;width:132px;height:99px;object-fit:contain}
+.brand-logo{display:block;flex:0 0 auto;width:260px;height:195px;object-fit:contain}
 .brand-attribution{display:block;color:#777aa4;font:800 10px/1.4 Nunito,sans-serif}
 .admin-item-actions{display:flex;flex-direction:column;gap:6px;align-items:stretch}
 .admin-row .admin-delete{background:#fff1f2;color:#b62747;border:1px solid #f6c8d0}
 .admin-row button:disabled{opacity:.5;cursor:wait}
-@media(max-width:760px){.brand-logo{width:100px;height:75px}.site-header .brand-words{font-size:14px}.brand-words small{letter-spacing:.07em;font-size:8px}}
-@media(max-width:420px){.admin-header .brand-logo{width:86px;height:65px}.admin-header .brand-words{font-size:13px}.admin-header-right .action-small{padding:8px 9px;font-size:11px}.admin-row{grid-template-columns:48px minmax(0,1fr) auto;gap:7px}.admin-row .admin-thumb{width:48px;height:48px}.admin-row button{padding:7px}}
+@media(max-width:760px){.brand-logo{width:156px;height:117px}.site-header .brand-words,.admin-header .brand-words{display:none}.site-header .brand-words{font-size:14px}.brand-words small{letter-spacing:.07em;font-size:8px}}
+@media(max-width:420px){.brand-logo,.admin-header .brand-logo{width:125px;height:94px}.admin-header .brand-words{font-size:13px}.admin-header-right .action-small{padding:8px 9px;font-size:11px}.admin-row{grid-template-columns:48px minmax(0,1fr) auto;gap:7px}.admin-row .admin-thumb{width:48px;height:48px}.admin-row button{padding:7px}}
