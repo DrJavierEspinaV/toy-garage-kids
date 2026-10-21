@@ -48,7 +48,7 @@ export async function removeToy(toy){
         const prefix='/storage/v1/object/public/toy-photos/';
         if(!url.pathname.startsWith(prefix))return [];
         const path=decodeURIComponent(url.pathname.slice(prefix.length));
-        return path.startsWith(toy.id+'/')&&/\\.jpe?g$/i.test(path)?[path]:[];
+        return path.startsWith(toy.id+'/')&&/\.jpe?g$/i.test(path)?[path]:[];
       }catch{return [];}
     });
     if(paths.length){

@@ -56,7 +56,7 @@ $('adminList').addEventListener('click',async event=>{
   if(!deleteBtn){const editBtn=event.target.closest('[data-edit]');if(editBtn)editToy(editBtn.dataset.edit);return;}
   const toy=toys.find(t=>t.id===deleteBtn.dataset.delete);
   if(!toy||isSaving)return;
-  const approved=window.confirm('¿Eliminar DEFINITIVAMENTE «'+toy.title+'»?\\n\\nSe quitará del catálogo y del inventario. También se intentarán borrar sus fotos almacenadas. Esta acción no se puede deshacer.\\n\\nSi solo quieres dejar de mostrarlo, edita el estado a «Oculto».');
+  const approved=window.confirm('¿Eliminar DEFINITIVAMENTE «'+toy.title+'»?\n\nSe quitará del catálogo y del inventario. También se intentarán borrar sus fotos almacenadas. Esta acción no se puede deshacer.\n\nSi solo quieres dejar de mostrarlo, edita el estado a «Oculto».');
   if(!approved)return;
   isSaving=true;deleteBtn.disabled=true;
   try{
