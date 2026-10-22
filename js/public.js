@@ -1,4 +1,4 @@
-import {readToys,readSettings,readBasket,writeBasket,watchUpdates,money,escapeHtml,drawToy,grades,categories,statuses,copyText,toast,isLive,safeImageUrl} from './common.js';
+import {readToys,readSettings,readBasket,writeBasket,watchUpdates,money,escapeHtml,drawToy,grades,categories,statuses,copyText,toast,isLive,safeImageUrl} from './common.js?v=multi16';
 let toys=[],settings={},basket=readBasket(),selectedCategory='Todas',searchTerm='',sortMode='newest';
 const $=id=>document.getElementById(id);
 async function load(){

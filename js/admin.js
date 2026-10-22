@@ -1,4 +1,4 @@
-import {readToys,readSettings,writeToy,removeToy,writeSettings,getClient,isLive,newId,uploadPhoto,money,escapeHtml,drawToy,grades,statuses,toast,watchUpdates,safeImageUrl} from './common.js';
+import {readToys,readSettings,writeToy,removeToy,writeSettings,getClient,isLive,newId,uploadPhoto,money,escapeHtml,drawToy,grades,statuses,toast,watchUpdates,safeImageUrl} from './common.js?v=multi16';
 const $=id=>document.getElementById(id);
 let toys=[],settings={},selectedPhotos=[],incomingFiles=[],editingId=null,isSaving=false;
 const formFields=['toyTitle','toyCategory','toyGrade','toyDescription','toyConditionNote','toyPrice','toyStatus','toySaleMode','toyEmoji','battleBase','battleStep','battleEnds'];

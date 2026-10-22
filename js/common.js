@@ -1,4 +1,6 @@
 const CONFIG = window.TGK_CONFIG || {};
+// La tienda fundadora permanece aislada mientras se prepara la plataforma comercial.
+export const FOUNDER_STORE_ID = 'd4549710-8c53-4901-bbee-f70fdb060f03';
 const demoKey = CONFIG.demoStorageKey || 'tgk-demo-v1';
 export const grades = {S:'Como nuevo',A:'Excelente',B:'Bueno',C:'Con detalles',D:'Incompleto'};
 export const categories = {'Vehículos':'🏎️','Peluches':'🧸','Construcción':'🧱','Figuras':'🦖','Juegos':'🎲','Retro':'🕹️','Especiales':'⭐'};
@@ -18,7 +20,7 @@ const LS = {get(k){try{const raw=localStorage.getItem(k);return raw===null?(memo
 export const localKeys = {toys:`${demoKey}:toys`,settings:`${demoKey}:settings`,basket:`${demoKey}:basket`};
 export async function readToys(){
   if(isLive()){
-    const client=await getClient(); const {data,error}=await client.from('toys').select('*').order('created_at',{ascending:false});
+    const client=await getClient(); const {data,error}=await client.from('toys').select('*').eq('store_id',FOUNDER_STORE_ID).order('created_at',{ascending:false});
     if(error)throw error; return data||[];
   }
   const stored=LS.get(localKeys.toys); if(Array.isArray(stored))return stored;
@@ -27,7 +29,7 @@ export async function readToys(){
 }
 export async function writeToy(toy){
   if(isLive()){
-    const client=await getClient();const {data,error}=await client.from('toys').upsert(toy,{onConflict:'id'}).select().single();
+    const client=await getClient();const {data,error}=await client.from('toys').upsert({...toy,store_id:FOUNDER_STORE_ID},{onConflict:'id'}).select().single();
     if(error)throw error;return data;
   }
   const all=await readToys(); const index=all.findIndex(t=>t.id===toy.id);
@@ -38,7 +40,7 @@ export async function removeToy(toy){
   if(!toy?.id)throw new Error('No se identificó el juguete.');
   if(isLive()){
     const client=await getClient();
-    const {data,error}=await client.from('toys').delete().eq('id',toy.id).select('id');
+    const {data,error}=await client.from('toys').delete().eq('id',toy.id).eq('store_id',FOUNDER_STORE_ID).select('id');
     if(error)throw error;
     if(!data?.length)throw new Error('No se pudo eliminar el juguete. Comprueba tu sesión y permisos.');
     const paths=(toy.photos||[]).flatMap(src=>{
