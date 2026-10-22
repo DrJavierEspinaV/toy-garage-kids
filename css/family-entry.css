@@ -1,0 +1,17 @@
+/* TGK invitación visible en tienda pública: sección independiente de la portada V1.4 */
+.main-nav .main-family-join{background:#f1eaff;color:#593bc0;border:1px solid #d8c7ff;padding:10px 12px;border-radius:999px;white-space:nowrap;font-size:12px}
+.main-nav .main-family-join:hover{background:#e8dcff;color:#392093}
+.tgk-family-join{display:flex;align-items:center;justify-content:space-between;gap:30px;background:#f8f5ff;border:1px solid #ddd2ff;border-radius:24px;padding:29px 32px;margin-block:12px 56px}
+.tgk-family-join h2{font-size:clamp(26px,3.6vw,37px);margin:0 0 8px;color:#1a2255}
+.tgk-family-join h2 span{color:#7147d8}
+.tgk-family-join p{color:#535b80;font-weight:800;font-size:14px;line-height:1.5;margin:0;max-width:630px}
+.tgk-family-join-actions{display:flex;flex-direction:column;gap:11px;align-items:center;flex:0 0 auto}
+.tgk-family-join-actions small{font-weight:800;font-size:10px;color:#73799b;max-width:170px;text-align:center}
+.mobile-section-nav .mobile-family-join{background:#6038bd!important;color:white!important;border-color:#5031a5!important}
+@media(max-width:1100px) and (min-width:761px){
+  .site-header .main-nav{gap:11px}
+  .site-header .main-nav a{font-size:12px}
+  .main-nav .main-family-join{padding:9px 10px;font-size:11px}
+}
+@media(max-width:790px){.tgk-family-join{flex-direction:column;align-items:stretch;padding:25px 20px;margin-inline:14px}.tgk-family-join-actions{align-items:stretch}}
+@media(max-width:760px){.tgk-family-join{margin-block:0 36px;border-radius:19px}.tgk-family-join-actions small{max-width:none}.tgk-family-join{scroll-margin-top:135px}}

@@ -55,3 +55,9 @@
 [hidden]{display:none!important}
 @media(max-width:810px){.family-columns{grid-template-columns:1fr}.family-toy-form{grid-template-columns:repeat(2,minmax(0,1fr))}.family-public-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.family-brand img{width:67px;height:53px}.family-brand{font-size:13px}.family-back{font-size:11px}.family-shell{padding:17px 14px 40px}.family-hero{padding:27px 22px}.family-panel{padding:17px}.family-toy-form{grid-template-columns:1fr}.family-public-grid{grid-template-columns:1fr}.family-store-hero{flex-direction:column;align-items:start}.family-overview{align-items:start;flex-direction:column}.family-toy-row{flex-wrap:wrap}.family-toy-row .family-toy-actions{margin-left:0;width:100%}}
+
+/* Invitación familiar desde la tienda fundadora, sin modificar portada V1.4 */
+.family-hero-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.family-registration-note{padding:12px 14px;background:#ecebff;border:1px solid #dcd6fb;border-radius:12px;color:#4a427e!important;font-size:13px!important}
+#registro,#acceso,#invitar{scroll-margin-top:22px}
+@media(max-width:810px){#authPane #registro{order:-1}}

@@ -19,7 +19,7 @@ async function refreshSession(){
  user=error?null:data.user;
  ui.auth.hidden=!!user;ui.account.hidden=!user;
  ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;store=null;
- if(!user)return;
+ if(!user){if(location.hash==='#registro')requestAnimationFrame(()=>$('registro')?.scrollIntoView({block:'start'}));return;}
  $('familySignedUser').textContent='Adulto responsable: '+(user.email||'sesión activa');
  const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published').eq('owner_user_id',user.id).maybeSingle();
  if(storeError){alertMsg('No se pudo comprobar tu tienda: '+storeError.message,true);return;}
@@ -27,7 +27,7 @@ async function refreshSession(){
  const {data:admin}=await client.from('admins').select('user_id').eq('user_id',user.id).maybeSingle();
  const isFounder=!!admin && store?.id===founderId;
  ui.founder.hidden=!isFounder;
- if(isFounder){alertMsg('Sesión de administrador fundador: desde aquí puedes invitar familias. Tu tienda original se administra desde el panel habitual.');return;}
+ if(isFounder){alertMsg('Estás en la sesión de la tienda fundadora. Desde aquí generas invitaciones; la familia invitada se registra desde su propio teléfono y su correo.');return;}
  ui.redeem.hidden=!!store;
  ui.work.hidden=!store;
  if(store){fillSettings();await loadInventory();}
@@ -68,6 +68,15 @@ $('inviteForm').addEventListener('submit',async e=>{
  finally{setBusy(form,false);}
 });
 $('copyInvite').addEventListener('click',async()=>{const ok=await copyText($('inviteCode').textContent);alertMsg(ok?'Código copiado.':'No se pudo copiar. Selecciona el código manualmente.',!ok);});
+$('copyInviteMessage').addEventListener('click',async()=>{
+ const code=$('inviteCode').textContent;
+ if(!code)return alertMsg('Primero genera la invitación.',true);
+ const email=$('inviteForm').elements.email.value.trim();
+ const joinUrl=new URL('./familias.html#registro',location.href).href;
+ const msg='¡Hola! Te invito al piloto de tiendas familiares Toy Garage Kids.\n\n1. Abre este enlace desde tu teléfono: '+joinUrl+'\n2. Crea una cuenta de adulto con este correo: '+email+'\n3. Confirma el correo e inicia sesión.\n4. Activa tu tienda con este código de invitación (14 días, un solo uso): '+code+'\n\nPuedes elegir el nombre y el logo de tu tienda y publicar tus propios juguetes. Actualmente es un piloto privado.';
+ const ok=await copyText(msg);
+ alertMsg(ok?'Invitación completa copiada. Compártela por WhatsApp o correo al adulto invitado.':'No se pudo copiar el mensaje.',!ok);
+});
 $('redeemForm').addEventListener('submit',async e=>{
  e.preventDefault();const form=e.currentTarget,v=new FormData(form);setBusy(form,true);
  try{

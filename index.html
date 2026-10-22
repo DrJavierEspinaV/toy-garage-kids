@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14">
   <link rel="stylesheet" href="./css/radar.css?v=integrado-15">
   <link rel="stylesheet" href="./css/mobile-nav.css?v=20261021-v1">
+  <link rel="stylesheet" href="./css/family-entry.css?v=17b">
   <script defer src="./config.js"></script>
   <script type="module" src="./js/public.js?v=multi16"></script>
   <script defer src="./js/radar.js?v=integrado-15"></script>
@@ -23,12 +24,13 @@
       <a href="#radar">📡 Toy Radar</a>
       <a href="#battle">⚡ Battle Arena</a>
       <a href="#como-funciona">❔ Cómo funciona</a>
+      <a href="./familias.html#registro" class="mobile-family-join">🏪 Crear mi tienda</a>
     </nav>
   </div>
   <div id="demoPublicBanner" class="demo-public-banner" hidden>🧪 CATÁLOGO DE EJEMPLO · Estos juguetes son ficticios y no están a la venta.</div>
   <header class="site-header">
     <a class="brand" href="#inicio" aria-label="Toy Garage Kids, inicio"><img class="brand-logo" src="./assets/toy-garage-kids-logo.webp" alt="Logotipo de Toy Garage Kids, proyecto de Cristóbal e Isidora" width="260" height="195"><span class="brand-words">TOY GARAGE <em>KIDS</em><small>PROYECTO DE CRISTÓBAL E ISIDORA</small></span></a>
-    <nav class="main-nav" aria-label="Navegación"><a href="#catalogo">Explorar</a><a href="#battle">⚡ Battle Arena</a><a href="#radar">📡 Toy Radar</a><a href="#como-funciona">¿Cómo funciona?</a></nav>
+    <nav class="main-nav" aria-label="Navegación"><a href="#catalogo">Explorar</a><a href="#battle">⚡ Battle Arena</a><a href="#radar">📡 Toy Radar</a><a href="#como-funciona">¿Cómo funciona?</a><a href="./familias.html#registro" class="main-family-join">🏪 Crear mi tienda</a></nav>
     <button id="basketBtn" class="basket-btn" type="button" aria-label="Abrir selección">🎒 Mi selección <span id="basketCount">0</span></button>
   </header>
   <main>
@@ -86,9 +88,20 @@
         <p class="tgk-radar-fine">Toy Radar está integrado como una sección experimental de esta tienda. La red multifamiliar y las conexiones reales todavía no están activas.</p>
       </div>
     </section>
-    <section id="como-funciona" class="how-section page-shell"><div class="section-kicker">04 / JUGAR + REUTILIZAR</div><h2>¿CÓMO <span>FUNCIONA?</span></h2><div class="steps"><div class="step"><b>01</b><span>📱</span><h3>Escanea y explora</h3><p>Encuentra los juguetes disponibles en el catálogo.</p></div><div class="step"><b>02</b><span>💖</span><h3>Elige tus favoritos</h3><p>Agrégalos a tu selección para consultar por ellos.</p></div><div class="step"><b>03</b><span>🤝</span><h3>Coordina con un adulto</h3><p>Las reservas, pagos y entregas son supervisados.</p></div></div></section>
+    <section id="como-funciona" class="how-section page-shell"><div class="section-kicker">03 / JUGAR + REUTILIZAR</div><h2>¿CÓMO <span>FUNCIONA?</span></h2><div class="steps"><div class="step"><b>01</b><span>📱</span><h3>Escanea y explora</h3><p>Encuentra los juguetes disponibles en el catálogo.</p></div><div class="step"><b>02</b><span>💖</span><h3>Elige tus favoritos</h3><p>Agrégalos a tu selección para consultar por ellos.</p></div><div class="step"><b>03</b><span>🤝</span><h3>Coordina con un adulto</h3><p>Las reservas, pagos y entregas son supervisados.</p></div></div></section>
+    <section id="unirse" class="page-shell tgk-family-join" aria-labelledby="tgk-join-title">
+      <div class="tgk-family-join-copy">
+        <span class="section-kicker">04 / TU PROPIA AVENTURA</span>
+        <h2 id="tgk-join-title">🏪 ¿Quieres crear <span>tu propia tienda?</span></h2>
+        <p>¿Tu familia también tiene juguetes listos para nuevas aventuras? Un adulto puede crear su propia tienda, elegir su nombre, subir juguetes y compartir un QR. Actualmente disponible solo con invitación para el piloto.</p>
+      </div>
+      <div class="tgk-family-join-actions">
+        <a class="action action-primary" href="./familias.html#registro">✨ Crear mi tienda</a>
+        <small>Acceso para adultos responsables · Se necesita invitación.</small>
+      </div>
+    </section>
   </main>
-  <footer class="site-footer"><div class="page-shell footer-in"><div><strong>🌟 TOY GARAGE KIDS</strong><p>Los juguetes no se despiden. ¡Cambian de aventura!</p></div><div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center"><a href="./afiche.html">🖨️ Ver afiche QR</a><a href="./familias.html" aria-label="Acceso al piloto de tiendas familiares para adultos">🏪 Familias piloto</a></div></div><p class="footer-note">Proyecto familiar. Juguetes usados; revisa fotografías y estado antes de comprar.</p></footer>
+  <footer class="site-footer"><div class="page-shell footer-in"><div><strong>🌟 TOY GARAGE KIDS</strong><p>Los juguetes no se despiden. ¡Cambian de aventura!</p></div><div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center"><a href="./afiche.html">🖨️ Ver afiche QR</a><a href="./familias.html#registro" aria-label="Crear mi tienda familiar, acceso para adultos invitados">🏪 Crear mi tienda</a></div></div><p class="footer-note">Proyecto familiar. Juguetes usados; revisa fotografías y estado antes de comprar.</p></footer>
   <dialog id="toyModal" class="toy-dialog" aria-labelledby="modalTitle"><button class="close-modal" id="closeModal" aria-label="Cerrar">✕</button><div id="toyModalContent"></div></dialog>
   <dialog id="basketDialog" class="basket-dialog" aria-labelledby="basketTitle"><div class="basket-header"><h2 id="basketTitle">🎒 Mi selección</h2><button class="close-modal-inline" id="closeBasket" aria-label="Cerrar">✕</button></div><div id="basketContent"></div><div class="basket-footer"><button type="button" class="action action-primary" id="shareBasket">📩 CONSULTAR DISPONIBILIDAD</button><p>Esto no realiza pagos ni confirma una reserva. Un adulto coordinará contigo.</p></div></dialog>
   <div id="toast" role="status" aria-live="polite" class="toast"></div>
