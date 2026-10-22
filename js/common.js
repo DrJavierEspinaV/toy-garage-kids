@@ -12,7 +12,7 @@ export const isLive = () => Boolean(CONFIG.supabaseUrl?.trim() && CONFIG.supabas
 let supabasePromise;
 export async function getClient(){
   if(!isLive())return null;
-  if(!supabasePromise){supabasePromise=import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm').then(({createClient})=>createClient(CONFIG.supabaseUrl,CONFIG.supabasePublishableKey,{auth:{persistSession:true,autoRefreshToken:true}}));}
+  if(!supabasePromise){supabasePromise=import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm').then(({createClient})=>createClient(CONFIG.supabaseUrl,CONFIG.supabasePublishableKey,{auth:{persistSession:true,autoRefreshToken:true,...(document.body?.dataset?.appMode==='standalone'?{storageKey:'tgk-mi-tienda-auth-v1'}:{})}}));}
   return supabasePromise;
 }
 const memoryStore=new Map();
