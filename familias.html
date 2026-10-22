@@ -4,13 +4,14 @@
 <meta name="description" content="Piloto V1.7: crea y administra tu propia tienda de juguetes con invitación de un adulto responsable.">
 <link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="./css/familias.css?v=18a"><link rel="stylesheet" href="./mi-tienda/app.css?v=19">
 <script defer src="./config.js"></script><script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<script type="module" src="./js/familias.js?v=19"></script></head>
+<script type="module" src="./js/familias.js?v=19a-confirm"></script></head>
 <body class="family-body">
 <header class="family-header"><a class="family-brand" href="./index.html"><img src="./assets/toy-garage-kids-logo.webp" alt="Toy Garage Kids"> <span>TIENDAS FAMILIARES<small>Proyecto piloto V1.7 · Acceso de adultos</small></span></a><a href="./index.html" class="family-back">← Tienda fundadora</a></header>
 <main class="family-shell">
 <div class="family-hero"><span class="family-eyebrow">✦ UNA TIENDA PARA CADA FAMILIA ✦</span><h1>Mi pequeño <em>gran negocio</em></h1><p>Crea tu tienda, dale tu propio nombre, publica juguetes y comparte su QR. La experiencia de Cristóbal e Isidora sigue siendo la tienda fundadora.</p><div class="family-hero-links"><a href="#registro" class="family-primary">✨ Crear cuenta</a><a href="#acceso" class="family-secondary">🔑 Ya tengo cuenta</a></div></div>
 <p class="family-notice">🛡️ <strong>Piloto por invitación:</strong> exclusivamente para adultos responsables (18+). No es una aplicación abierta para menores ni habilita aún Toy Radar real.</p>
 <p class="family-help family-registration-note">Si recibiste una invitación, utiliza la <a href="./mi-tienda/#registro">📲 aplicación familiar independiente</a> en tu propio teléfono. Tu cuenta y tu catálogo no se mezclarán con la tienda fundadora.</p>
+<p class="family-help" id="confirmationTip">✅ ¿Confirmaste el correo pero viste «localhost:3000» o «No se puede acceder a este sitio»? La confirmación puede haberse completado de todos modos. Vuelve a esta aplicación e inicia sesión con el mismo correo y contraseña. No necesitas crear otra cuenta.</p>
 <div id="familyAlert" class="family-alert" role="status" aria-live="polite"></div>
 <section id="authPane" class="family-columns">
  <div class="family-panel" id="acceso"><h2>🔑 Iniciar sesión</h2><form id="loginForm"><label>Correo electrónico<input name="email" type="email" autocomplete="username" required></label><label>Contraseña<input name="password" type="password" autocomplete="current-password" minlength="8" required></label><button class="family-primary" type="submit">Entrar a mi tienda</button></form></div>

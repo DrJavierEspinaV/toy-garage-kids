@@ -1,6 +1,8 @@
 import {getClient,isLive,compressImage,money,newId,copyText,safeImageUrl} from './common.js?v=multi16';
 const $=id=>document.getElementById(id);
 const SITE_ROOT=new URL('../',import.meta.url);
+// La confirmación por correo NUNCA debe regresar a localhost, aunque la prueba se abra desde allí.
+const AUTH_REDIRECT_URL=window.TGK_CONFIG?.authRedirectUrl || 'https://drjavierespinav.github.io/toy-garage-kids/mi-tienda/';
 const standalone=document.body.dataset.appMode==='standalone';
 const ui={auth:$('authPane'),account:$('accountPane'),redeem:$('redeemPane'),founder:$('founderInvitePane'),work:$('familyWorkspace'),radar:$('radarAdminPane')};
 let client=null,user=null,store=null,toys=[],saving=false;
@@ -48,7 +50,7 @@ $('signupForm').addEventListener('submit',async e=>{
   const email=String(v.get('email')||'').trim().toLowerCase();
   const password=String(v.get('password')||'');
   if(password.length<8)throw Error('La contraseña debe tener al menos 8 caracteres.');
-  const redirectTo=location.origin+location.pathname;
+  const redirectTo=AUTH_REDIRECT_URL;
   const {data,error}=await client.auth.signUp({email,password,options:{emailRedirectTo:redirectTo}});
   if(error)throw error;
   if(!data?.user)throw Error('El servidor no confirmó el registro. Intenta iniciar sesión o vuelve a intentarlo.');
