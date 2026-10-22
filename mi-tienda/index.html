@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171a48"><title>Mi Tienda · Tu tienda familiar</title>
+<meta name="description" content="Aplicación familiar independiente: administra tu catálogo de juguetes desde tu celular.">
+<link rel="stylesheet" href="../css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="../css/familias.css?v=18a"><link rel="stylesheet" href="./app.css?v=19">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./icon.svg"><script defer src="../config.js"></script><script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script type="module" src="../js/familias.js?v=19"></script><script defer src="./install.js?v=19"></script></head>
+<body class="family-body" data-app-mode="standalone">
+<header class="family-header"><span class="family-brand">🧸 <span>MI TIENDA<small>Un negocio familiar, un espacio propio</small></span></span><a class="family-back" href="#acceso">🔑 Mi cuenta</a></header>
+<main class="family-shell">
+<div class="family-hero"><span class="family-eyebrow">✦ TU PROPIA TIENDA DE JUGUETES ✦</span><h1>Tu tienda. <em>Tus aventuras.</em></h1><p>Crea tu tienda con tu nombre y logo, administra tus juguetes y comparte tu propio catálogo. Cada familia conserva su cuenta y sus productos de manera independiente.</p><div class="family-hero-links"><a href="#registro" class="family-primary">✨ Crear cuenta</a><a href="#acceso" class="family-secondary">🔑 Ingresar</a></div></div></div>
+<aside class="mi-install" aria-label="Instalación de la aplicación"><div><strong>📲 Mi Tienda en tu celular</strong><p>Instálala para abrirla como una aplicación, sin depender de otra tienda o familia.</p><p id="installHelp">En Chrome, usa el menú ⋮ y elige «Instalar aplicación» o «Añadir a pantalla de inicio».</p></div><button type="button" id="installFamilyApp" class="family-primary" hidden>Instalar aplicación</button></aside><p class="family-notice">🛡️ <strong>Piloto privado por invitación:</strong> registro exclusivo de adultos (18+). El acceso a Toy Radar es voluntario. Esta aplicación no habilita altas comerciales gratuitas.</p>
+<p class="family-help family-registration-note">Usa un correo propio y el código de invitación recibido. No uses la cuenta del administrador de otra familia. Si este enlace se abrió dentro de WhatsApp o ChatGPT, ábrelo directamente en Chrome para instalar la app.</p>
+<div id="familyAlert" class="family-alert" role="status" aria-live="polite"></div>
+<section id="authPane" class="family-columns">
+ <div class="family-panel" id="acceso"><h2>🔑 Iniciar sesión</h2><form id="loginForm"><label>Correo electrónico<input name="email" type="email" autocomplete="username" required></label><label>Contraseña<input name="password" type="password" autocomplete="current-password" minlength="8" required></label><button class="family-primary" type="submit">Entrar a mi tienda</button></form></div>
+ <div class="family-panel" id="registro" tabindex="-1"><h2>✨ Crea tu propia tienda</h2><p>Primero se crea la cuenta y se verifica el correo. Después se utiliza el código de invitación para activar la tienda.</p><form id="signupForm"><label>Correo del adulto invitado<input name="email" type="email" autocomplete="email" required></label><label>Contraseña (mínimo 8 caracteres)<input name="password" type="password" autocomplete="new-password" minlength="8" required></label><label class="family-check"><input type="checkbox" name="adult" required><span>Confirmo que tengo al menos 18 años y administraré la tienda como adulto responsable.</span></label><button class="family-primary" type="submit">Crear cuenta de adulto</button><p id="signupStatus" class="mi-signup-status" role="status" aria-live="polite"></p></form></div>
+</section>
+<section id="accountPane" hidden>
+<div class="family-account-bar"><span id="familySignedUser">Sesión de adulto</span><button type="button" id="familySignout" class="family-secondary">Cerrar sesión</button></div>
+<section id="founderInvitePane" hidden><form id="inviteForm"><input type="email" name="email"><button type="submit">Invitar</button></form><div id="inviteOutput" hidden><code id="inviteCode"></code><button type="button" id="copyInvite"></button><button type="button" id="copyInviteMessage"></button></div></section>
+<section class="family-panel family-area" id="radarAdminPane" hidden>
+  <div class="family-row-between"><div><h2>📡 Mi Toy Radar · V1.8</h2><p>Participación voluntaria entre adultos. Se comparte solo la comuna que eliges, nunca tu dirección ni GPS.</p></div><span class="family-counter">PILOTO REAL</span></div>
+  <form id="radarSettingsForm" class="family-radar-form">
+    <label>Comuna de referencia
+      <select name="radar_area_id"><option value="">Selecciona una comuna...</option></select>
+    </label>
+    <label class="family-check"><input type="checkbox" name="radar_opt_in">
+      <span>Autorizo mostrar mi tienda publicada en el directorio Toy Radar de la comuna seleccionada. Puedo desactivarlo cuando quiera.</span>
+    </label>
+    <button class="family-primary" type="submit">Guardar preferencias de Toy Radar</button>
+  </form>
+  <p id="radarAdminState" class="family-help" role="status"></p>
+  <div class="family-row-between family-radar-requests-head"><h3>🤝 Solicitudes entre tiendas</h3><button type="button" class="family-secondary" id="reloadConnections">↻ Revisar solicitudes</button></div>
+  <div id="familyConnections" class="family-inventory" aria-live="polite"></div>
+  <p class="family-help">Solo los adultos administradores pueden solicitar, aceptar, rechazar, cancelar o bloquear conexiones. No hay chat infantil ni localización domiciliaria. Las alertas se consultan desde este panel.</p>
+</section>
+<section class="family-panel family-area" id="redeemPane" hidden><h2>🎟️ Activar una tienda nueva</h2><p>Ingresa el código que recibiste. Solo funcionará si tu correo verificado coincide con el correo invitado.</p><form id="redeemForm"><label>Código de invitación<input name="code" type="text" autocomplete="off" minlength="30" maxlength="50" required></label><label>Nombre de la tienda<input name="display_name" type="text" required minlength="2" maxlength="90" placeholder="El rincón de Martina"></label><label>Identificador para el enlace<input name="slug" type="text" required minlength="3" maxlength="48" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="rincon-de-martina"></label><p class="family-help">Tu enlace será: .../tienda.html?slug=<strong>identificador</strong></p><button class="family-primary" type="submit">Activar mi tienda</button></form></section>
+<section id="familyWorkspace" hidden>
+ <div class="family-overview"><div><span class="family-eyebrow">MI TIENDA FAMILIAR</span><h2 id="myStoreTitle">Mi tienda</h2><p id="myStoreStatus">Borrador</p></div><a class="family-primary" id="visitStore" href="#" target="_blank" rel="noopener">↗ Ver catálogo</a></div>
+ <div class="family-columns">
+  <section class="family-panel"><h2>🎨 Personalizar tienda</h2><form id="settingsForm"><label>Nombre de la tienda<input name="display_name" maxlength="90" required></label><label>Frase de presentación<textarea name="tagline" rows="3" maxlength="220" placeholder="¡Juguetes que buscan una nueva aventura!"></textarea></label><label>Logotipo o imagen (opcional)<input name="logo" type="file" accept="image/jpeg,image/png,image/webp"></label><img id="familyLogoPreview" class="family-logo-preview" alt="Logo actual" hidden><label class="family-check"><input name="is_published" type="checkbox"><span>Publicar mi catálogo para visitantes con enlace. No activa Toy Radar ni muestra mi domicilio.</span></label><button type="submit" class="family-primary">Guardar mi tienda</button></form></section>
+  <section class="family-panel"><h2>📱 Mi código QR</h2><p>Tu propio enlace y QR. El QR funciona cuando la tienda está publicada.</p><div class="family-qr" id="familyQr"></div><a class="family-textlink" id="familyStoreLink" href="#" target="_blank" rel="noopener"></a><button id="copyStoreLink" class="family-secondary" type="button">Copiar enlace</button><p class="family-help">No compartas información de niños ni direcciones en el nombre, logo o fotografías.</p></section>
+ </div>
+ <section class="family-panel family-area"><div class="family-row-between"><div><h2>🧸 Inventario propio</h2><p>Máximo 3 fotos por juguete, administradas únicamente por tu cuenta.</p></div><span id="myToyCount" class="family-counter">0 juguetes</span></div>
+ <form id="toyForm" class="family-toy-form"><input name="id" type="hidden"><label>Nombre del juguete<input name="title" required maxlength="90" placeholder="Auto de carreras"></label><label>Categoría<select name="category" required><option>Vehículos</option><option>Peluches</option><option>Construcción</option><option>Figuras</option><option>Juegos</option><option>Retro</option><option>Especiales</option></select></label><label>Precio (CLP)<input name="price" required type="number" min="0" step="1" value="1000"></label><label>Conservación<select name="grade"><option value="S">Como nuevo</option><option value="A" selected>Excelente</option><option value="B">Bueno</option><option value="C">Con detalles</option><option value="D">Incompleto</option></select></label><label>Estado<select name="status"><option value="available">Disponible</option><option value="reserved">Reservado</option><option value="sold">Vendido</option><option value="hidden">Oculto</option></select></label><label>Foto (opcional)<input name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label><label class="family-wide">Descripción<textarea name="description" rows="2" maxlength="600"></textarea></label><div class="family-wide family-form-actions"><button class="family-primary" id="familySaveToy" type="submit">Guardar juguete</button><button type="button" class="family-secondary" id="clearToy">Nuevo / limpiar</button></div></form>
+ <div id="familyInventory" class="family-inventory"></div>
+ </section>
+</section>
+</section>
+</main><footer class="family-footer">Mi Tienda · Cuentas e inventarios independientes. La administración y las entregas corresponden exclusivamente a adultos.</footer>
+</body></html>
