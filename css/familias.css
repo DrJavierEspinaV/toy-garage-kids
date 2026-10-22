@@ -61,3 +61,13 @@
 .family-registration-note{padding:12px 14px;background:#ecebff;border:1px solid #dcd6fb;border-radius:12px;color:#4a427e!important;font-size:13px!important}
 #registro,#acceso,#invitar{scroll-margin-top:22px}
 @media(max-width:810px){#authPane #registro{order:-1}}
+
+/* Toy Radar V1.8 — panel familiar, aislado del editor */
+.family-radar-form{max-width:800px}
+.family-radar-form select{max-width:360px}
+.family-radar-requests-head{margin:24px 0 12px}
+.family-radar-requests-head h3{font-size:19px;color:#282554;margin:0}
+.family-radar-request{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border:1px solid #e5e4f6;border-radius:13px;padding:13px;margin-bottom:8px}
+.family-radar-request-description strong{display:block;color:#302c68}
+.family-radar-request-description small{color:#7377a0}
+.family-radar-request-actions{display:flex;gap:8px;flex-wrap:wrap}

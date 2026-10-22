@@ -2,9 +2,9 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#171a48"><title>Mi tienda familiar · Toy Garage Kids</title>
 <meta name="description" content="Piloto V1.7: crea y administra tu propia tienda de juguetes con invitación de un adulto responsable.">
-<link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="./css/familias.css?v=17b">
+<link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="./css/familias.css?v=18a">
 <script defer src="./config.js"></script><script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<script type="module" src="./js/familias.js?v=17b"></script></head>
+<script type="module" src="./js/familias.js?v=18a"></script></head>
 <body class="family-body">
 <header class="family-header"><a class="family-brand" href="./index.html"><img src="./assets/toy-garage-kids-logo.webp" alt="Toy Garage Kids"> <span>TIENDAS FAMILIARES<small>Proyecto piloto V1.7 · Acceso de adultos</small></span></a><a href="./index.html" class="family-back">← Tienda fundadora</a></header>
 <main class="family-shell">
@@ -19,6 +19,22 @@
 <section id="accountPane" hidden>
 <div class="family-account-bar"><span id="familySignedUser">Sesión de adulto</span><button type="button" id="familySignout" class="family-secondary">Cerrar sesión</button></div>
 <section class="family-panel family-area" id="founderInvitePane" hidden><div id="invitar"></div><h2>✉️ Invitar una familia piloto</h2><p>Esta función es exclusiva del administrador fundador. El código se muestra una sola vez y solo sirve para el correo indicado.</p><form id="inviteForm" class="family-inline"><label>Correo del adulto<input name="email" type="email" required placeholder="adulto@correo.cl"></label><button class="family-primary" type="submit">Generar invitación</button></form><div id="inviteOutput" hidden><p><strong>Comparte este código con el adulto invitado:</strong></p><code id="inviteCode" class="family-code"></code><button type="button" class="family-secondary" id="copyInvite">Copiar código</button> <button type="button" class="family-secondary" id="copyInviteMessage">📩 Copiar invitación completa</button><p>Vigente durante 14 días, de un solo uso. Compártelo por un canal privado.</p></div><p class="family-help">La otra familia debe abrir el enlace en su propio celular y crear una cuenta con el correo invitado. Si aquí ya tienes sesión iniciada, verás tu panel, no el formulario de registro.</p><a class="family-textlink" href="./admin.html">Ir al panel original de Cristóbal e Isidora →</a></section>
+<section class="family-panel family-area" id="radarAdminPane" hidden>
+  <div class="family-row-between"><div><h2>📡 Mi Toy Radar · V1.8</h2><p>Participación voluntaria entre adultos. Se comparte solo la comuna que eliges, nunca tu dirección ni GPS.</p></div><span class="family-counter">PILOTO REAL</span></div>
+  <form id="radarSettingsForm" class="family-radar-form">
+    <label>Comuna de referencia
+      <select name="radar_area_id"><option value="">Selecciona una comuna...</option></select>
+    </label>
+    <label class="family-check"><input type="checkbox" name="radar_opt_in">
+      <span>Autorizo mostrar mi tienda publicada en el directorio Toy Radar de la comuna seleccionada. Puedo desactivarlo cuando quiera.</span>
+    </label>
+    <button class="family-primary" type="submit">Guardar preferencias de Toy Radar</button>
+  </form>
+  <p id="radarAdminState" class="family-help" role="status"></p>
+  <div class="family-row-between family-radar-requests-head"><h3>🤝 Solicitudes entre tiendas</h3><button type="button" class="family-secondary" id="reloadConnections">↻ Revisar solicitudes</button></div>
+  <div id="familyConnections" class="family-inventory" aria-live="polite"></div>
+  <p class="family-help">Solo los adultos administradores pueden solicitar, aceptar, rechazar, cancelar o bloquear conexiones. No hay chat infantil ni localización domiciliaria. Las alertas se consultan desde este panel.</p>
+</section>
 <section class="family-panel family-area" id="redeemPane" hidden><h2>🎟️ Activar una tienda nueva</h2><p>Ingresa el código que recibiste. Solo funcionará si tu correo verificado coincide con el correo invitado.</p><form id="redeemForm"><label>Código de invitación<input name="code" type="text" autocomplete="off" minlength="30" maxlength="50" required></label><label>Nombre de la tienda<input name="display_name" type="text" required minlength="2" maxlength="90" placeholder="El rincón de Martina"></label><label>Identificador para el enlace<input name="slug" type="text" required minlength="3" maxlength="48" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="rincon-de-martina"></label><p class="family-help">Tu enlace será: .../tienda.html?slug=<strong>identificador</strong></p><button class="family-primary" type="submit">Activar mi tienda</button></form></section>
 <section id="familyWorkspace" hidden>
  <div class="family-overview"><div><span class="family-eyebrow">MI TIENDA FAMILIAR</span><h2 id="myStoreTitle">Mi tienda</h2><p id="myStoreStatus">Borrador</p></div><a class="family-primary" id="visitStore" href="#" target="_blank" rel="noopener">↗ Ver catálogo</a></div>

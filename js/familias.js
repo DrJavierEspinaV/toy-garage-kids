@@ -1,6 +1,6 @@
 import {getClient,isLive,compressImage,money,newId,copyText,safeImageUrl} from './common.js?v=multi16';
 const $=id=>document.getElementById(id);
-const ui={auth:$('authPane'),account:$('accountPane'),redeem:$('redeemPane'),founder:$('founderInvitePane'),work:$('familyWorkspace')};
+const ui={auth:$('authPane'),account:$('accountPane'),redeem:$('redeemPane'),founder:$('founderInvitePane'),work:$('familyWorkspace'),radar:$('radarAdminPane')};
 let client=null,user=null,store=null,toys=[],saving=false;
 const founderId='d4549710-8c53-4901-bbee-f70fdb060f03';
 function alertMsg(text,err=false){const n=$('familyAlert');n.textContent=text;n.dataset.error=String(err);}
@@ -18,15 +18,17 @@ async function refreshSession(){
  const {data,error}=await client.auth.getUser();
  user=error?null:data.user;
  ui.auth.hidden=!!user;ui.account.hidden=!user;
- ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;store=null;
+ ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;ui.radar.hidden=true;store=null;
  if(!user){if(location.hash==='#registro')requestAnimationFrame(()=>$('registro')?.scrollIntoView({block:'start'}));return;}
  $('familySignedUser').textContent='Adulto responsable: '+(user.email||'sesión activa');
- const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published').eq('owner_user_id',user.id).maybeSingle();
+ const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id').eq('owner_user_id',user.id).maybeSingle();
  if(storeError){alertMsg('No se pudo comprobar tu tienda: '+storeError.message,true);return;}
  store=owned;
  const {data:admin}=await client.from('admins').select('user_id').eq('user_id',user.id).maybeSingle();
  const isFounder=!!admin && store?.id===founderId;
  ui.founder.hidden=!isFounder;
+ ui.radar.hidden=!store;
+ if(store)await loadRadarPanel();
  if(isFounder){alertMsg('Estás en la sesión de la tienda fundadora. Desde aquí generas invitaciones; la familia invitada se registra desde su propio teléfono y su correo.');return;}
  ui.redeem.hidden=!!store;
  ui.work.hidden=!store;
@@ -113,7 +115,7 @@ $('settingsForm').addEventListener('submit',async e=>{
    if(uploadError)throw uploadError;
    upd.logo_url=client.storage.from('family-media').getPublicUrl(path).data.publicUrl;
   }
-  const {data,error}=await client.from('stores').update(upd).eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published').single();
+  const {data,error}=await client.from('stores').update(upd).eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id').single();
   if(error)throw error;
   store=data;form.elements.logo.value='';fillSettings();alertMsg('Tu tienda fue actualizada correctamente.');
  }catch(err){alertMsg('No se guardó la tienda: '+errorText(err),true);}
@@ -179,4 +181,81 @@ async function removeToy(t){
  await loadInventory();
  if(!$('familyAlert').dataset.error || $('familyAlert').dataset.error==='false')alertMsg('Juguete eliminado.');
 }
+
+/* V1.8 — preferencias y conexiones entre administradores adultos. */
+async function loadRadarPanel(){
+ const form=$('radarSettingsForm'),picker=form.elements.radar_area_id;
+ const {data:areas,error}=await client.from('radar_areas').select('id,label').order('label');
+ if(error){alertMsg('No se pudieron cargar las comunas: '+error.message,true);return;}
+ picker.replaceChildren();
+ const placeholder=tag('option','','Selecciona una comuna...');placeholder.value='';picker.append(placeholder);
+ for(const area of areas||[]){const option=tag('option','',area.label);option.value=area.id;picker.append(option);}
+ picker.value=store.radar_area_id||'';form.elements.radar_opt_in.checked=!!store.radar_opt_in;
+ $('radarAdminState').textContent=store.radar_opt_in&&store.is_published
+  ?'Visible en Toy Radar por comuna. No se comparte dirección ni distancia.'
+  : 'Tu tienda no aparece en Toy Radar. Puedes activar la participación cuando esté publicada.';
+ await loadConnections();
+}
+$('radarSettingsForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!store||!client)return;
+ const form=e.currentTarget;setBusy(form,true);
+ try{
+  const optIn=form.elements.radar_opt_in.checked;
+  const area=form.elements.radar_area_id.value||null;
+  if(optIn&&!store.is_published)throw Error('Primero publica tu catálogo en «Personalizar tienda».');
+  if(optIn&&!area)throw Error('Selecciona una comuna para aparecer en Toy Radar.');
+  const {data,error}=await client.from('stores').update({radar_opt_in:optIn,radar_area_id:area})
+   .eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id').single();
+  if(error)throw error;
+  store=data;
+  $('radarAdminState').textContent=optIn?'Participación activada. Tu tienda aparecerá en la comuna elegida.':'Participación desactivada. Tu tienda deja de aparecer en Toy Radar.';
+  alertMsg('Preferencias de Toy Radar guardadas.');
+ }catch(err){alertMsg('No se pudo actualizar Toy Radar: '+errorText(err),true);}
+ finally{setBusy(form,false);}
+});
+$('reloadConnections').addEventListener('click',()=>loadConnections());
+async function loadConnections(){
+ const root=$('familyConnections');empty(root);
+ if(!store)return;
+ const id=store.id;
+ const {data,error}=await client.from('tgk_connections')
+   .select('id,from_store_id,to_store_id,status,created_at')
+   .or('from_store_id.eq.'+id+',to_store_id.eq.'+id)
+   .order('created_at',{ascending:false}).limit(60);
+ if(error){root.append(tag('p','', 'No se pudieron consultar las solicitudes: '+error.message));return;}
+ const items=data||[];
+ if(!items.length){root.append(tag('p','', 'Aún no hay solicitudes de otras familias. Comparte tu tienda o invita a otra familia al piloto.'));return;}
+ const ids=[...new Set(items.map(x=>x.from_store_id===id?x.to_store_id:x.from_store_id))];
+ const {data:publicShops}=await client.from('storefronts').select('store_id,display_name').in('store_id',ids);
+ const names=new Map((publicShops||[]).map(x=>[x.store_id,x.display_name]));
+ const statusNames={pending:'Pendiente',accepted:'Aceptada',declined:'Rechazada',blocked:'Bloqueada',cancelled:'Cancelada'};
+ for(const item of items){
+   const isIncoming=item.to_store_id===id;
+   const otherId=isIncoming?item.from_store_id:item.to_store_id;
+   const row=tag('article','family-radar-request');
+   const details=tag('div','family-radar-request-description');
+   details.append(tag('strong','',(isIncoming?'📩 Recibida de ':'📤 Enviada a ')+(names.get(otherId)||'Tienda familiar')));
+   details.append(tag('small','',(statusNames[item.status]||item.status)+' · '+new Date(item.created_at).toLocaleDateString('es-CL')));
+   row.append(details);
+   if(item.status==='pending'){
+    const actions=tag('div','family-radar-request-actions');
+    const ops=isIncoming?[['accepted','Aceptar'],['declined','Rechazar'],['blocked','Bloquear']]:[['cancelled','Cancelar']];
+    for(const [value,label] of ops){
+     const b=tag('button','family-secondary',label);b.type='button';
+     b.addEventListener('click',async()=>{
+      for(const btn of actions.querySelectorAll('button'))btn.disabled=true;
+      const {data:updated,error:updateError}=await client.from('tgk_connections').update({status:value})
+       .eq('id',item.id).eq('status','pending').eq(isIncoming?'to_store_id':'from_store_id',id).select('id');
+      if(updateError||!updated?.length)alertMsg('No se pudo procesar la solicitud: '+(updateError?.message||'No autorizada.'),true);
+      else alertMsg('Solicitud '+(statusNames[value]||'actualizada').toLowerCase()+'.');
+      await loadConnections();
+     });
+     actions.append(b);
+    }
+    row.append(actions);
+   }
+   root.append(row);
+ }
+}
+
 init().catch(err=>alertMsg('Error iniciando el portal: '+errorText(err),true));
