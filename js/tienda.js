@@ -2,7 +2,7 @@ import {getClient,isLive,money,safeImageUrl} from './common.js?v=multi16';
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search),slug=(params.get('slug')||'').toLowerCase();
 function el(t,cls,content){const x=document.createElement(t);if(cls)x.className=cls;if(content!==undefined)x.textContent=String(content);return x;}
-function showError(message){$('storeError').hidden=false;$('storeError').replaceChildren(el('h2','',message),el('p','','Puedes regresar a la tienda fundadora o consultar al adulto que te compartió el enlace.'));}
+function showError(message){$('storeError').hidden=false;$('storeError').replaceChildren(el('h2','',message),el('p','','Consulta al adulto que compartió este catálogo o revisa la dirección del enlace.'));}
 async function main(){
  if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)||slug.length>80)return showError('Enlace de tienda inválido.');
  if(!isLive())return showError('El catálogo no está disponible en este momento.');
@@ -11,7 +11,7 @@ async function main(){
  if(storeErr||!store)return showError('Esta tienda no está publicada o no existe.');
  const {data:toys,error:toyErr}=await client.from('toys').select('id,title,description,price,status,category,grade,photos,emoji').eq('store_id',store.store_id).neq('status','hidden').order('created_at',{ascending:false});
  if(toyErr)return showError('No fue posible cargar los juguetes.');
- $('storeError').hidden=true;$('publicStore').hidden=false;document.title=store.display_name+' · Toy Garage Kids';
+ $('storeError').hidden=true;$('publicStore').hidden=false;document.title=store.display_name+' · Mi Tienda';
  $('publicTitle').textContent=store.display_name;$('publicTagline').textContent=store.tagline||'¡Cada juguete merece una nueva aventura!';
  const logo=safeImageUrl(store.logo_url);if(logo){$('publicLogo').src=logo;$('publicLogo').hidden=false;}
  $('publicCount').textContent=(toys||[]).length+' juguetes';
