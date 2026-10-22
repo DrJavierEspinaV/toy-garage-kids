@@ -1,12 +1,15 @@
 import {getClient,isLive,compressImage,money,newId,copyText,safeImageUrl} from './common.js?v=multi16';
 const $=id=>document.getElementById(id);
+const SITE_ROOT=new URL('../',import.meta.url);
+const standalone=document.body.dataset.appMode==='standalone';
 const ui={auth:$('authPane'),account:$('accountPane'),redeem:$('redeemPane'),founder:$('founderInvitePane'),work:$('familyWorkspace'),radar:$('radarAdminPane')};
 let client=null,user=null,store=null,toys=[],saving=false;
 const founderId='d4549710-8c53-4901-bbee-f70fdb060f03';
 function alertMsg(text,err=false){const n=$('familyAlert');n.textContent=text;n.dataset.error=String(err);}
+function signupMsg(text,err=false){const n=$('signupStatus');if(n){n.textContent=text;n.dataset.error=String(err);}alertMsg(text,err);}
 function setBusy(form,value){for(const b of form.querySelectorAll('button[type="submit"]'))b.disabled=value;}
 function errorText(e){return e?.message||'No fue posible completar la operación.';}
-function url(){return new URL('./tienda.html?slug='+encodeURIComponent(store.slug),location.href).href;}
+function url(){return new URL('tienda.html?slug='+encodeURIComponent(store.slug),SITE_ROOT).href;}
 function empty(node){node.replaceChildren();}
 function tag(name,cls,content){const n=document.createElement(name);if(cls)n.className=cls;if(content!==undefined)n.textContent=String(content);return n;}
 async function init(){
@@ -26,26 +29,35 @@ async function refreshSession(){
  store=owned;
  const {data:admin}=await client.from('admins').select('user_id').eq('user_id',user.id).maybeSingle();
  const isFounder=!!admin && store?.id===founderId;
- ui.founder.hidden=!isFounder;
+ ui.founder.hidden=!isFounder||standalone;
  ui.radar.hidden=!store;
  if(store)await loadRadarPanel();
- if(isFounder){alertMsg('Estás en la sesión de la tienda fundadora. Desde aquí generas invitaciones; la familia invitada se registra desde su propio teléfono y su correo.');return;}
+ if(isFounder){alertMsg(standalone?'Esta cuenta pertenece a la tienda fundadora. Para probar otra tienda instala esta aplicación en otro teléfono y regístrate con un correo distinto.':'Estás en la sesión de la tienda fundadora. Desde aquí generas invitaciones; la familia invitada se registra desde su propio teléfono y su correo.');return;}
  ui.redeem.hidden=!!store;
  ui.work.hidden=!store;
  if(store){fillSettings();await loadInventory();}
  else alertMsg('Cuenta iniciada. Introduce la invitación que recibiste para crear tu tienda.');
 }
 $('signupForm').addEventListener('submit',async e=>{
- e.preventDefault();const form=e.currentTarget,v=new FormData(form);
- if(!v.get('adult'))return alertMsg('Un adulto responsable debe aceptar esta condición.',true);
- setBusy(form,true);alertMsg('');
+ e.preventDefault();
+ const form=e.currentTarget,v=new FormData(form);
+ if(!v.get('adult'))return signupMsg('Confirma que eres un adulto responsable.',true);
+ if(!client)return signupMsg('Conectando con el servidor. Comprueba tu conexión e inténtalo de nuevo.',true);
+ setBusy(form,true);signupMsg('Creando cuenta. Mantén esta página abierta hasta ver el resultado.');
  try{
-  const {data,error}=await client.auth.signUp({email:String(v.get('email')).trim().toLowerCase(),password:String(v.get('password')),options:{emailRedirectTo:location.origin+location.pathname}});
+  const email=String(v.get('email')||'').trim().toLowerCase();
+  const password=String(v.get('password')||'');
+  if(password.length<8)throw Error('La contraseña debe tener al menos 8 caracteres.');
+  const redirectTo=location.origin+location.pathname;
+  const {data,error}=await client.auth.signUp({email,password,options:{emailRedirectTo:redirectTo}});
   if(error)throw error;
+  if(!data?.user)throw Error('El servidor no confirmó el registro. Intenta iniciar sesión o vuelve a intentarlo.');
   form.reset();
-  alertMsg(data.session?'Cuenta creada con sesión activa. Completa el registro de tu tienda usando el código.':'Cuenta solicitada. Revisa tu correo para confirmar el email; luego vuelve aquí e inicia sesión antes de usar la invitación.');
+  signupMsg(data.session
+   ?'Cuenta creada. Ya tienes acceso: activa tu tienda con el código privado que recibiste.'
+   :'Solicitud recibida. Abre tu correo y confirma la dirección. Después regresa aquí, inicia sesión y utiliza tu código de invitación.');
   if(data.session)await refreshSession();
- }catch(err){alertMsg('No fue posible crear la cuenta: '+errorText(err),true)}
+ }catch(err){signupMsg('No fue posible crear la cuenta: '+errorText(err),true);}
  finally{setBusy(form,false);}
 });
 $('loginForm').addEventListener('submit',async e=>{
@@ -74,7 +86,7 @@ $('copyInviteMessage').addEventListener('click',async()=>{
  const code=$('inviteCode').textContent;
  if(!code)return alertMsg('Primero genera la invitación.',true);
  const email=$('inviteForm').elements.email.value.trim();
- const joinUrl=new URL('./familias.html#registro',location.href).href;
+ const joinUrl=new URL('mi-tienda/#registro',SITE_ROOT).href;
  const msg='¡Hola! Te invito al piloto de tiendas familiares Toy Garage Kids.\n\n1. Abre este enlace desde tu teléfono: '+joinUrl+'\n2. Crea una cuenta de adulto con este correo: '+email+'\n3. Confirma el correo e inicia sesión.\n4. Activa tu tienda con este código de invitación (14 días, un solo uso): '+code+'\n\nPuedes elegir el nombre y el logo de tu tienda y publicar tus propios juguetes. Actualmente es un piloto privado.';
  const ok=await copyText(msg);
  alertMsg(ok?'Invitación completa copiada. Compártela por WhatsApp o correo al adulto invitado.':'No se pudo copiar el mensaje.',!ok);
