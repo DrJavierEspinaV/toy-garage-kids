@@ -1,0 +1,173 @@
+import {getClient,isLive,compressImage,money,newId,copyText,safeImageUrl} from './common.js?v=multi16';
+const $=id=>document.getElementById(id);
+const ui={auth:$('authPane'),account:$('accountPane'),redeem:$('redeemPane'),founder:$('founderInvitePane'),work:$('familyWorkspace')};
+let client=null,user=null,store=null,toys=[],saving=false;
+const founderId='d4549710-8c53-4901-bbee-f70fdb060f03';
+function alertMsg(text,err=false){const n=$('familyAlert');n.textContent=text;n.dataset.error=String(err);}
+function setBusy(form,value){for(const b of form.querySelectorAll('button[type="submit"]'))b.disabled=value;}
+function errorText(e){return e?.message||'No fue posible completar la operación.';}
+function url(){return new URL('./tienda.html?slug='+encodeURIComponent(store.slug),location.href).href;}
+function empty(node){node.replaceChildren();}
+function tag(name,cls,content){const n=document.createElement(name);if(cls)n.className=cls;if(content!==undefined)n.textContent=String(content);return n;}
+async function init(){
+ if(!isLive()){alertMsg('Supabase no está conectado. Este piloto requiere la configuración pública del proyecto.',true);return;}
+ client=await getClient();
+ await refreshSession();
+}
+async function refreshSession(){
+ const {data,error}=await client.auth.getUser();
+ user=error?null:data.user;
+ ui.auth.hidden=!!user;ui.account.hidden=!user;
+ ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;store=null;
+ if(!user)return;
+ $('familySignedUser').textContent='Adulto responsable: '+(user.email||'sesión activa');
+ const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published').eq('owner_user_id',user.id).maybeSingle();
+ if(storeError){alertMsg('No se pudo comprobar tu tienda: '+storeError.message,true);return;}
+ store=owned;
+ const {data:admin}=await client.from('admins').select('user_id').eq('user_id',user.id).maybeSingle();
+ const isFounder=!!admin && store?.id===founderId;
+ ui.founder.hidden=!isFounder;
+ if(isFounder){alertMsg('Sesión de administrador fundador: desde aquí puedes invitar familias. Tu tienda original se administra desde el panel habitual.');return;}
+ ui.redeem.hidden=!!store;
+ ui.work.hidden=!store;
+ if(store){fillSettings();await loadInventory();}
+ else alertMsg('Cuenta iniciada. Introduce la invitación que recibiste para crear tu tienda.');
+}
+$('signupForm').addEventListener('submit',async e=>{
+ e.preventDefault();const form=e.currentTarget,v=new FormData(form);
+ if(!v.get('adult'))return alertMsg('Un adulto responsable debe aceptar esta condición.',true);
+ setBusy(form,true);alertMsg('');
+ try{
+  const {data,error}=await client.auth.signUp({email:String(v.get('email')).trim().toLowerCase(),password:String(v.get('password')),options:{emailRedirectTo:location.origin+location.pathname}});
+  if(error)throw error;
+  form.reset();
+  alertMsg(data.session?'Cuenta creada con sesión activa. Completa el registro de tu tienda usando el código.':'Cuenta solicitada. Revisa tu correo para confirmar el email; luego vuelve aquí e inicia sesión antes de usar la invitación.');
+  if(data.session)await refreshSession();
+ }catch(err){alertMsg('No fue posible crear la cuenta: '+errorText(err),true)}
+ finally{setBusy(form,false);}
+});
+$('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();const form=e.currentTarget,v=new FormData(form);setBusy(form,true);
+ try{
+  const {error}=await client.auth.signInWithPassword({email:String(v.get('email')).trim(),password:String(v.get('password'))});
+  if(error)throw error;
+  form.reset();alertMsg('Sesión iniciada.');await refreshSession();
+ }catch(err){alertMsg('Error de acceso: '+errorText(err),true);}
+ finally{setBusy(form,false);}
+});
+$('familySignout').addEventListener('click',async()=>{if(!client)return;await client.auth.signOut();alertMsg('Sesión cerrada.');await refreshSession();});
+$('inviteForm').addEventListener('submit',async e=>{
+ e.preventDefault();const form=e.currentTarget;setBusy(form,true);
+ try{
+  const email=String(new FormData(form).get('email')).trim();
+  const {data,error}=await client.rpc('tgk_issue_family_invite',{p_email:email});
+  if(error)throw error;
+  $('inviteCode').textContent=data;$('inviteOutput').hidden=false;
+  alertMsg('Invitación generada para '+email+'. Debes compartir el código de forma privada: no se envió un correo automático.');
+ }catch(err){alertMsg('Error creando invitación: '+errorText(err),true);}
+ finally{setBusy(form,false);}
+});
+$('copyInvite').addEventListener('click',async()=>{const ok=await copyText($('inviteCode').textContent);alertMsg(ok?'Código copiado.':'No se pudo copiar. Selecciona el código manualmente.',!ok);});
+$('redeemForm').addEventListener('submit',async e=>{
+ e.preventDefault();const form=e.currentTarget,v=new FormData(form);setBusy(form,true);
+ try{
+  const {data,error}=await client.rpc('tgk_redeem_family_invite',{p_code:String(v.get('code')).trim(),p_slug:String(v.get('slug')).trim(),p_name:String(v.get('display_name')).trim()});
+  if(error)throw error;
+  form.reset();alertMsg('¡Tienda creada! Ya puedes personalizarla y publicar tus juguetes.');
+  await refreshSession();
+ }catch(err){alertMsg('No se pudo activar la tienda: '+errorText(err),true);}
+ finally{setBusy(form,false);}
+});
+function fillSettings(){
+ const f=$('settingsForm');f.elements.display_name.value=store.display_name;f.elements.tagline.value=store.tagline||'';
+ f.elements.is_published.checked=store.is_published;
+ const image=$('familyLogoPreview'),safe=safeImageUrl(store.logo_url);
+ image.hidden=!safe;if(safe)image.src=safe;
+ $('myStoreTitle').textContent=store.display_name;
+ $('myStoreStatus').textContent=store.is_published?'🟢 Catálogo publicado · visible mediante enlace':'🔒 Catálogo privado · todavía no publicado';
+ $('visitStore').href=url();$('familyStoreLink').href=url();$('familyStoreLink').textContent=url();
+ empty($('familyQr'));
+ if(window.QRCode){new window.QRCode($('familyQr'),{text:url(),width:150,height:150,correctLevel:window.QRCode.CorrectLevel.M});}
+ else $('familyQr').append(tag('p','', 'Abre el enlace de tu tienda para compartirlo.'));
+}
+$('settingsForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!store||saving)return;const form=e.currentTarget;setBusy(form,true);saving=true;
+ try{
+  const v=new FormData(form);const upd={display_name:String(v.get('display_name')).trim(),tagline:String(v.get('tagline')).trim(),is_published:v.get('is_published')==='on'};
+  if(upd.display_name.length<2||upd.display_name.length>90)throw Error('Nombre de tienda inválido.');
+  if(upd.tagline.length>220)throw Error('La descripción es demasiado larga (máximo 220 caracteres).');
+  const file=form.elements.logo.files[0];
+  if(file){
+   const blob=await compressImage(file);
+   const path=store.id+'/logo/'+newId()+'.jpg';
+   const {error:uploadError}=await client.storage.from('family-media').upload(path,blob,{contentType:'image/jpeg',upsert:false});
+   if(uploadError)throw uploadError;
+   upd.logo_url=client.storage.from('family-media').getPublicUrl(path).data.publicUrl;
+  }
+  const {data,error}=await client.from('stores').update(upd).eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published').single();
+  if(error)throw error;
+  store=data;form.elements.logo.value='';fillSettings();alertMsg('Tu tienda fue actualizada correctamente.');
+ }catch(err){alertMsg('No se guardó la tienda: '+errorText(err),true);}
+ finally{saving=false;setBusy(form,false);}
+});
+$('copyStoreLink').addEventListener('click',async()=>{if(!store)return;const ok=await copyText(url());alertMsg(ok?'Enlace copiado.':'No se pudo copiar el enlace.',!ok);});
+async function loadInventory(){
+ if(!store)return;
+ const {data,error}=await client.from('toys').select('*').eq('store_id',store.id).order('created_at',{ascending:false});
+ if(error){alertMsg('No se pudo cargar el inventario: '+error.message,true);return;}
+ toys=data||[];renderInventory();
+}
+function renderInventory(){
+ const root=$('familyInventory');empty(root);$('myToyCount').textContent=toys.length+' juguetes';
+ if(!toys.length){root.append(tag('p','','Aún no tienes juguetes. Publica el primero para comenzar.'));return;}
+ for(const t of toys){
+  const row=tag('article','family-toy-row');
+  const imageUrl=safeImageUrl(t.photos?.[0]);
+  if(imageUrl){const image=tag('img','');image.src=imageUrl;image.alt=t.title;image.loading='lazy';row.append(image);}else row.append(tag('span','family-avatar','🧸'));
+  const info=tag('div','family-toy-info');info.append(tag('strong','',t.title),tag('small','',money(t.price)+' · '+t.status));
+  const actions=tag('div','family-toy-actions'),edit=tag('button','family-secondary','Editar'),del=tag('button','family-secondary','Eliminar');
+  edit.type='button';del.type='button';edit.addEventListener('click',()=>editToy(t));del.addEventListener('click',()=>removeToy(t));
+  actions.append(edit,del);row.append(info,actions);root.append(row);
+ }
+}
+function editToy(t){
+ const f=$('toyForm');f.elements.id.value=t.id;for(const field of ['title','description','category','grade','price','status'])f.elements[field].value=t[field]??'';
+ f.elements.photo.value='';$('familySaveToy').textContent='Actualizar juguete';
+ f.scrollIntoView({behavior:'smooth',block:'center'});
+}
+$('clearToy').addEventListener('click',()=>{$('toyForm').reset();$('toyForm').elements.id.value='';$('familySaveToy').textContent='Guardar juguete';});
+$('toyForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!store||saving)return;const form=e.currentTarget,v=new FormData(form);
+ saving=true;setBusy(form,true);
+ try{
+  const id=String(v.get('id')||newId()),previous=toys.find(t=>t.id===id);
+  const price=Number(v.get('price'));if(!Number.isSafeInteger(price)||price<0)throw Error('El precio debe ser un entero positivo o cero.');
+  let photos=[...(previous?.photos||[])];
+  const file=form.elements.photo.files[0];
+  if(file){
+   if(photos.length>=3)throw Error('Máximo 3 fotos. Elimina o reemplaza el juguete antes de añadir otra.');
+   const blob=await compressImage(file),path=store.id+'/toys/'+id+'/'+newId()+'.jpg';
+   const {error:uploadErr}=await client.storage.from('family-media').upload(path,blob,{contentType:'image/jpeg',upsert:false});
+   if(uploadErr)throw uploadErr;
+   photos.push(client.storage.from('family-media').getPublicUrl(path).data.publicUrl);
+  }
+  const payload={...previous,id,store_id:store.id,title:String(v.get('title')).trim(),category:String(v.get('category')),grade:String(v.get('grade')),price,
+     status:String(v.get('status')),description:String(v.get('description')||'').trim(),photos,sale_mode:'fixed',emoji:'🧸'};
+  const {error}=await client.from('toys').upsert(payload,{onConflict:'id'}).select('id').single();
+  if(error)throw error;
+  form.reset();form.elements.id.value='';$('familySaveToy').textContent='Guardar juguete';
+  await loadInventory();alertMsg('Juguete guardado en tu propia tienda.');
+ }catch(err){alertMsg('No se pudo guardar el juguete: '+errorText(err),true);}
+ finally{saving=false;setBusy(form,false);}
+});
+async function removeToy(t){
+ if(!window.confirm('¿Eliminar definitivamente «'+t.title+'» de TU tienda?'))return;
+ const {data,error}=await client.from('toys').delete().eq('id',t.id).eq('store_id',store.id).select('id');
+ if(error||!data?.length){alertMsg('No se pudo eliminar: '+(error?.message||'No tienes permisos.'),true);return;}
+ const marker='/storage/v1/object/public/family-media/';
+ const paths=(t.photos||[]).flatMap(src=>{try{const u=new URL(src);if(u.origin!==new URL(window.TGK_CONFIG.supabaseUrl).origin||!u.pathname.includes(marker))return [];const path=decodeURIComponent(u.pathname.split(marker)[1]||'');return path.startsWith(store.id+'/toys/'+t.id+'/')?[path]:[];}catch{return[];}});
+ if(paths.length){const {error:mediaError}=await client.storage.from('family-media').remove(paths);if(mediaError)alertMsg('Juguete eliminado. Algunas fotografías antiguas no pudieron retirarse: '+mediaError.message,true);}
+ await loadInventory();
+ if(!$('familyAlert').dataset.error || $('familyAlert').dataset.error==='false')alertMsg('Juguete eliminado.');
+}
+init().catch(err=>alertMsg('Error iniciando el portal: '+errorText(err),true));

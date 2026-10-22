@@ -1,0 +1,12 @@
+# V1.7 · Piloto controlado de múltiples tiendas
+- URLs: `familias.html` (registro, inicio de sesión, invitación y panel privado) y `tienda.html?slug=<identificador>` (catálogo público de cada familia).
+- Adulto fundador: inicia sesión en `familias.html`, genera un código **para un correo concreto**, lo comparte por un canal privado. No se envían correos desde la aplicación.
+- Adulto invitado: crea cuenta, verifica email, inicia sesión, canjea código, personaliza tienda y añade juguetes.
+- La invitación es de 40 caracteres hexadecimales de un solo uso, almacenada mediante SHA-256 y válida 14 días.
+- Datos privados: `public.stores` (propietario, contacto; visibles solo al propietario). Exposición controlada: `public.storefronts` sincronizada por trigger (solo nombre, logo, frase, slug y flag publicación).
+- Las fotografías familiares se guardan en el bucket independiente `family-media`, bajo rutas `{storeId}/logo/...` y `{storeId}/toys/{toyId}/...`. Se restringen subidas y borrados por dueño, RLS en `storage.objects`. No se modifica el bucket fundacional `toy-photos`.
+- Los juguetes solo son accesibles públicamente si la tienda está publicada y el estado no es `hidden`. El dueño puede ver los suyos incluso si están ocultos o no publicados.
+- No se activaron radar, geolocalización, conexión directa, pagos ni compras en línea. Sólo coordinación fuera de plataforma por adultos cuando corresponda.
+- Pago único futuro: antes de abrir registros comerciales, integrar comprobación de licencia de Google Play; los códigos se reservan para las pruebas privadas.
+- La tienda original `index.html`, `admin.html`, su identidad gráfica y el inventario fundador no cambian. No usar la página de familias para modificar la tienda fundadora.
+- Antes de ampliar el piloto, habilitar protección contra contraseñas filtradas, control de abusos y corroborar política de correo de Supabase Auth.
