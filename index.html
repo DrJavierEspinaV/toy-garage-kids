@@ -7,12 +7,13 @@
   <meta name="description" content="Toy Garage Kids: juguetes en busca de una nueva aventura. Catálogo familiar de segunda mano y Battle Arena.">
   <title>Toy Garage Kids · Una nueva aventura</title>
   <link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14">
-  <link rel="stylesheet" href="./css/radar.css?v=integrado-15">
+  <link rel="stylesheet" href="./css/radar.css?v=integrado-18a">
   <link rel="stylesheet" href="./css/mobile-nav.css?v=20261021-v1">
   <link rel="stylesheet" href="./css/family-entry.css?v=17b">
   <script defer src="./config.js"></script>
   <script type="module" src="./js/public.js?v=multi16"></script>
   <script defer src="./js/radar.js?v=integrado-15"></script>
+  <script type="module" src="./js/radar-network.js?v=18a"></script>
 </head>
 <body>
 
@@ -60,7 +61,7 @@
         <div class="section-kicker">03 / CONECTA TU MUNDO</div>
         <div class="tgk-radar-heading">
           <div><h2 id="tgk-radar-title">📡 TOY <span>RADAR</span></h2><p>¡Descubre tiendas familiares y juguetes que buscan nuevas aventuras!</p></div>
-          <span class="tgk-radar-status">VISTA PREVIA · V1.5</span>
+          <span class="tgk-radar-status">SIMULACIÓN + RED · V1.8</span>
         </div>
         <p class="tgk-radar-demo">🧪 Simulación: las tiendas y distancias son ficticias. No se solicita tu ubicación ni se envían invitaciones reales.</p>
         <div class="tgk-radar-grid">
@@ -85,7 +86,25 @@
             <div class="tgk-radar-safety"><strong>🛡️ Seguridad familiar</strong><p>Sin ubicación exacta de hogares ni niños. Las futuras conexiones serán solicitudes entre adultos responsables.</p></div>
           </div>
         </div>
-        <p class="tgk-radar-fine">Toy Radar está integrado como una sección experimental de esta tienda. La red multifamiliar y las conexiones reales todavía no están activas.</p>
+        <section id="tgkLiveRadar" class="tgk-radar-real" aria-labelledby="tgkLiveTitle">
+          <div class="tgk-radar-real-header">
+            <div><span class="section-kicker">RED FAMILIAR · PILOTO V1.8</span>
+              <h3 id="tgkLiveTitle">🏪 Explora tiendas reales</h3>
+              <p>Solo aparecen tiendas publicadas y autorizadas por sus administradores adultos. La búsqueda es por comuna, no por distancia exacta.</p>
+            </div>
+            <span class="tgk-radar-real-label">PILOTO REAL</span>
+          </div>
+          <div class="tgk-radar-real-controls">
+            <label for="tgkRadarArea">Comuna</label>
+            <select id="tgkRadarArea"><option value="">Selecciona una comuna...</option></select>
+            <button id="tgkRadarRealRefresh" type="button">↻ Actualizar</button>
+          </div>
+          <p class="tgk-radar-real-note">La animación de 500 m, 1 km y 3 km de arriba sigue siendo ficticia. Aquí no se utiliza GPS ni se muestran domicilios.</p>
+          <div id="tgkRadarRealResults" class="tgk-radar-real-results" aria-live="polite"></div>
+          <p id="tgkRadarRealStatus" class="tgk-radar-real-feedback" role="status">Selecciona una comuna para ver las tiendas participantes.</p>
+          <p class="tgk-radar-real-actions">¿Quieres participar? <a href="./familias.html#registro">Crea tu tienda con invitación</a> y activa Toy Radar desde tu panel.</p>
+        </section>
+        <p class="tgk-radar-fine">La red real funciona por comunas elegidas voluntariamente y requiere autorización de adultos; los radios gráficos siguen siendo de demostración.</p>
       </div>
     </section>
     <section id="como-funciona" class="how-section page-shell"><div class="section-kicker">03 / JUGAR + REUTILIZAR</div><h2>¿CÓMO <span>FUNCIONA?</span></h2><div class="steps"><div class="step"><b>01</b><span>📱</span><h3>Escanea y explora</h3><p>Encuentra los juguetes disponibles en el catálogo.</p></div><div class="step"><b>02</b><span>💖</span><h3>Elige tus favoritos</h3><p>Agrégalos a tu selección para consultar por ellos.</p></div><div class="step"><b>03</b><span>🤝</span><h3>Coordina con un adulto</h3><p>Las reservas, pagos y entregas son supervisados.</p></div></div></section>
