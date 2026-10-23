@@ -4,7 +4,7 @@ const SITE_ROOT=new URL('../',import.meta.url);
 // La confirmación por correo NUNCA debe regresar a localhost, aunque la prueba se abra desde allí.
 const AUTH_REDIRECT_URL=window.TGK_CONFIG?.authRedirectUrl || 'https://drjavierespinav.github.io/toy-garage-kids/mi-tienda/';
 const standalone=document.body.dataset.appMode==='standalone';
-const ui={auth:$('authPane'),account:$('accountPane'),redeem:$('redeemPane'),founder:$('founderInvitePane'),work:$('familyWorkspace'),radar:$('radarAdminPane')};
+const ui={auth:$('authPane'),account:$('accountPane'),redeem:$('redeemPane'),founder:$('founderInvitePane'),work:$('familyWorkspace'),radar:$('radarAdminPane'),poster:$('posterSettingsPane')};
 let client=null,user=null,store=null,toys=[],saving=false;
 const founderId='d4549710-8c53-4901-bbee-f70fdb060f03';
 function alertMsg(text,err=false){const n=$('familyAlert');n.textContent=text;n.dataset.error=String(err);}
@@ -28,11 +28,52 @@ function focusAuthenticatedPanel(){
   requestAnimationFrame(()=>$('accountPane')?.scrollIntoView({block:'start'}));
  }
 }
+/* V2.4: afiche editable del adulto propietario, guardado por RLS solo en su tienda. */
+const DEFAULT_POSTER=Object.freeze({
+ headline:'MIS JUGUETES BUSCAN NUEVAS AVENTURAS',
+ story:'Han sido parte de momentos muy bonitos y ahora están listos para seguir jugando.',
+ closing:'Quizás sus próximas aventuras están contigo.',
+ cta:'Escanea el QR y conócelos.'
+});
+const POSTER_MAX={headline:75,story:180,closing:100,cta:85};
+function fillPosterSettings(){
+ if(!store)return;
+ const form=$('posterSettingsForm'),current=store.poster_copy||DEFAULT_POSTER;
+ for(const k of Object.keys(DEFAULT_POSTER))form.elements[k].value=String(current[k]||DEFAULT_POSTER[k]);
+ const link=$('posterOpenPreview');
+ link.href=store.is_published?new URL('afiche-tienda.html?slug='+encodeURIComponent(store.slug),SITE_ROOT).href:'#';
+ link.setAttribute('aria-disabled',String(!store.is_published));
+ link.title=store.is_published?'Ver el afiche de mi tienda':'Primero publica la tienda para generar su QR público';
+}
+$('posterRestoreCopy').addEventListener('click',()=>{
+ const form=$('posterSettingsForm');
+ for(const [key,value] of Object.entries(DEFAULT_POSTER))form.elements[key].value=value;
+ alertMsg('Texto sugerido recuperado en el formulario. Pulsa «Guardar texto del afiche» para aplicar los cambios.');
+});
+$('posterSettingsForm').addEventListener('submit',async event=>{
+ event.preventDefault();if(!client||!user||!store||saving)return;
+ const form=event.currentTarget,poster_copy={};
+ try{
+  for(const key of Object.keys(DEFAULT_POSTER)){
+   const value=String(form.elements[key].value||'').trim();
+   if(value.length<10||value.length>POSTER_MAX[key])throw Error('Revisa el campo '+key+': de 10 a '+POSTER_MAX[key]+' caracteres.');
+   poster_copy[key]=value;
+  }
+  saving=true;setBusy(form,true);
+  const {data,error}=await client.from('stores').update({poster_copy}).eq('id',store.id)
+   .select('id,poster_copy').single();
+  if(error)throw error;
+  store.poster_copy=data.poster_copy;
+  alertMsg('¡Afiche guardado! Puedes abrir la vista previa y descargarlo como PDF desde Imprimir.');
+ }catch(err){alertMsg('No se pudo guardar el texto del afiche: '+errorText(err),true);}
+ finally{saving=false;setBusy(form,false);}
+});
+
 function configureFounderDashboard(){
  const link=(id,relative)=>{const element=$(id);if(element)element.href=new URL(relative,SITE_ROOT).href;};
  link('founderEditLink','admin.html');
  link('founderCatalogLink','index.html');
- link('founderPosterLink','afiche.html');
+ link('founderPosterLink','afiche-tienda.html?slug=cristobal-isidora');
  link('founderInviteLink','familias.html#invitar');
  const brandLogo=$('founderLogo');brandLogo.src=new URL('assets/toy-garage-kids-logo.webp',SITE_ROOT).href;
  if($('headerPublicStore')){$('headerPublicStore').href=new URL('index.html',SITE_ROOT).href;$('headerPublicStore').hidden=false;}
@@ -53,7 +94,7 @@ async function refreshSession(){
  const {data,error}=await client.auth.getUser();
  user=error?null:data.user;
  ui.auth.hidden=!!user;ui.account.hidden=!user;
- ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;ui.radar.hidden=true;
+ ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;ui.radar.hidden=true;ui.poster.hidden=true;
  $('founderDashboard').hidden=true;$('invitedDashboard').hidden=true;store=null;
  document.body.classList.toggle('family-signed-in',!!user);
  const headerAccount=$('headerMyAccount');
@@ -61,13 +102,15 @@ async function refreshSession(){
  for(const name of ['headerPublicStore','headerManageStore'])if($(name))$(name).hidden=true;
  if(!user){if(location.hash==='#registro')requestAnimationFrame(()=>$('registro')?.scrollIntoView({block:'start'}));return;}
  $('familySignedUser').textContent='Adulto responsable: '+(user.email||'sesión activa');
- const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in,theme_preset').eq('owner_user_id',user.id).maybeSingle();
+ const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in,theme_preset,poster_copy').eq('owner_user_id',user.id).maybeSingle();
  if(storeError){alertMsg('No se pudo comprobar tu tienda: '+storeError.message,true);return;}
  store=owned;
  const {data:admin}=await client.from('admins').select('user_id').eq('user_id',user.id).maybeSingle();
  const isFounder=!!admin && store?.id===founderId;
  ui.founder.hidden=!isFounder||standalone;
  ui.radar.hidden=!store;
+ ui.poster.hidden=!store;
+ if(store)fillPosterSettings();
  if(isFounder){
    configureFounderDashboard();
    $('founderDashboard').hidden=false;
@@ -201,9 +244,9 @@ $('settingsForm').addEventListener('submit',async e=>{
    if(uploadError)throw uploadError;
    upd.logo_url=client.storage.from('family-media').getPublicUrl(path).data.publicUrl;
   }
-  const {data,error}=await client.from('stores').update(upd).eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in,theme_preset').single();
+  const {data,error}=await client.from('stores').update(upd).eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in,theme_preset,poster_copy').single();
   if(error)throw error;
-  store=data;form.elements.logo.value='';fillSettings();configureInvitedDashboard();alertMsg('Tu tienda fue actualizada. '+(store.public_whatsapp_opt_in&&store.is_published?'Los visitantes pueden consultar por WhatsApp al adulto responsable.':'Tu WhatsApp no se muestra públicamente.'));
+  store=data;form.elements.logo.value='';fillSettings();fillPosterSettings();configureInvitedDashboard();alertMsg('Tu tienda fue actualizada. '+(store.public_whatsapp_opt_in&&store.is_published?'Los visitantes pueden consultar por WhatsApp al adulto responsable.':'Tu WhatsApp no se muestra públicamente.'));
  }catch(err){alertMsg('No se guardó la tienda: '+errorText(err),true);}
  finally{saving=false;setBusy(form,false);}
 });
@@ -292,7 +335,7 @@ $('radarSettingsForm').addEventListener('submit',async e=>{
   if(optIn&&!store.is_published)throw Error('Primero publica tu catálogo en «Personalizar tienda».');
   if(optIn&&!area)throw Error('Selecciona una comuna para aparecer en Toy Radar.');
   const {data,error}=await client.from('stores').update({radar_opt_in:optIn,radar_area_id:area})
-   .eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in,theme_preset').single();
+   .eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in,theme_preset,poster_copy').single();
   if(error)throw error;
   store=data;
   $('radarAdminState').textContent=optIn?'Participación activada. Tu tienda aparecerá en la comuna elegida.':'Participación desactivada. Tu tienda deja de aparecer en Toy Radar.';

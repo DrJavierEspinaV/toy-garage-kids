@@ -2,9 +2,9 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#171a48"><title>Mi Tienda · Tu tienda familiar</title>
 <meta name="description" content="Aplicación familiar independiente: administra tu catálogo de juguetes desde tu celular.">
-<link rel="stylesheet" href="../css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="../css/familias.css?v=23-themes"><link rel="stylesheet" href="./app.css?v=22-founder-panel">
+<link rel="stylesheet" href="../css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="../css/familias.css?v=24-poster"><link rel="stylesheet" href="./app.css?v=22-founder-panel">
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./icon.svg"><script defer src="../config.js"></script><script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<script type="module" src="../js/familias.js?v=23b-themes"></script><script defer src="./install.js?v=19"></script></head>
+<script type="module" src="../js/familias.js?v=24-poster"></script><script defer src="./install.js?v=19"></script></head>
 <body class="family-body" data-app-mode="standalone">
 <header class="family-header"><span class="family-brand">🧸 <span>MI TIENDA<small>Un negocio familiar, un espacio propio</small></span></span><nav class="family-header-links" aria-label="Navegación de mi cuenta"><a id="headerPublicStore" href="#" hidden>🏠 Ver tienda</a><a id="headerManageStore" href="#" hidden>🧸 Panel</a><a class="family-back" id="headerMyAccount" href="#acceso">🔑 Ingresar</a></nav></header>
 <main class="family-shell">
@@ -31,6 +31,7 @@
  <nav class="family-dashboard-grid" aria-label="Accesos de administración de la tienda fundadora">
   <a id="founderEditLink" class="family-dashboard-card family-dashboard-card-primary" href="#"><span>🧸</span><strong>Administrar juguetes</strong><small>Ingresar productos, imágenes, precios y estados</small></a>
   <a id="founderCatalogLink" class="family-dashboard-card" href="#"><span>🏠</span><strong>Ver tienda pública</strong><small>Volver a Toy Garage Kids</small></a>
+  <a class="family-dashboard-card" href="#posterSettingsPane"><span>✏️</span><strong>Editar afiche</strong><small>Cambiar los textos infantiles</small></a>
   <a id="founderPosterLink" class="family-dashboard-card" href="#"><span>🖨️</span><strong>Imprimir afiche QR</strong><small>Promocionar la tienda fundadora</small></a>
   <a id="founderInviteLink" class="family-dashboard-card" href="#"><span>✉️</span><strong>Invitar familias</strong><small>Códigos exclusivos del piloto fundador</small></a>
   <a class="family-dashboard-card" href="#radarAdminPane"><span>📡</span><strong>Gestionar Toy Radar</strong><small>Comuna, participación y solicitudes</small></a>
@@ -48,11 +49,23 @@
   <a class="family-dashboard-card family-dashboard-card-primary" href="#toyForm"><span>🧸</span><strong>Ingresar juguetes</strong><small>Fotografías, precios, estado y descripción</small></a>
   <a class="family-dashboard-card" href="#settingsForm"><span>🎨</span><strong>Personalizar tienda</strong><small>Nombre, logo y datos públicos</small></a>
   <a id="invitedCatalogLink" class="family-dashboard-card" href="#" target="_blank" rel="noopener"><span>🏠</span><strong>Ver mi catálogo</strong><small>Página que ven los clientes</small></a>
+  <a class="family-dashboard-card" href="#posterSettingsPane"><span>✏️</span><strong>Editar mi afiche</strong><small>Escribir mis propias frases</small></a>
   <a id="invitedPosterLink" class="family-dashboard-card" href="#" target="_blank" rel="noopener"><span>🖨️</span><strong>Mi afiche y QR</strong><small>Imprimir material para promocionar</small></a>
   <a class="family-dashboard-card" href="#radarAdminPane"><span>📡</span><strong>Mi Toy Radar</strong><small>Participación y conexiones entre adultos</small></a>
  </nav>
 </section>
 
+<section id="posterSettingsPane" class="family-panel family-area" hidden>
+  <div class="family-row-between"><div><h2>🖨️ Editar mi afiche QR</h2><p>Juguetes usados que buscan nuevas aventuras. Personaliza el mensaje de tu pequeña feria familiar; el logo y el nombre se incorporan automáticamente.</p></div><span class="family-counter">TEXTO EDITABLE</span></div>
+  <form id="posterSettingsForm" class="family-poster-form">
+    <label>Título principal<textarea name="headline" rows="2" minlength="10" maxlength="75" required></textarea></label>
+    <label>La historia de mis juguetes<textarea name="story" rows="3" minlength="10" maxlength="180" required></textarea></label>
+    <label>Invitación especial<textarea name="closing" rows="2" minlength="10" maxlength="100" required></textarea></label>
+    <label>Frase junto al QR<input name="cta" minlength="10" maxlength="85" required></label>
+    <div class="family-poster-actions"><button type="submit" class="family-primary">💾 Guardar texto del afiche</button><button id="posterRestoreCopy" type="button" class="family-secondary">↺ Restaurar frase sugerida</button><a id="posterOpenPreview" class="family-secondary" href="#" target="_blank" rel="noopener">🖨️ Ver afiche / PDF</a></div>
+    <p class="family-help">La leyenda «Feria de juguetes usados y creaciones familiares» permanece visible para explicar la actividad. El código QR no cambia cuando modificas el texto.</p>
+  </form>
+</section>
 <section id="founderInvitePane" hidden><form id="inviteForm"><input type="email" name="email"><button type="submit">Invitar</button></form><div id="inviteOutput" hidden><code id="inviteCode"></code><button type="button" id="copyInvite"></button><button type="button" id="copyInviteMessage"></button></div></section>
 <section class="family-panel family-area" id="radarAdminPane" hidden>
   <div class="family-row-between"><div><h2>📡 Mi Toy Radar · V1.8</h2><p>Participación voluntaria entre adultos. Se comparte solo la comuna que eliges, nunca tu dirección ni GPS.</p></div><span class="family-counter">PILOTO REAL</span></div>
@@ -87,6 +100,7 @@
   <small>Estos temas conservan el estilo de juguetes y aventuras de la plataforma.</small>
 </label><div class="family-theme-preview" id="familyThemePreview" data-theme="galaxia"><span>✦ JUGUETES CON HISTORIA ✦</span><strong>Tu tienda · ¡Mil aventuras!</strong><small>Vista previa del color del encabezado</small></div><label>Logotipo o imagen (opcional)<input name="logo" type="file" accept="image/jpeg,image/png,image/webp"></label><img id="familyLogoPreview" class="family-logo-preview" alt="Logo actual" hidden><label>WhatsApp de contacto para consultas (opcional)<input name="contact_whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="Ej. 56912345678" maxlength="20"><small>Este número no será público a menos que lo autorices expresamente.</small></label><label class="family-check"><input type="checkbox" name="public_whatsapp_opt_in"><span>Autorizo publicar este WhatsApp del adulto responsable para recibir consultas sobre productos. Puedo ocultarlo cuando quiera.</span></label><label class="family-check"><input name="is_published" type="checkbox"><span>Publicar mi catálogo para visitantes con enlace. No activa Toy Radar ni muestra mi domicilio.</span></label><button type="submit" class="family-primary">Guardar mi tienda</button></form></section>
   <section class="family-panel"><h2>📱 Mi código QR</h2><p>Tu propio enlace y QR. El QR funciona cuando la tienda está publicada.</p><div class="family-qr" id="familyQr"></div><a class="family-textlink" id="familyStoreLink" href="#" target="_blank" rel="noopener"></a><button id="copyStoreLink" class="family-secondary" type="button">Copiar enlace</button>
+ <a href="#posterSettingsPane" class="family-secondary">✏️ Editar texto del afiche</a>
  <a id="printStorePoster" class="family-primary family-poster-button" href="#" target="_blank" rel="noopener">🖨️ Crear afiche con mi QR</a>
  <p id="posterPublishHint" class="family-help" hidden>Para imprimir un afiche funcional debes publicar primero el catálogo.</p><p class="family-help">No compartas información de niños ni direcciones en el nombre, logo o fotografías.</p></section>
  </div>

@@ -81,3 +81,14 @@
 .family-theme-preview[data-theme="menta"]{background:linear-gradient(115deg,#145e62,#248a75)}
 .family-theme-preview[data-theme="sol"]{background:linear-gradient(115deg,#874019,#d67c20)}
 .family-theme-preview[data-theme="oceano"]{background:linear-gradient(115deg,#173f80,#2488b8)}
+
+/* Editor de texto QR - compartido por panel fundador e invitadas */
+.family-poster-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:17px}
+.family-poster-form label{display:grid;gap:7px;font-size:13px;color:#3d366c;font-weight:900}
+.family-poster-form textarea,.family-poster-form input{box-sizing:border-box;width:100%;padding:11px 13px;border:1px solid #d7d0ed;border-radius:11px;background:#fff;color:#29244e;font:700 14px/1.45 Nunito,Arial,sans-serif;resize:vertical}
+.family-poster-form textarea:focus-visible,.family-poster-form input:focus-visible{outline:3px solid #d9c9ff}
+.family-poster-actions{grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:9px}
+.family-poster-actions a{display:inline-flex;align-items:center;padding:10px 14px;text-decoration:none}
+.family-poster-actions a[aria-disabled="true"]{pointer-events:none;opacity:.45}
+.family-poster-form>.family-help{grid-column:1/-1}
+@media(max-width:640px){.family-poster-form{grid-template-columns:1fr}}
