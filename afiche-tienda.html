@@ -1,47 +1,54 @@
 <!doctype html>
 <html lang="es">
 <head>
- <meta charset="utf-8">
- <meta name="viewport" content="width=device-width,initial-scale=1">
- <meta name="theme-color" content="#151c50">
- <meta name="description" content="Afiche imprimible con código QR de una tienda familiar independiente.">
- <title>Afiche QR · Mi Tienda Familiar</title>
- <link rel="stylesheet" href="./css/flyer-family.css?v=20261023-v1">
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="theme-color" content="#1b2057">
+ <meta name="description" content="Afiche QR de una feria familiar de juguetes usados y creaciones infantiles.">
+ <title>Mi afiche QR · Feria de juguetes</title>
+ <link rel="stylesheet" href="./css/flyer-family.css?v=24-posters">
  <script defer src="./config.js"></script>
  <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
- <script type="module" src="./js/flyer-family.js?v=20261023-v1"></script>
+ <script type="module" src="./js/flyer-family.js?v=24-posters"></script>
 </head>
-<body>
- <header class="flyer-controls" aria-label="Herramientas del afiche">
-   <a id="backToStore" class="flyer-button flyer-secondary" href="./mi-tienda/">← Volver a mi tienda</a>
-   <span class="flyer-controls-label">AFICHE A4 · TU TIENDA FAMILIAR</span>
-   <button id="printFlyer" class="flyer-button flyer-primary" type="button" disabled>🖨️ Imprimir / Guardar PDF</button>
+<body data-theme="galaxia">
+ <header class="flyer-controls">
+  <a id="backToStore" class="flyer-button flyer-secondary" href="./index.html">← Ver tienda</a>
+  <a class="flyer-button flyer-secondary" href="./mi-tienda/#posterSettingsPane">✏️ Editar texto (propietario)</a>
+  <button id="printFlyer" class="flyer-button flyer-primary" type="button" disabled>🖨️ Imprimir / Guardar PDF</button>
  </header>
- <p id="flyerNotice" class="flyer-notice" role="status" aria-live="polite">Cargando tu tienda y preparando el código QR...</p>
- <main class="flyer-print-area" aria-label="Afiche para imprimir">
-   <article id="flyer" class="flyer-sheet" hidden>
-      <div class="flyer-top-stars" aria-hidden="true">✦ ⭐ ✦ ⭐ ✦</div>
-      <div class="flyer-edition">♻️ JUGUETES CON HISTORIA · NUEVAS AVENTURAS</div>
-      <div class="flyer-brand-frame">
-        <img id="flyerLogo" alt="Logotipo de la tienda familiar" hidden>
-        <span id="flyerFallback" class="flyer-logo-fallback" aria-hidden="true">🧸</span>
-      </div>
-      <div class="flyer-kicker">✦ TE INVITAMOS A NUESTRA TIENDA ✦</div>
-      <h1 id="flyerTitle">MI TIENDA FAMILIAR</h1>
-      <p class="flyer-subtitle" id="flyerTagline">¡Cada juguete merece una nueva aventura!</p>
-      <div class="flyer-icons" aria-hidden="true">🦖 &nbsp; 🧸 &nbsp; 🚀 &nbsp; 🏎️ &nbsp; 🎲</div>
-      <div class="flyer-qr-container">
-        <div id="flyerQr" class="flyer-qr-code" aria-label="Código QR para abrir el catálogo"></div>
-        <p class="flyer-scan">📱 ESCANEA Y DESCUBRE</p>
-        <p class="flyer-qr-detail">¡Mira nuestro catálogo de juguetes!</p>
-      </div>
-      <p id="flyerCatalogUrl" class="flyer-qr-url"></p>
-      <div class="flyer-bottom-banner">
-        <strong>¡UN JUGUETE, MIL AVENTURAS!</strong>
-        <small>Catálogo gratuito · Compras y entregas coordinadas entre adultos.</small>
-      </div>
-   </article>
+ <p id="flyerNotice" class="flyer-notice" role="status" aria-live="polite">Preparando tu afiche y su código QR...</p>
+ <main class="flyer-print-area">
+  <article id="flyer" class="flyer-sheet" hidden aria-label="Afiche familiar de juguetes usados">
+   <div class="flyer-starline" aria-hidden="true">✦ ⭐ ✦ ⭐ ✦</div>
+   <div class="flyer-edition">♻️ PEQUEÑA FERIA DE JUGUETES USADOS Y CREACIONES FAMILIARES ♻️</div>
+   <div class="flyer-brand">
+    <div class="flyer-brand-frame">
+     <img id="flyerLogo" alt="Logo de la tienda" hidden>
+     <span id="flyerFallback" class="flyer-logo-fallback" aria-hidden="true">🧸</span>
+    </div>
+    <div class="flyer-brand-info">
+     <span class="flyer-kicker">✦ TE INVITAMOS A NUESTRA TIENDA ✦</span>
+     <h2 id="flyerTitle">MI TIENDA FAMILIAR</h2>
+    </div>
+   </div>
+   <div class="flyer-story-content">
+    <h1 id="flyerHeadline">MIS JUGUETES BUSCAN NUEVAS AVENTURAS</h1>
+    <p id="flyerStory">Han sido parte de momentos muy bonitos y ahora están listos para seguir jugando.</p>
+    <p id="flyerClosing">Quizás sus próximas aventuras están contigo.</p>
+   </div>
+   <div class="flyer-toys" aria-hidden="true">🦖 &nbsp; 🧸 &nbsp; 🚀 &nbsp; 🏎️ &nbsp; 🎲</div>
+   <div class="flyer-qr-container">
+    <div id="flyerQr" class="flyer-qr-code" aria-label="Código QR del catálogo público"></div>
+    <p id="flyerCTA" class="flyer-scan">Escanea el QR y conócelos.</p>
+    <span class="flyer-qr-small">📱 ¡Mira nuestros juguetes disponibles!</span>
+   </div>
+   <p id="flyerCatalogUrl" class="flyer-qr-url"></p>
+   <div class="flyer-bottom">
+    <strong>💛 ¡QUE SIGA LA AVENTURA!</strong>
+    <small>Juguetes con historia, listos para volver a jugar · Las compras y entregas se coordinan entre adultos.</small>
+   </div>
+  </article>
  </main>
- <p class="flyer-help">Selecciona «Imprimir / Guardar PDF» y elige impresora o «Guardar como PDF». Configura papel A4, orientación vertical y gráficos de fondo activados. Prueba el QR antes de compartir el afiche.</p>
+ <p class="flyer-help">Para imprimir, pulsa «Imprimir / Guardar PDF» y selecciona A4, orientación vertical y gráficos de fondo. Comprueba que el QR abra tu tienda antes de repartir el afiche.</p>
 </body>
 </html>
