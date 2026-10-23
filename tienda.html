@@ -4,13 +4,13 @@
 <title>Mi tienda familiar</title>
 <link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14">
 <link rel="stylesheet" href="./css/familias.css?v=18a">
-<link rel="stylesheet" href="./css/radar.css?v=integrado-18a">
+<link rel="stylesheet" href="./css/radar.css?v=real-v23">
 <link rel="stylesheet" href="./css/mobile-nav.css?v=20261021-v1">
 <link rel="stylesheet" href="./css/tienda-public.css?v=23-themes">
 <script defer src="./config.js"></script>
 <script type="module" src="./js/tienda.js?v=23-themes"></script>
-<script defer src="./js/radar.js?v=integrado-15"></script>
-<script type="module" src="./js/radar-network.js?v=18a"></script>
+
+<script type="module" src="./js/radar-network.js?v=23-real-list"></script>
 </head>
 <body class="family-body family-public-page">
 <div class="top-strip">
@@ -94,58 +94,44 @@
     </div>
   </section>
     <section id="radar" class="tgk-radar" aria-labelledby="tgk-radar-title">
-      <div class="page-shell">
-        <div class="section-kicker">03 / CONECTA TU MUNDO</div>
-        <div class="tgk-radar-heading">
-          <div><h2 id="tgk-radar-title">📡 TOY <span>RADAR</span></h2><p>¡Descubre tiendas familiares y juguetes que buscan nuevas aventuras!</p></div>
-          <span class="tgk-radar-status">SIMULACIÓN + RED · V1.8</span>
+  <div class="page-shell">
+    <div class="section-kicker">03 / CONECTA TU MUNDO</div>
+    <div class="tgk-radar-heading">
+      <div><h2 id="tgk-radar-title">📡 TOY <span>RADAR</span></h2>
+       <p>¡Conoce tiendas familiares que comparten juguetes con una nueva aventura!</p></div>
+      <span class="tgk-radar-status">RED REAL · PILOTO</span>
+    </div>
+    <p class="tgk-radar-demo">🛡️ Tiendas reales publicadas por adultos. La búsqueda funciona <strong>por comuna elegida voluntariamente</strong>; no compartimos GPS, direcciones ni distancias hasta los hogares.</p>
+    <div class="tgk-radar-grid">
+      <div class="tgk-radar-panel">
+        <div class="tgk-radar-panel-head"><h3>📡 Nuestro radar</h3><p>Ilustración del concepto de búsqueda. Los radios no determinan los resultados actuales.</p></div>
+        <div class="tgk-radar-ranges" role="group" aria-label="Escala ilustrativa (no filtra tiendas reales)">
+          <button type="button" data-radar-radius="0.5" aria-pressed="false" title="Escala visual, sin filtro real">500 m</button>
+          <button type="button" data-radar-radius="1" aria-pressed="true" title="Escala visual, sin filtro real">1 km</button>
+          <button type="button" data-radar-radius="3" aria-pressed="false" title="Escala visual, sin filtro real">3 km</button>
         </div>
-        <p class="tgk-radar-demo">🧪 Simulación: las tiendas y distancias son ficticias. No se solicita tu ubicación ni se envían invitaciones reales.</p>
-        <div class="tgk-radar-grid">
-          <div class="tgk-radar-panel">
-            <div class="tgk-radar-panel-head"><h3>📡 Explorar tiendas</h3><p>Prueba cómo funcionaría el radio de búsqueda.</p></div>
-            <div class="tgk-radar-ranges" role="group" aria-label="Radio de búsqueda de prueba">
-              <button type="button" data-radar-radius="0.5" aria-pressed="false">500 m</button>
-              <button type="button" data-radar-radius="1" aria-pressed="true">1 km</button>
-              <button type="button" data-radar-radius="3" aria-pressed="false">3 km</button>
-            </div>
-            <div class="tgk-radar-screen" aria-label="Representación simulada de tiendas cercanas">
-              <div class="tgk-radar-center" aria-label="Tu tienda">🏠</div>
-              <div id="tgkRadarMarkers"></div>
-              <span class="tgk-radar-radius" id="tgkRadarRadiusLabel">1 KM</span>
-            </div>
-            <p class="tgk-radar-count" id="tgkRadarCount">Explorando ejemplos...</p>
-          </div>
-          <div class="tgk-radar-panel">
-            <div class="tgk-radar-panel-head"><h3>🏪 Tiendas descubiertas</h3><p>En el futuro, solo aparecerán tiendas autorizadas por un adulto.</p></div>
-            <div id="tgkRadarResults" class="tgk-radar-results" aria-live="polite"></div>
-            <p id="tgkRadarNotice" class="tgk-radar-feedback" role="status"></p>
-            <div class="tgk-radar-safety"><strong>🛡️ Seguridad familiar</strong><p>Sin ubicación exacta de hogares ni niños. Las futuras conexiones serán solicitudes entre adultos responsables.</p></div>
-          </div>
+        <div class="tgk-radar-screen" aria-label="Ilustración de radar, no representa tiendas geolocalizadas">
+          <div class="tgk-radar-center" aria-hidden="true">🏠</div>
+          <span class="tgk-radar-radius" id="tgkRadarRadiusLabel">1 KM · DEMO</span>
         </div>
-        <section id="tgkLiveRadar" class="tgk-radar-real" aria-labelledby="tgkLiveTitle">
-          <div class="tgk-radar-real-header">
-            <div><span class="section-kicker">RED FAMILIAR · PILOTO V1.8</span>
-              <h3 id="tgkLiveTitle">🏪 Explora tiendas reales</h3>
-              <p>Solo aparecen tiendas publicadas y autorizadas por sus administradores adultos. La búsqueda es por comuna, no por distancia exacta.</p>
-            </div>
-            <span class="tgk-radar-real-label">PILOTO REAL</span>
-          </div>
-          <div class="tgk-radar-real-controls">
-            <label for="tgkRadarArea">Comuna</label>
-            <select id="tgkRadarArea"><option value="">Selecciona una comuna...</option></select>
-            <button id="tgkRadarRealRefresh" type="button">↻ Actualizar</button>
-          </div>
-          <p class="tgk-radar-real-note">La animación de 500 m, 1 km y 3 km de arriba sigue siendo ficticia. Aquí no se utiliza GPS ni se muestran domicilios.</p>
-          <div id="tgkRadarRealResults" class="tgk-radar-real-results" aria-live="polite"></div>
-          <p id="tgkRadarRealStatus" class="tgk-radar-real-feedback" role="status">Selecciona una comuna para ver las tiendas participantes.</p>
-          <p class="tgk-radar-real-actions">¿Quieres participar? <a href="./familias.html#registro">Crea tu tienda con invitación</a> y activa Toy Radar desde tu panel.</p>
-        </section>
-        <p class="tgk-radar-fine">La red real funciona por comunas elegidas voluntariamente y requiere autorización de adultos; los radios gráficos siguen siendo de demostración.</p>
+        <p class="tgk-radar-count" id="tgkRadarCount">Escala visual de ejemplo. Busca tiendas reales por comuna →</p>
       </div>
-    </section>
-
-  <section id="como-funciona" class="how-section page-shell family-public-how">
+      <div class="tgk-radar-panel">
+        <div class="tgk-radar-panel-head"><h3>🏪 Tiendas reales descubiertas</h3><p>Solo participantes reales de la base de datos que autorizaron aparecer.</p></div>
+        <div class="tgk-radar-real-controls">
+          <label for="tgkRadarArea">Selecciona una comuna</label>
+          <select id="tgkRadarArea"><option value="">Elige una comuna...</option></select>
+          <button id="tgkRadarRealRefresh" type="button">↻ Buscar tiendas</button>
+        </div>
+        <div id="tgkRadarResults" class="tgk-radar-results" aria-live="polite"></div>
+        <p id="tgkRadarNotice" class="tgk-radar-feedback" role="status">Selecciona una comuna para descubrir tiendas reales.</p>
+        <div class="tgk-radar-safety"><strong>🛡️ Privacidad familiar</strong><p>Sin posiciones exactas. La conexión entre tiendas requiere una solicitud gestionada por adultos. No existe chat entre menores.</p></div>
+      </div>
+    </div>
+    <p class="tgk-radar-fine">El radar circular es ilustrativo. Los resultados a la derecha corresponden a tiendas reales publicadas y con participación voluntaria en Toy Radar.</p>
+  </div>
+</section>
+<section id="como-funciona" class="how-section page-shell family-public-how">
     <div class="section-kicker">04 / JUGAR + REUTILIZAR</div>
     <h2>¿CÓMO <span>FUNCIONA?</span></h2>
     <div class="steps">

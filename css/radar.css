@@ -65,3 +65,19 @@
 .tgk-radar-real-actions{margin-top:13px!important}
 .tgk-radar-real-actions a{font-weight:1000;color:#6346d1}
 @media(max-width:760px){.tgk-radar-real{padding:18px;margin-top:17px}.tgk-radar-real-header{flex-direction:column}.tgk-radar-real-controls{align-items:stretch;flex-direction:column}.tgk-radar-real-controls select,.tgk-radar-real-controls button{width:100%}}
+
+/* V2.3: Lista REAL en panel de tiendas descubiertas; no existen tiendas ficticias. */
+.tgk-radar-results{max-height:410px;overflow-y:auto;padding-right:2px}
+.tgk-radar-real-result{align-items:center;flex-wrap:wrap}
+.tgk-radar-store-logo{flex:0 0 50px;width:50px;height:50px;border-radius:10px;background:#f9f8ff;object-fit:contain}
+.tgk-radar-store-actions{display:flex;gap:7px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.tgk-radar-store-link{background:#efe9ff;border-radius:10px;padding:9px;color:#493386;text-decoration:none;font-size:11px;font-weight:900}
+.tgk-radar-store-actions button{cursor:pointer}
+.tgk-radar-store-actions button:disabled{opacity:.6}
+.tgk-radar-real-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:15px 0 10px}
+.tgk-radar-real-controls label{font-size:12px;font-weight:1000;color:#37335f}
+.tgk-radar-real-controls select{flex:1 1 165px;min-width:0;min-height:41px;max-width:100%;padding:8px;border-radius:10px;border:1px solid #d6d0f2;background:#fff;color:#30275e}
+.tgk-radar-real-controls button{padding:9px;border-radius:10px;border:1px solid #dcd4f5;color:#563a9f;background:#eee9ff;font-weight:900;font-size:11px;cursor:pointer}
+.tgk-radar-count{max-width:390px;line-height:1.5}
+.tgk-radar-safety{margin-top:14px}
+@media(max-width:760px){.tgk-radar-real-result .tgk-radar-store-actions{width:100%;margin-left:0}.tgk-radar-real-controls select{flex:1 1 100%}}
