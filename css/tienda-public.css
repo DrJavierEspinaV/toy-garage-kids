@@ -252,3 +252,12 @@
 .family-public-page .family-public-hero-actions .action-primary{background:var(--tgk-accent);color:#2b2459}
 .family-public-page .family-public-trustbar{border-top-color:var(--tgk-soft)}
 .family-public-page .family-product-kind{display:inline-flex;align-items:center;margin:7px 0;padding:5px 9px;border-radius:8px;background:var(--tgk-soft);color:#544276;font:900 11px Nunito,sans-serif}
+
+/* Adquisición y panel comunes a todas las tiendas */
+.family-public-page .family-public-desktop-nav .family-join-top{background:#f4edff;border:1px solid #e4d8fa;border-radius:999px;color:#5e3ca0;padding:8px 10px}
+.family-public-page .family-account-top{display:grid;place-items:center;border:1px solid #dcd1fa;background:#f7f2ff;border-radius:12px;width:34px;height:38px;text-decoration:none}
+.family-public-footer-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.family-public-footer-actions a{font-size:12px;font-weight:900;color:#59419c}
+.family-public-page .main-nav{gap:9px}
+@media(min-width:761px) and (max-width:1180px){.family-public-page .family-public-desktop-nav{gap:6px}.family-public-page .family-public-desktop-nav a{font-size:10px}.family-public-page .family-public-brand{flex-basis:250px;width:250px;max-width:250px}.family-public-page .family-public-brand-copy strong{font-size:18px}}
+@media(max-width:760px){.family-public-page .family-public-header-actions{gap:6px}.family-public-page .family-account-top{width:33px;height:36px}}

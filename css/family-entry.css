@@ -15,3 +15,8 @@
 }
 @media(max-width:790px){.tgk-family-join{flex-direction:column;align-items:stretch;padding:25px 20px;margin-inline:14px}.tgk-family-join-actions{align-items:stretch}}
 @media(max-width:760px){.tgk-family-join{margin-block:0 36px;border-radius:19px}.tgk-family-join-actions small{max-width:none}.tgk-family-join{scroll-margin-top:135px}}
+
+/* Acceso de adulto diferenciado, sin rediseñar hero fundador */
+.main-nav .tgk-account-quick{display:grid;place-items:center;min-width:35px;height:35px;padding:5px;font-size:17px;border:1px solid #e6ddff;border-radius:50%;background:#faf9ff}
+.main-nav .tgk-account-quick:hover{background:#eee8ff}
+[data-create-store][aria-disabled="true"]{opacity:.6;pointer-events:none}
