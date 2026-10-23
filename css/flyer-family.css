@@ -35,13 +35,13 @@ body[data-theme="oceano"]{--flyer-bg1:#183d7c;--flyer-bg2:#2586b4;--flyer-accent
 .flyer-logo-fallback{font-size:72px;line-height:1}
 .flyer-brand-info{min-width:0;flex:0 1 415px;text-align:left}
 .flyer-kicker{font:900 11px/1.3 Nunito,sans-serif;color:#ffeeb3;letter-spacing:.07em}
-.flyer-brand h2{font:700 36px/1.05 Fredoka,Nunito,sans-serif;color:#fff;margin:8px 0 0;overflow-wrap:anywhere}
-.flyer-story-content{width:100%;max-width:670px}
-.flyer-story-content h1{font:700 52px/1.03 Fredoka,Nunito,sans-serif;letter-spacing:-.012em;color:var(--flyer-accent);margin:21px auto 18px;overflow-wrap:anywhere;text-wrap:balance}
+.flyer-brand h2{font:700 32px/1.05 Fredoka,Nunito,sans-serif;color:#fff;margin:8px 0 0;overflow-wrap:anywhere}
+.flyer-story-content{width:100%;max-width:640px}
+.flyer-story-content h1{font:700 50px/1.03 Fredoka,Nunito,sans-serif;letter-spacing:-.012em;color:var(--flyer-accent);margin:17px auto 14px;overflow-wrap:anywhere;text-wrap:balance}
 .flyer-story-content p{overflow-wrap:anywhere}
-.flyer-story-content #flyerStory{font:800 19px/1.43 Nunito,sans-serif;color:#eeeaff;margin:0 auto 18px;max-width:615px
-.flyer-story-content #flyerClosing{font:700 31px/1.22 Fredoka,Nunito,sans-serif;color:#fff;margin:0 auto 18px;max-width:630px
-.flyer-toys{font-size:34px;line-height:1.3;margin:7px auto 16px}
+.flyer-story-content #flyerStory{font:800 19px/1.43 Nunito,sans-serif;color:#eeeaff;margin:0 auto 13px;max-width:570px}
+.flyer-story-content #flyerClosing{font:700 30px/1.24 Fredoka,Nunito,sans-serif;color:#fff;margin:0 auto 13px;max-width:580px}
+.flyer-toys{font-size:31px;line-height:1.3;margin:5px auto 12px}
 .flyer-qr-container{
  border-radius:20px;background:#fff;border:3px solid #fff;color:#2b2456;
  display:flex;align-items:center;flex-direction:column;justify-content:center;
@@ -50,7 +50,7 @@ body[data-theme="oceano"]{--flyer-bg1:#183d7c;--flyer-bg2:#2586b4;--flyer-accent
 }
 .flyer-qr-code{width:216px;height:216px;display:grid;place-items:center;overflow:hidden;background:white}
 .flyer-qr-code img,.flyer-qr-code canvas{display:block!important;width:216px!important;height:216px!important;max-width:100%}
-.flyer-scan{font:700 23px/1.15 Fredoka,Nunito,sans-serif;color:#2b2456;max-width:300px;margin:2px 0;overflow-wrap:anywhere}
+.flyer-scan{font:700 20px/1.15 Fredoka,Nunito,sans-serif;color:#2b2456;max-width:300px;margin:2px 0;overflow-wrap:anywhere}
 .flyer-qr-small{font:900 11px Nunito,sans-serif;color:#605987}
 .flyer-qr-url{font:800 11px/1.3 Nunito,sans-serif;color:#eee8ff;overflow-wrap:anywhere;max-width:620px;margin:0 auto 13px}
 .flyer-bottom{width:100%;max-width:635px;background:var(--flyer-accent);color:#2b2354;border-radius:13px;padding:10px 15px;display:flex;flex-direction:column;gap:4px}
@@ -65,15 +65,15 @@ body[data-theme="oceano"]{--flyer-bg1:#183d7c;--flyer-bg2:#2586b4;--flyer-accent
  .flyer-brand-frame{width:88px;height:81px;flex-basis:88px;border-width:4px;border-radius:12px}
  .flyer-logo-fallback{font-size:45px}
  .flyer-brand-info{flex:1}
- .flyer-brand h2{font-size:clamp(20px,5.8vw,30px)}
+ .flyer-brand h2{font-size:clamp(18px,5.2vw,28px)}
  .flyer-kicker{font-size:8px}
- .flyer-story-content h1{font-size:clamp(28px,7.4vw,43px);margin:14px auto}
+ .flyer-story-content h1{font-size:clamp(27px,7.1vw,42px);margin:10px auto}
  .flyer-story-content #flyerStory{font-size:15px}
- .flyer-story-content #flyerClosing{font-size:clamp(21px,5vw,28px)}
- .flyer-toys{font-size:25px}
+ .flyer-story-content #flyerClosing{font-size:clamp(20px,4.9vw,27px)}
+ .flyer-toys{font-size:23px}
  .flyer-qr-code,.flyer-qr-code img,.flyer-qr-code canvas{width:184px!important;height:184px!important}
  .flyer-qr-container{max-width:100%;padding:11px}
- .flyer-scan{font-size:19px}
+ .flyer-scan{font-size:17px}
  .flyer-bottom strong{font-size:20px}
 }
 @media print{
@@ -91,13 +91,13 @@ body[data-theme="oceano"]{--flyer-bg1:#183d7c;--flyer-bg2:#2586b4;--flyer-accent
  .flyer-edition{font-size:11px!important;margin:14px 0 8px!important}
  .flyer-brand{min-height:115px!important;gap:19px!important;margin:5px 0 10px!important}
  .flyer-brand-frame{width:130px!important;height:113px!important;flex-basis:130px!important;border-width:5px!important}
- .flyer-brand h2{font-size:34px!important}
+ .flyer-brand h2{font-size:30px!important}
  .flyer-kicker{font-size:11px!important}
- .flyer-story-content h1{font-size:49px!important;margin:20px auto 15px!important}
+ .flyer-story-content h1{font-size:47px!important;margin:14px auto 11px!important}
  .flyer-story-content #flyerStory{font-size:18px!important}
- .flyer-story-content #flyerClosing{font-size:29px!important}
- .flyer-toys{font-size:32px!important}
+ .flyer-story-content #flyerClosing{font-size:28px!important}
+ .flyer-toys{font-size:29px!important}
  .flyer-qr-code,.flyer-qr-code img,.flyer-qr-code canvas{width:57mm!important;height:57mm!important}
- .flyer-scan{font-size:23px!important}
+ .flyer-scan{font-size:19px!important}
  .flyer-bottom strong{font-size:22px!important}
 }
