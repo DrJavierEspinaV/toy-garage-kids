@@ -90,3 +90,15 @@
  .family-public-page .family-public-brand-copy strong{max-width:112px}
  .family-public-page .family-public-admin-link{padding:8px}
 }
+/* V2.0: avisos de venta, tamaños de fotografias, carrito y botones */
+.family-public-card-actions .family-public-unavailable{padding:10px;border-radius:9px;background:#f4f0ff;color:#706a97;font-size:11px;font-weight:900}
+.family-public-detail-price{color:#5d38bd;font:700 29px Fredoka,sans-serif}
+.family-public-no-photo{display:grid;place-items:center;min-height:220px;border-radius:14px;background:#f1edff;font-size:85px}
+.family-public-page .card-price span{display:block}
+.family-public-page .card-desc{min-height:28px}
+.family-public-page #catalogGrid .toy-card .card-visual .grade-badge{z-index:2}
+.family-public-page #catalogGrid .card-visual{aspect-ratio:5/4}
+.family-public-page #catalogGrid .family-public-photo{object-fit:cover}
+.family-public-dialog .action{width:100%}
+.family-public-cart-item p{margin:4px 0;font-size:13px;color:#686d8d}
+.family-public-card-actions button:focus-visible,.family-public-dialog button:focus-visible{outline:3px solid #33cbeb;outline-offset:3px}

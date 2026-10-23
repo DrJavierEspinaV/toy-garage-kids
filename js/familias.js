@@ -26,7 +26,7 @@ async function refreshSession(){
  ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;ui.radar.hidden=true;store=null;
  if(!user){if(location.hash==='#registro')requestAnimationFrame(()=>$('registro')?.scrollIntoView({block:'start'}));return;}
  $('familySignedUser').textContent='Adulto responsable: '+(user.email||'sesión activa');
- const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id').eq('owner_user_id',user.id).maybeSingle();
+ const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in').eq('owner_user_id',user.id).maybeSingle();
  if(storeError){alertMsg('No se pudo comprobar tu tienda: '+storeError.message,true);return;}
  store=owned;
  const {data:admin}=await client.from('admins').select('user_id').eq('user_id',user.id).maybeSingle();
@@ -106,6 +106,8 @@ $('redeemForm').addEventListener('submit',async e=>{
 function fillSettings(){
  const f=$('settingsForm');f.elements.display_name.value=store.display_name;f.elements.tagline.value=store.tagline||'';
  f.elements.is_published.checked=store.is_published;
+ f.elements.contact_whatsapp.value=store.contact_whatsapp||'';
+ f.elements.public_whatsapp_opt_in.checked=!!store.public_whatsapp_opt_in;
  const image=$('familyLogoPreview'),safe=safeImageUrl(store.logo_url);
  image.hidden=!safe;if(safe)image.src=safe;
  $('myStoreTitle').textContent=store.display_name;
@@ -118,7 +120,14 @@ function fillSettings(){
 $('settingsForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!store||saving)return;const form=e.currentTarget;setBusy(form,true);saving=true;
  try{
-  const v=new FormData(form);const upd={display_name:String(v.get('display_name')).trim(),tagline:String(v.get('tagline')).trim(),is_published:v.get('is_published')==='on'};
+  const v=new FormData(form);
+  const phone=String(v.get('contact_whatsapp')||'').replace(/\D/g,'');
+  const visibleContact=v.get('public_whatsapp_opt_in')==='on';
+  if(phone && (phone.length<8||phone.length>15))throw Error('WhatsApp inválido: indica de 8 a 15 dígitos con código de país.');
+  if(visibleContact && !phone)throw Error('Ingresa el WhatsApp del adulto antes de habilitar las consultas.');
+  const upd={display_name:String(v.get('display_name')).trim(),
+    tagline:String(v.get('tagline')).trim(),is_published:v.get('is_published')==='on',
+    contact_whatsapp:phone,public_whatsapp_opt_in:visibleContact};
   if(upd.display_name.length<2||upd.display_name.length>90)throw Error('Nombre de tienda inválido.');
   if(upd.tagline.length>220)throw Error('La descripción es demasiado larga (máximo 220 caracteres).');
   const file=form.elements.logo.files[0];
@@ -129,9 +138,9 @@ $('settingsForm').addEventListener('submit',async e=>{
    if(uploadError)throw uploadError;
    upd.logo_url=client.storage.from('family-media').getPublicUrl(path).data.publicUrl;
   }
-  const {data,error}=await client.from('stores').update(upd).eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id').single();
+  const {data,error}=await client.from('stores').update(upd).eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in').single();
   if(error)throw error;
-  store=data;form.elements.logo.value='';fillSettings();alertMsg('Tu tienda fue actualizada correctamente.');
+  store=data;form.elements.logo.value='';fillSettings();alertMsg('Tu tienda fue actualizada. '+(store.public_whatsapp_opt_in&&store.is_published?'Los visitantes pueden consultar por WhatsApp al adulto responsable.':'Tu WhatsApp no se muestra públicamente.'));
  }catch(err){alertMsg('No se guardó la tienda: '+errorText(err),true);}
  finally{saving=false;setBusy(form,false);}
 });
@@ -219,7 +228,7 @@ $('radarSettingsForm').addEventListener('submit',async e=>{
   if(optIn&&!store.is_published)throw Error('Primero publica tu catálogo en «Personalizar tienda».');
   if(optIn&&!area)throw Error('Selecciona una comuna para aparecer en Toy Radar.');
   const {data,error}=await client.from('stores').update({radar_opt_in:optIn,radar_area_id:area})
-   .eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id').single();
+   .eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in').single();
   if(error)throw error;
   store=data;
   $('radarAdminState').textContent=optIn?'Participación activada. Tu tienda aparecerá en la comuna elegida.':'Participación desactivada. Tu tienda deja de aparecer en Toy Radar.';
