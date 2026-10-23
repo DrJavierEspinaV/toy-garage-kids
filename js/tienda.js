@@ -201,7 +201,9 @@ async function main(){
   .select('id,title,description,condition_note,price,status,category,grade,photos,emoji,sale_mode,battle_base,created_at')
   .eq('store_id',shop.store_id).neq('status','hidden').order('created_at',{ascending:false});
  if(itemsError)return error('No se pudo cargar el inventario de esta familia.');
- store=shop;toys=items||[];$('publicStore').hidden=false;$('storeError').hidden=true;
+ store=shop;toys=items||[];
+ $('shareBasket').textContent=String(store.contact_whatsapp||'').trim()?'📲 Consultar por WhatsApp':'📩 Compartir consulta de compra';
+ $('publicStore').hidden=false;$('storeError').hidden=true;
  document.title=store.display_name+' · Mi Tienda';
  $('publicTitle').textContent=store.display_name;
  $('storeHeaderTitle').textContent=store.display_name;
