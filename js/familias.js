@@ -20,6 +20,14 @@ async function init(){
  await refreshSession();
 }
 
+function focusAuthenticatedPanel(){
+ // El formulario con #acceso se oculta tras autenticar; mostrar el panel visible.
+ if(location.hash==='#acceso'||location.hash==='#registro'){
+  const target=new URL(location.href);target.hash='accountPane';
+  history.replaceState(null,'',target.href);
+  requestAnimationFrame(()=>$('accountPane')?.scrollIntoView({block:'start'}));
+ }
+}
 function configureFounderDashboard(){
  const link=(id,relative)=>{const element=$(id);if(element)element.href=new URL(relative,SITE_ROOT).href;};
  link('founderEditLink','admin.html');
@@ -70,6 +78,7 @@ async function refreshSession(){
  }
  if(store)await loadRadarPanel();
  if(isFounder){
+   focusAuthenticatedPanel();
    if(location.hash==='#invitar'&&!standalone)requestAnimationFrame(()=>$('invitar')?.scrollIntoView({block:'start'}));
    return;
  }
@@ -77,7 +86,7 @@ async function refreshSession(){
  ui.work.hidden=!store;
  if(store){fillSettings();await loadInventory();}
  else alertMsg('Sesión iniciada. Introduce la invitación recibida para activar tu tienda; todavía no tienes catálogo.');
-
+ focusAuthenticatedPanel();
 }
 $('signupForm').addEventListener('submit',async e=>{
  e.preventDefault();
