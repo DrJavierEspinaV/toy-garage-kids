@@ -113,6 +113,11 @@ function fillSettings(){
  $('myStoreTitle').textContent=store.display_name;
  $('myStoreStatus').textContent=store.is_published?'🟢 Catálogo publicado · visible mediante enlace':'🔒 Catálogo privado · todavía no publicado';
  $('visitStore').href=url();$('familyStoreLink').href=url();$('familyStoreLink').textContent=url();
+ const poster=$('printStorePoster');
+ const posterUrl=new URL('afiche-tienda.html?slug='+encodeURIComponent(store.slug),SITE_ROOT).href;
+ poster.href=store.is_published?posterUrl:'#';
+ poster.hidden=!store.is_published;
+ $('posterPublishHint').hidden=!!store.is_published;
  empty($('familyQr'));
  if(window.QRCode){new window.QRCode($('familyQr'),{text:url(),width:150,height:150,correctLevel:window.QRCode.CorrectLevel.M});}
  else $('familyQr').append(tag('p','', 'Abre el enlace de tu tienda para compartirlo.'));
