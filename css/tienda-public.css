@@ -261,3 +261,47 @@
 .family-public-page .main-nav{gap:9px}
 @media(min-width:761px) and (max-width:1180px){.family-public-page .family-public-desktop-nav{gap:6px}.family-public-page .family-public-desktop-nav a{font-size:10px}.family-public-page .family-public-brand{flex-basis:250px;width:250px;max-width:250px}.family-public-page .family-public-brand-copy strong{font-size:18px}}
 @media(max-width:760px){.family-public-page .family-public-header-actions{gap:6px}.family-public-page .family-account-top{width:33px;height:36px}}
+
+/* V2.3 · Portada universal: misma lógica visual que fundadora V1.4, identidad por familia */
+.family-public-page #inicio.family-public-intro{max-width:none;padding:0;margin:0}
+.family-public-page .family-store-hero{
+ display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:22px;align-items:center;
+ width:100%;min-height:500px;max-width:none;border-radius:0;
+ position:relative;isolation:isolate;overflow:hidden;
+ background:radial-gradient(circle at 76% 46%,color-mix(in srgb,var(--tgk-hero-end) 72%,white),transparent 48%),linear-gradient(116deg,var(--tgk-hero-start),var(--tgk-hero-end));
+ padding:55px max(30px,calc((100vw - 1140px)/2)) 50px;
+}
+.family-public-page .family-store-hero::before{content:'';position:absolute;inset:0;opacity:.14;z-index:-1;background-image:radial-gradient(#fff 1.3px,transparent 1.3px);background-size:35px 35px}
+.family-public-page .family-public-intro-copy{z-index:1;display:flex;flex-direction:column;align-items:start;justify-content:center;min-width:0}
+.family-public-page .family-store-hero img.family-public-hero-logo{
+ display:block;width:180px;height:115px;max-width:100%;max-height:115px;flex:0 0 auto;object-fit:contain;object-position:left;
+ border:0;border-radius:0;background:transparent;padding:0;margin:0 0 10px;
+}
+.family-public-page .family-store-hero img.family-public-hero-logo[hidden]{display:none!important}
+.family-public-page .family-public-intro-copy .family-eyebrow{font-size:11px;letter-spacing:.14em;color:var(--tgk-accent);margin:4px 0 13px}
+.family-public-page .family-store-hero h1{font:700 clamp(42px,5.4vw,76px)/.98 Fredoka,sans-serif;letter-spacing:-.02em;margin:0 0 14px;color:#fff}
+.family-public-page .family-store-hero p{font-size:clamp(14px,1.5vw,18px);max-width:590px;margin:0;color:#f1efff;line-height:1.45}
+.family-public-page .family-public-hero-actions{margin:19px 0 0}
+.family-public-page .family-public-hero-actions .action{box-shadow:0 4px 0 #00000030}
+.family-public-page .family-public-stats{margin-top:23px}
+.family-public-page .family-hero-art{height:375px;width:100%;max-width:435px;position:relative;justify-self:center;display:grid;place-items:center;isolation:isolate}
+.family-public-page .family-hero-orbit{position:absolute;top:10%;left:10%;right:10%;bottom:10%;border-radius:50%;border:2px solid #ffffff4b}
+.family-public-page .family-hero-orbit.orbit-a{transform:rotate(-19deg) scale(1.14,.85)}
+.family-public-page .family-hero-orbit.orbit-b{transform:rotate(37deg) scale(.91,1.06);border-style:dashed;opacity:.7}
+.family-public-page .family-hero-planet{display:grid;place-items:center;border-radius:50%;width:68%;aspect-ratio:1;max-width:284px;z-index:1;background:radial-gradient(circle at 37% 23%,#67e8ff,#6650d4 53%,#342b89);border:7px solid #8c59ed;box-shadow:0 0 0 10px #ffffff0a,0 0 32px #090d3b33;font-size:clamp(90px,10vw,138px);text-shadow:0 8px 10px #24215b55}
+.family-public-page .family-hero-toy{font-size:32px;position:absolute;z-index:2;filter:drop-shadow(0 4px 4px #080b272b)}
+.family-public-page .family-hero-toy-a{top:9%;right:1%}
+.family-public-page .family-hero-toy-b{bottom:6%;left:0}
+.family-public-page .family-hero-toy-c{bottom:9%;right:0}
+.family-public-page .family-hero-mission{position:absolute;top:11%;left:0;z-index:3;transform:rotate(-9deg);border-radius:9px;padding:12px;background:var(--tgk-accent);color:#2e255a;font:1000 12px Nunito,sans-serif;box-shadow:3px 4px 0 #332b67}
+.family-public-page #inicio .family-notice{max-width:1140px;margin:17px auto 13px}
+@media(max-width:850px){
+ .family-public-page .family-store-hero{grid-template-columns:1fr;min-height:0;padding:32px 22px 18px!important;gap:7px!important;align-items:start}
+ .family-public-page .family-store-hero img.family-public-hero-logo{width:135px;height:92px;max-height:92px;flex-basis:auto}
+ .family-public-page .family-store-hero h1{font-size:clamp(38px,8vw,57px)}
+ .family-public-page .family-hero-art{height:220px;max-width:270px;margin:0 auto}
+ .family-public-page .family-hero-planet{font-size:85px;border-width:5px}
+ .family-public-page .family-hero-toy{font-size:23px}
+ .family-public-page .family-hero-mission{font-size:9px;padding:8px}
+ .family-public-page #inicio .family-notice{margin:10px 14px 16px}
+}
