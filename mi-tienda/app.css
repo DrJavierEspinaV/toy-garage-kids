@@ -1,1 +1,46 @@
 .mi-install{background:#fff;border:1px solid #d3d8f3;border-radius:18px;padding:18px 20px;margin:20px 0 0;display:flex;align-items:center;justify-content:space-between;gap:14px;box-shadow:0 9px 26px #1317480a}.mi-install strong{font:900 17px Fredoka,Nunito,sans-serif;color:#29225c}.mi-install p{font-size:12px;line-height:1.5;font-weight:750;color:#5b6385;margin:5px 0}.mi-install #installHelp{color:#735c26}.mi-install button{flex-shrink:0}.mi-signup-status{border-radius:12px;font-size:13px!important;font-weight:850!important;line-height:1.5;min-height:0}.mi-signup-status:not(:empty){margin:18px 0 3px;padding:13px;border:1px solid #c6cff7;background:#f3f5ff;color:#332b69!important}.mi-signup-status[data-error="true"]{background:#fff1ed;border-color:#f2adab;color:#a43131!important}body[data-app-mode="standalone"] .family-header .family-brand{font-size:21px;color:#29235f}body[data-app-mode="standalone"] .family-header .family-brand small{margin-top:3px}body[data-app-mode="standalone"] .family-notice{margin-top:20px}@media(max-width:650px){.mi-install{align-items:stretch;flex-direction:column;padding:16px}.mi-install button{width:100%}body[data-app-mode="standalone"] .family-header .family-brand{font-size:18px}}
+/* V2.2 · Consola clara para fundadora e invitadas; solo estilos de la app familiar. */
+body.family-signed-in .family-hero,
+body.family-signed-in .family-registration-note,
+body.family-signed-in #confirmationTip,
+body.family-signed-in .family-notice{display:none!important}
+body[data-app-mode="standalone"].family-signed-in .mi-install{display:none!important}
+body.family-signed-in .family-shell{padding-top:18px}
+.family-header-links{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:10px}
+.family-header-links>a{font-size:12px;font-weight:1000;color:#5841a1;text-decoration:none;white-space:nowrap}
+.family-header-links>a:not(.family-back){background:#f1edff;padding:9px 11px;border-radius:11px}
+.family-header-links>a[hidden]{display:none!important}
+.family-dashboard{margin:14px 0 22px;padding:22px}
+.family-dashboard-identity{display:flex;align-items:center;gap:16px;margin:0 0 19px}
+.family-dashboard-identity .family-eyebrow{color:#6c48c3}
+.family-dashboard-identity h2{font-size:clamp(26px,4vw,36px);margin:4px 0 5px;color:#2a2360}
+.family-dashboard-identity p{margin:0;max-width:690px;color:#666d8f;font-size:13px;line-height:1.5}
+.family-dashboard-logo{width:125px;height:93px;object-fit:contain;flex:0 0 125px;border-radius:14px;border:1px solid #e7e2fc;background:#fff}
+.family-dashboard-symbol{font-size:46px;display:grid;place-items:center;width:85px;height:85px;background:#eee9ff;border-radius:14px}
+.family-dashboard-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.family-dashboard-card{display:flex;flex-direction:column;gap:7px;min-height:122px;border:1px solid #e0dcf5;border-radius:14px;padding:16px;background:#f8f7ff;text-decoration:none;color:#2b255b;transition:background .15s,transform .15s}
+.family-dashboard-card span{font-size:27px;line-height:1}
+.family-dashboard-card strong{font:700 17px Fredoka,Nunito,sans-serif}
+.family-dashboard-card small{font:800 11px/1.35 Nunito,sans-serif;color:#737595}
+.family-dashboard-card-primary{background:#fff1bf;border-color:#efcd51;box-shadow:0 4px 0 #e8ca68}
+.family-dashboard-card-primary strong{color:#2b2152}
+.family-dashboard-card:hover{background:#ece8fc;transform:translateY(-1px)}
+.family-dashboard-card-primary:hover{background:#ffe99a}
+.family-dashboard-card:focus-visible{outline:3px solid #6f4ee6;outline-offset:3px}
+.family-dashboard-card[aria-disabled="true"]{opacity:.5;pointer-events:none}
+.family-dashboard + .family-panel{margin-top:18px}
+@media(max-width:800px){.family-dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:590px){
+ .family-header{align-items:flex-start;flex-direction:column;gap:7px;padding-block:12px}
+ .family-header-links{justify-content:flex-start;gap:7px}
+ .family-header-links>a{font-size:11px}
+ .family-dashboard{padding:17px}
+ .family-dashboard-identity{align-items:flex-start;gap:10px}
+ .family-dashboard-logo{width:77px;height:77px;flex-basis:77px}
+ .family-dashboard-symbol{width:64px;height:64px;font-size:35px}
+ .family-dashboard-grid{grid-template-columns:1fr 1fr;gap:9px}
+ .family-dashboard-card{min-height:130px;padding:12px}
+ .family-dashboard-card strong{font-size:15px}
+ .family-dashboard-card small{font-size:10px}
+}
+@media(max-width:360px){.family-dashboard-grid{grid-template-columns:1fr}}

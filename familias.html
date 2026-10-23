@@ -2,9 +2,9 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#171a48"><title>Mi tienda familiar · Toy Garage Kids</title>
 <meta name="description" content="Piloto V1.7: crea y administra tu propia tienda de juguetes con invitación de un adulto responsable.">
-<link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="./css/familias.css?v=18a"><link rel="stylesheet" href="./mi-tienda/app.css?v=19">
+<link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="./css/familias.css?v=18a"><link rel="stylesheet" href="./mi-tienda/app.css?v=22-founder-panel">
 <script defer src="./config.js"></script><script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<script type="module" src="./js/familias.js?v=20b-poster"></script></head>
+<script type="module" src="./js/familias.js?v=22-founder-panel"></script></head>
 <body class="family-body">
 <header class="family-header"><a class="family-brand" href="./index.html"><img src="./assets/toy-garage-kids-logo.webp" alt="Toy Garage Kids"> <span>TIENDAS FAMILIARES<small>Proyecto piloto V1.7 · Acceso de adultos</small></span></a><a href="./index.html" class="family-back">← Tienda fundadora</a></header>
 <main class="family-shell">
@@ -19,6 +19,40 @@
 </section>
 <section id="accountPane" hidden>
 <div class="family-account-bar"><span id="familySignedUser">Sesión de adulto</span><button type="button" id="familySignout" class="family-secondary">Cerrar sesión</button></div>
+
+<section id="founderDashboard" class="family-panel family-area family-dashboard family-founder-dashboard" hidden aria-labelledby="founderDashboardTitle">
+ <div class="family-dashboard-identity">
+  <img id="founderLogo" class="family-dashboard-logo" alt="Toy Garage Kids, tienda fundadora">
+  <div><span class="family-eyebrow">CUENTA FUNDADORA · CONTROL DE MISIÓN</span>
+   <h2 id="founderDashboardTitle">Toy Garage Kids</h2>
+   <p>Estás usando la cuenta de Cristóbal e Isidora. Su inventario se administra en el panel fundador, no en el editor de las tiendas invitadas.</p>
+  </div>
+ </div>
+ <nav class="family-dashboard-grid" aria-label="Accesos de administración de la tienda fundadora">
+  <a id="founderEditLink" class="family-dashboard-card family-dashboard-card-primary" href="#"><span>🧸</span><strong>Administrar juguetes</strong><small>Ingresar productos, imágenes, precios y estados</small></a>
+  <a id="founderCatalogLink" class="family-dashboard-card" href="#"><span>🏠</span><strong>Ver tienda pública</strong><small>Volver a Toy Garage Kids</small></a>
+  <a id="founderPosterLink" class="family-dashboard-card" href="#"><span>🖨️</span><strong>Imprimir afiche QR</strong><small>Promocionar la tienda fundadora</small></a>
+  <a id="founderInviteLink" class="family-dashboard-card" href="#"><span>✉️</span><strong>Invitar familias</strong><small>Códigos exclusivos del piloto fundador</small></a>
+  <a class="family-dashboard-card" href="#radarAdminPane"><span>📡</span><strong>Gestionar Toy Radar</strong><small>Comuna, participación y solicitudes</small></a>
+ </nav>
+</section>
+<section id="invitedDashboard" class="family-panel family-area family-dashboard" hidden aria-labelledby="invitedDashboardTitle">
+ <div class="family-dashboard-identity">
+  <span class="family-dashboard-symbol" aria-hidden="true">🏪</span>
+  <div><span class="family-eyebrow">PANEL PRIVADO DE TU FAMILIA</span>
+    <h2 id="invitedDashboardTitle">Mi tienda familiar</h2>
+    <p>Administra tus propios juguetes, personaliza el catálogo y comparte tu enlace QR.</p>
+  </div>
+ </div>
+ <nav class="family-dashboard-grid" aria-label="Accesos para gestionar tu tienda familiar">
+  <a class="family-dashboard-card family-dashboard-card-primary" href="#toyForm"><span>🧸</span><strong>Ingresar juguetes</strong><small>Fotografías, precios, estado y descripción</small></a>
+  <a class="family-dashboard-card" href="#settingsForm"><span>🎨</span><strong>Personalizar tienda</strong><small>Nombre, logo y datos públicos</small></a>
+  <a id="invitedCatalogLink" class="family-dashboard-card" href="#" target="_blank" rel="noopener"><span>🏠</span><strong>Ver mi catálogo</strong><small>Página que ven los clientes</small></a>
+  <a id="invitedPosterLink" class="family-dashboard-card" href="#" target="_blank" rel="noopener"><span>🖨️</span><strong>Mi afiche y QR</strong><small>Imprimir material para promocionar</small></a>
+  <a class="family-dashboard-card" href="#radarAdminPane"><span>📡</span><strong>Mi Toy Radar</strong><small>Participación y conexiones entre adultos</small></a>
+ </nav>
+</section>
+
 <section class="family-panel family-area" id="founderInvitePane" hidden><div id="invitar"></div><h2>✉️ Invitar una familia piloto</h2><p>Esta función es exclusiva del administrador fundador. El código se muestra una sola vez y solo sirve para el correo indicado.</p><form id="inviteForm" class="family-inline"><label>Correo del adulto<input name="email" type="email" required placeholder="adulto@correo.cl"></label><button class="family-primary" type="submit">Generar invitación</button></form><div id="inviteOutput" hidden><p><strong>Comparte este código con el adulto invitado:</strong></p><code id="inviteCode" class="family-code"></code><button type="button" class="family-secondary" id="copyInvite">Copiar código</button> <button type="button" class="family-secondary" id="copyInviteMessage">📩 Copiar invitación completa</button><p>Vigente durante 14 días, de un solo uso. Compártelo por un canal privado.</p></div><p class="family-help">La otra familia debe abrir el enlace en su propio celular y crear una cuenta con el correo invitado. Si aquí ya tienes sesión iniciada, verás tu panel, no el formulario de registro.</p><a class="family-textlink" href="./admin.html">Ir al panel original de Cristóbal e Isidora →</a></section>
 <section class="family-panel family-area" id="radarAdminPane" hidden>
   <div class="family-row-between"><div><h2>📡 Mi Toy Radar · V1.8</h2><p>Participación voluntaria entre adultos. Se comparte solo la comuna que eliges, nunca tu dirección ni GPS.</p></div><span class="family-counter">PILOTO REAL</span></div>

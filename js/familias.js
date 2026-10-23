@@ -19,11 +19,38 @@ async function init(){
  client=await getClient();
  await refreshSession();
 }
+
+function configureFounderDashboard(){
+ const link=(id,relative)=>{const element=$(id);if(element)element.href=new URL(relative,SITE_ROOT).href;};
+ link('founderEditLink','admin.html');
+ link('founderCatalogLink','index.html');
+ link('founderPosterLink','afiche.html');
+ link('founderInviteLink','familias.html#invitar');
+ const brandLogo=$('founderLogo');brandLogo.src=new URL('assets/toy-garage-kids-logo.webp',SITE_ROOT).href;
+ if($('headerPublicStore')){$('headerPublicStore').href=new URL('index.html',SITE_ROOT).href;$('headerPublicStore').hidden=false;}
+ if($('headerManageStore')){$('headerManageStore').href=new URL('admin.html',SITE_ROOT).href;$('headerManageStore').hidden=false;}
+}
+function configureInvitedDashboard(){
+ $('invitedDashboardTitle').textContent=store.display_name;
+ const catalogue=url();
+ const poster=new URL('afiche-tienda.html?slug='+encodeURIComponent(store.slug),SITE_ROOT).href;
+ $('invitedCatalogLink').href=catalogue;
+ $('invitedPosterLink').href=store.is_published?poster:'#';
+ $('invitedPosterLink').setAttribute('aria-disabled',String(!store.is_published));
+ if($('headerPublicStore')){$('headerPublicStore').href=catalogue;$('headerPublicStore').hidden=false;}
+ if($('headerManageStore')){$('headerManageStore').href='#toyForm';$('headerManageStore').hidden=false;}
+}
+
 async function refreshSession(){
  const {data,error}=await client.auth.getUser();
  user=error?null:data.user;
  ui.auth.hidden=!!user;ui.account.hidden=!user;
- ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;ui.radar.hidden=true;store=null;
+ ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;ui.radar.hidden=true;
+ $('founderDashboard').hidden=true;$('invitedDashboard').hidden=true;store=null;
+ document.body.classList.toggle('family-signed-in',!!user);
+ const headerAccount=$('headerMyAccount');
+ if(headerAccount){headerAccount.textContent=user?'🔑 Mi cuenta':'🔑 Ingresar';headerAccount.href=user?'#accountPane':'#acceso';}
+ for(const name of ['headerPublicStore','headerManageStore'])if($(name))$(name).hidden=true;
  if(!user){if(location.hash==='#registro')requestAnimationFrame(()=>$('registro')?.scrollIntoView({block:'start'}));return;}
  $('familySignedUser').textContent='Adulto responsable: '+(user.email||'sesión activa');
  const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in').eq('owner_user_id',user.id).maybeSingle();
@@ -33,12 +60,24 @@ async function refreshSession(){
  const isFounder=!!admin && store?.id===founderId;
  ui.founder.hidden=!isFounder||standalone;
  ui.radar.hidden=!store;
+ if(isFounder){
+   configureFounderDashboard();
+   $('founderDashboard').hidden=false;
+   alertMsg('Sesión fundadora activa. Utiliza «Administrar juguetes» para abrir tu Centro de Control o «Ver tienda pública» para regresar al catálogo.');
+ }else if(store){
+   configureInvitedDashboard();
+   $('invitedDashboard').hidden=false;
+ }
  if(store)await loadRadarPanel();
- if(isFounder){alertMsg(standalone?'Esta cuenta pertenece a la tienda fundadora. Para probar otra tienda instala esta aplicación en otro teléfono y regístrate con un correo distinto.':'Estás en la sesión de la tienda fundadora. Desde aquí generas invitaciones; la familia invitada se registra desde su propio teléfono y su correo.');return;}
+ if(isFounder){
+   if(location.hash==='#invitar'&&!standalone)requestAnimationFrame(()=>$('invitar')?.scrollIntoView({block:'start'}));
+   return;
+ }
  ui.redeem.hidden=!!store;
  ui.work.hidden=!store;
  if(store){fillSettings();await loadInventory();}
- else alertMsg('Cuenta iniciada. Introduce la invitación que recibiste para crear tu tienda.');
+ else alertMsg('Sesión iniciada. Introduce la invitación recibida para activar tu tienda; todavía no tienes catálogo.');
+
 }
 $('signupForm').addEventListener('submit',async e=>{
  e.preventDefault();
@@ -145,7 +184,7 @@ $('settingsForm').addEventListener('submit',async e=>{
   }
   const {data,error}=await client.from('stores').update(upd).eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in').single();
   if(error)throw error;
-  store=data;form.elements.logo.value='';fillSettings();alertMsg('Tu tienda fue actualizada. '+(store.public_whatsapp_opt_in&&store.is_published?'Los visitantes pueden consultar por WhatsApp al adulto responsable.':'Tu WhatsApp no se muestra públicamente.'));
+  store=data;form.elements.logo.value='';fillSettings();configureInvitedDashboard();alertMsg('Tu tienda fue actualizada. '+(store.public_whatsapp_opt_in&&store.is_published?'Los visitantes pueden consultar por WhatsApp al adulto responsable.':'Tu WhatsApp no se muestra públicamente.'));
  }catch(err){alertMsg('No se guardó la tienda: '+errorText(err),true);}
  finally{saving=false;setBusy(form,false);}
 });
