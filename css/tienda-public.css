@@ -1,0 +1,92 @@
+/* V2.0 – tienda pública multifamiliar: mismos accesos y módulos que tienda fundadora.
+   Sólo aplica a tienda.html; no altera index.html ni admin.html. */
+.family-public-page{background:#f5f7ff;color:#182149}
+.family-public-page .site-header.family-public-header{display:flex;align-items:center;justify-content:space-between;gap:13px;min-height:86px;padding:12px max(20px,calc((100vw - 1140px)/2));}
+.family-public-brand{min-width:0;display:flex;align-items:center;gap:9px;text-decoration:none;flex:0 1 auto}
+.family-public-brand-icon{font-size:30px;display:grid;place-items:center;width:43px;height:43px;border-radius:12px;background:#f1eaff;flex-shrink:0}
+.family-public-brand-copy{display:flex;flex-direction:column;gap:2px;min-width:0}
+.family-public-brand-copy strong{font:700 18px/1.1 Fredoka,sans-serif;color:#292054;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px}
+.family-public-brand-copy small{font-size:9px;font-weight:1000;color:#7d80a0;white-space:nowrap}
+.family-public-desktop-nav{gap:14px}
+.family-public-desktop-nav a{font-size:12px;white-space:nowrap}
+.family-public-header-actions{display:flex;gap:9px;align-items:center;flex-shrink:0}
+.family-public-header-actions .basket-btn{padding:11px 10px;font-size:12px;border-radius:13px}
+.family-public-admin-link{font-size:11px;font-weight:1000;color:#593db0;border:1px solid #ddd1fa;border-radius:12px;padding:10px;background:#f7f2ff;white-space:nowrap}
+.family-public-intro{max-width:1210px;padding-top:24px;padding-bottom:0}
+.family-public-page .family-store-hero{min-height:325px;padding:30px 38px;gap:30px}
+.family-public-page .family-store-hero img{height:165px;width:194px;object-fit:contain;flex:0 0 194px}
+.family-public-intro-copy{min-width:0;flex:1}
+.family-public-page .family-store-hero h1{overflow-wrap:anywhere;font-size:clamp(38px,5vw,62px);line-height:1.05}
+.family-public-hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.family-public-hero-actions .action{padding:11px 16px;font-size:13px}
+.family-public-stats{display:flex;gap:24px;margin-top:25px;flex-wrap:wrap}
+.family-public-stats span{display:flex;flex-direction:column;gap:4px}
+.family-public-stats strong{color:#ffd93e;font:700 26px Fredoka,sans-serif}
+.family-public-stats small{font-size:11px;font-weight:800;color:#e8dfff}
+.family-public-page .family-notice{margin-bottom:15px}
+.family-public-trustbar{background:#fff;display:flex;justify-content:center;gap:25px;flex-wrap:wrap;padding:15px 20px;color:#50567d;font-size:12px;font-weight:900;border-block:1px solid #dce2f5}
+.family-public-catalog{padding-top:62px;padding-bottom:75px}
+.family-public-page #catalogo .catalog-grid{min-height:120px}
+.family-public-page #catalogo .toy-card{min-width:0;display:flex;flex-direction:column}
+.family-public-page #catalogo .card-body{flex:1;display:flex;flex-direction:column}
+.family-public-page #catalogo .family-public-card-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto}
+.family-public-page #catalogo .family-public-card-actions button{border:none;border-radius:9px;padding:9px;font-weight:900;font-size:11px;flex:1 1 95px}
+.family-public-page #catalogo .family-public-card-actions .family-add-button{background:#ffdc48;color:#2b235a}
+.family-public-page #catalogo .family-public-card-actions .family-detail-button{background:#eee9ff;color:#513a9c}
+.family-public-page #catalogo .family-public-photo{display:block;width:100%;height:100%;object-fit:cover}
+.family-public-page #catalogo .family-public-placeholder{font-size:66px}
+.family-public-page #catalogo .card-visual{overflow:hidden}
+.family-public-page .family-public-battle .battle-content{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.family-public-battle .family-public-battle-empty{background:#fff;border-radius:15px;padding:24px;color:#47416e;font-size:14px;font-weight:800}
+.family-public-page #radar{scroll-margin-top:100px}
+.family-public-footer{padding-top:25px}
+.family-public-error{max-width:900px;margin:24px auto}
+.family-public-dialog{border:0;border-radius:18px;padding:0;width:min(93vw,580px);max-height:85vh;overflow-y:auto;box-shadow:0 25px 90px #13163f77;background:white;color:#29245a}
+.family-public-dialog::backdrop{background:#0a1038bd}
+.family-public-dialog-header{display:flex;align-items:center;justify-content:space-between;background:#f2edff;padding:15px 20px;gap:10px;position:sticky;top:0}
+.family-public-dialog-header h2{margin:0;font-size:23px}
+.family-public-dialog-header button{background:white;border:1px solid #d6ccf7;padding:8px 12px;border-radius:9px;font-weight:900}
+.family-public-dialog-content{padding:20px;display:grid;gap:12px}
+.family-public-dialog-footer{padding:0 20px 20px}
+.family-public-dialog-footer p{font-size:12px;font-weight:800;color:#7b7993;margin-top:14px}
+.family-public-cart-item{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #e5e2f7;padding:10px 0}
+.family-public-cart-item strong{color:#252051}
+.family-public-cart-item button{font-size:12px;background:#fff1f3;border:1px solid #efd0d9;border-radius:8px;color:#9a3157;padding:7px 9px}
+.family-public-detail-photo{width:100%;max-height:350px;object-fit:contain;border-radius:12px;background:#f4f1ff}
+.family-public-detail-info{color:#555c80;font-size:14px}
+.family-public-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:100;color:white;background:#2c235e;padding:11px 18px;border-radius:13px;font-size:13px;font-weight:900;box-shadow:0 10px 30px #10144355;max-width:90vw;text-align:center}
+.family-public-toast:empty{display:none}
+.family-public-page #inicio,.family-public-page #catalogo,.family-public-page #battle,.family-public-page #radar,.family-public-page #como-funciona{scroll-margin-top:100px}
+@media(max-width:1120px) and (min-width:761px){
+ .family-public-page .family-public-brand-copy strong{max-width:145px;font-size:14px}
+ .family-public-page .family-public-desktop-nav{gap:9px}
+ .family-public-page .family-public-desktop-nav a{font-size:11px}
+ .family-public-header-actions .basket-btn{font-size:11px;padding:9px}
+ .family-public-admin-link{padding:8px}
+}
+@media(max-width:760px){
+ .family-public-page .family-public-header{top:48px!important;min-height:77px!important;padding:9px 15px!important}
+ .family-public-page .family-public-brand-copy strong{max-width:180px;font-size:15px}
+ .family-public-page .family-public-brand-copy small{font-size:8px}
+ .family-public-page .family-public-brand-icon{width:35px;height:35px;font-size:23px}
+ .family-public-page .family-public-desktop-nav{display:none}
+ .family-public-page .family-public-header-actions{gap:6px}
+ .family-public-page .family-public-header-actions .basket-btn{font-size:0;padding:9px}
+ .family-public-page .family-public-header-actions .basket-btn span{font-size:12px}
+ .family-public-page .family-public-admin-link{font-size:0;padding:9px}
+ .family-public-page .family-public-admin-link::before{content:"🔑";font-size:16px}
+ .family-public-page .family-public-intro{padding:16px 14px 0}
+ .family-public-page .family-store-hero{padding:25px!important;gap:20px!important;flex-direction:column;align-items:flex-start;min-height:0}
+ .family-public-page .family-store-hero img{height:auto;max-height:140px;width:165px;max-width:100%;flex-basis:auto}
+ .family-public-page .family-store-hero h1{font-size:clamp(34px,8vw,51px);margin-bottom:10px}
+ .family-public-page .family-public-stats{gap:20px;margin-top:18px}
+ .family-public-page .family-public-hero-actions .action{font-size:11px;padding:10px 13px}
+ .family-public-page .family-public-trustbar{gap:8px 20px;font-size:10px}
+ .family-public-page .family-public-catalog{padding-top:48px;padding-bottom:54px}
+ .family-public-page .family-public-battle .battle-content{grid-template-columns:1fr}
+ .family-public-page #inicio,.family-public-page #catalogo,.family-public-page #battle,.family-public-page #radar,.family-public-page #como-funciona{scroll-margin-top:137px}
+}
+@media(max-width:420px){
+ .family-public-page .family-public-brand-copy strong{max-width:112px}
+ .family-public-page .family-public-admin-link{padding:8px}
+}

@@ -1,3 +1,164 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#191947"><title>Tienda familiar · Mi Tienda</title><link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="./css/familias.css?v=17a"><script defer src="./config.js"></script><script type="module" src="./js/tienda.js?v=17a"></script></head>
-<body class="family-body"><header class="family-header"><span class="family-brand">🧸 <span>MI TIENDA<small>Tiendas familiares independientes</small></span></span><a class="family-back" href="./mi-tienda/">🔑 Administrar mi tienda</a></header>
-<main class="family-shell"><div id="publicStore" hidden><div class="family-store-hero"><img id="publicLogo" alt="Logo de esta tienda" hidden><div><span class="family-eyebrow">✦ MI TIENDA FAMILIAR ✦</span><h1 id="publicTitle">Mi tienda</h1><p id="publicTagline"></p></div></div><p class="family-notice">🛡️ Tienda administrada por un adulto. Las reservas y entregas se coordinan de forma supervisada. Toy Radar es opcional y las solicitudes entre tiendas son gestionadas por adultos.</p><h2 class="family-subtitle">🧸 Nuestra colección <small id="publicCount"></small></h2><div id="publicToys" class="family-public-grid"></div></div><div id="storeError" class="family-panel"><h2>Buscando tienda...</h2><p>Si la tienda todavía no está publicada, su catálogo no estará disponible.</p></div></main><footer class="family-footer"><a href="./mi-tienda/">Accede a tu cuenta para administrar tu catálogo.</a></footer></body></html>
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#191947"><meta name="description" content="Explora el catálogo independiente de esta tienda familiar de juguetes.">
+<title>Mi tienda familiar</title>
+<link rel="stylesheet" href="./css/styles.css?v=tgk-layout-20261021-v14">
+<link rel="stylesheet" href="./css/familias.css?v=18a">
+<link rel="stylesheet" href="./css/radar.css?v=integrado-18a">
+<link rel="stylesheet" href="./css/mobile-nav.css?v=20261021-v1">
+<link rel="stylesheet" href="./css/tienda-public.css?v=201026-v20">
+<script defer src="./config.js"></script>
+<script type="module" src="./js/tienda.js?v=201026-v20"></script>
+<script defer src="./js/radar.js?v=integrado-15"></script>
+<script type="module" src="./js/radar-network.js?v=18a"></script>
+</head>
+<body class="family-body family-public-page">
+<div class="top-strip">
+  <span class="top-strip-message">✨ CADA JUGUETE MERECE UNA NUEVA AVENTURA ✨</span>
+  <nav class="mobile-section-nav" aria-label="Secciones de esta tienda familiar">
+    <a href="#inicio">🏠 Inicio</a>
+    <a href="#catalogo">🧸 Juguetes</a>
+    <a href="#battle">⚡ Battle Arena</a>
+    <a href="#radar">📡 Toy Radar</a>
+    <a href="#como-funciona">❔ Cómo funciona</a>
+  </nav>
+</div>
+<header class="site-header family-public-header">
+ <a href="#inicio" class="family-public-brand" aria-label="Volver al inicio de esta tienda">
+   <span class="family-public-brand-icon" aria-hidden="true">🧸</span>
+   <span class="family-public-brand-copy"><strong id="storeHeaderTitle">MI TIENDA</strong><small>TIENDA FAMILIAR INDEPENDIENTE</small></span>
+ </a>
+ <nav class="main-nav family-public-desktop-nav" aria-label="Secciones de esta tienda">
+   <a href="#inicio">Inicio</a>
+   <a href="#catalogo">🧸 Juguetes</a>
+   <a href="#battle">⚡ Battle Arena</a>
+   <a href="#radar">📡 Toy Radar</a>
+   <a href="#como-funciona">¿Cómo funciona?</a>
+ </nav>
+ <div class="family-public-header-actions">
+   <button id="basketBtn" class="basket-btn" type="button" aria-label="Abrir mi selección">🎒 Mi selección <span id="basketCount">0</span></button>
+   <a class="family-public-admin-link" href="./mi-tienda/" aria-label="Acceso para administrar esta tienda">🔑 Administrar</a>
+ </div>
+</header>
+<main id="publicStore" hidden>
+  <section id="inicio" class="family-shell family-public-intro" aria-labelledby="publicTitle">
+    <div class="family-store-hero">
+      <img id="publicLogo" alt="Logo de esta tienda" hidden>
+      <div class="family-public-intro-copy">
+        <span class="family-eyebrow">✦ MI TIENDA FAMILIAR ✦</span>
+        <h1 id="publicTitle">Mi tienda</h1>
+        <p id="publicTagline"></p>
+        <div class="family-public-hero-actions">
+          <a href="#catalogo" class="action action-primary">🧸 Explorar juguetes</a>
+          <a href="#radar" class="action action-light">📡 Toy Radar</a>
+        </div>
+        <div class="family-public-stats">
+          <span><strong id="publicTotal">—</strong><small>Juguetes</small></span>
+          <span><strong id="publicAvailable">—</strong><small>Disponibles</small></span>
+          <span><strong id="publicBattles">—</strong><small>Battles</small></span>
+        </div>
+      </div>
+    </div>
+    <p class="family-notice">🛡️ Tienda administrada por un adulto. Las reservas y entregas deben coordinarse de forma supervisada; elegir un juguete no realiza pagos ni reservas.</p>
+  </section>
+  <div class="family-public-trustbar" aria-label="Ventajas de la tienda">
+    <span>♻️ Una segunda vida a cada juguete</span>
+    <span>🏅 Estado de conservación visible</span>
+    <span>🛡️ Coordinación entre adultos</span>
+  </div>
+  <section id="catalogo" class="catalog-section page-shell family-public-catalog">
+    <div class="section-kicker">01 / LA COLECCIÓN</div>
+    <div class="section-heading"><div><h2>ELIGE TU <span>PRÓXIMA MISIÓN</span></h2><p>Explora los juguetes de esta familia.</p></div><span id="catalogCounter" class="section-counter">Cargando...</span></div>
+    <div class="catalog-toolbar">
+      <label class="search-field"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" autocomplete="off" placeholder="Buscar juguetes..." aria-label="Buscar juguetes de esta tienda"></label>
+      <label class="sort-field">Ordenar <select id="sortSelect"><option value="newest">Más recientes</option><option value="cheap">Menor precio</option><option value="expensive">Mayor precio</option><option value="name">Nombre A-Z</option></select></label>
+    </div>
+    <div id="categoryFilters" class="filter-row" role="group" aria-label="Categorías de juguetes"></div>
+    <div id="catalogGrid" class="catalog-grid" aria-live="polite"></div>
+    <p id="catalogEmpty" class="empty-state" hidden>No encontramos juguetes con ese filtro. ¡Prueba otra búsqueda!</p>
+  </section>
+  <section id="battle" class="battle-wrap family-public-battle">
+    <div class="page-shell">
+      <div class="section-kicker battle-kicker">02 / MODO DESAFÍO</div>
+      <div class="battle-heading"><div><h2>⚡ BATTLE <span>ARENA</span></h2><p>Futuros desafíos supervisados para los juguetes de esta tienda.</p></div><span class="battle-pill">PRÓXIMA FASE</span></div>
+      <div class="battle-content">
+        <div class="battle-info"><span class="battle-icon">🏆</span><h3>¡Una oferta puede cambiarlo todo!</h3><p>Como en la tienda fundadora, la Battle Arena todavía es una vista previa. No aceptamos ofertas, cobros ni reservas automáticas.</p><div class="battle-rules"><span>🔒 Datos protegidos</span><span>👨‍👩‍👧 Supervisión adulta</span><span>⏱️ Cierre anunciado</span></div></div>
+        <div id="familyBattlePreview" class="battle-preview"></div>
+      </div>
+    </div>
+  </section>
+    <section id="radar" class="tgk-radar" aria-labelledby="tgk-radar-title">
+      <div class="page-shell">
+        <div class="section-kicker">03 / CONECTA TU MUNDO</div>
+        <div class="tgk-radar-heading">
+          <div><h2 id="tgk-radar-title">📡 TOY <span>RADAR</span></h2><p>¡Descubre tiendas familiares y juguetes que buscan nuevas aventuras!</p></div>
+          <span class="tgk-radar-status">SIMULACIÓN + RED · V1.8</span>
+        </div>
+        <p class="tgk-radar-demo">🧪 Simulación: las tiendas y distancias son ficticias. No se solicita tu ubicación ni se envían invitaciones reales.</p>
+        <div class="tgk-radar-grid">
+          <div class="tgk-radar-panel">
+            <div class="tgk-radar-panel-head"><h3>📡 Explorar tiendas</h3><p>Prueba cómo funcionaría el radio de búsqueda.</p></div>
+            <div class="tgk-radar-ranges" role="group" aria-label="Radio de búsqueda de prueba">
+              <button type="button" data-radar-radius="0.5" aria-pressed="false">500 m</button>
+              <button type="button" data-radar-radius="1" aria-pressed="true">1 km</button>
+              <button type="button" data-radar-radius="3" aria-pressed="false">3 km</button>
+            </div>
+            <div class="tgk-radar-screen" aria-label="Representación simulada de tiendas cercanas">
+              <div class="tgk-radar-center" aria-label="Tu tienda">🏠</div>
+              <div id="tgkRadarMarkers"></div>
+              <span class="tgk-radar-radius" id="tgkRadarRadiusLabel">1 KM</span>
+            </div>
+            <p class="tgk-radar-count" id="tgkRadarCount">Explorando ejemplos...</p>
+          </div>
+          <div class="tgk-radar-panel">
+            <div class="tgk-radar-panel-head"><h3>🏪 Tiendas descubiertas</h3><p>En el futuro, solo aparecerán tiendas autorizadas por un adulto.</p></div>
+            <div id="tgkRadarResults" class="tgk-radar-results" aria-live="polite"></div>
+            <p id="tgkRadarNotice" class="tgk-radar-feedback" role="status"></p>
+            <div class="tgk-radar-safety"><strong>🛡️ Seguridad familiar</strong><p>Sin ubicación exacta de hogares ni niños. Las futuras conexiones serán solicitudes entre adultos responsables.</p></div>
+          </div>
+        </div>
+        <section id="tgkLiveRadar" class="tgk-radar-real" aria-labelledby="tgkLiveTitle">
+          <div class="tgk-radar-real-header">
+            <div><span class="section-kicker">RED FAMILIAR · PILOTO V1.8</span>
+              <h3 id="tgkLiveTitle">🏪 Explora tiendas reales</h3>
+              <p>Solo aparecen tiendas publicadas y autorizadas por sus administradores adultos. La búsqueda es por comuna, no por distancia exacta.</p>
+            </div>
+            <span class="tgk-radar-real-label">PILOTO REAL</span>
+          </div>
+          <div class="tgk-radar-real-controls">
+            <label for="tgkRadarArea">Comuna</label>
+            <select id="tgkRadarArea"><option value="">Selecciona una comuna...</option></select>
+            <button id="tgkRadarRealRefresh" type="button">↻ Actualizar</button>
+          </div>
+          <p class="tgk-radar-real-note">La animación de 500 m, 1 km y 3 km de arriba sigue siendo ficticia. Aquí no se utiliza GPS ni se muestran domicilios.</p>
+          <div id="tgkRadarRealResults" class="tgk-radar-real-results" aria-live="polite"></div>
+          <p id="tgkRadarRealStatus" class="tgk-radar-real-feedback" role="status">Selecciona una comuna para ver las tiendas participantes.</p>
+          <p class="tgk-radar-real-actions">¿Quieres participar? <a href="./familias.html#registro">Crea tu tienda con invitación</a> y activa Toy Radar desde tu panel.</p>
+        </section>
+        <p class="tgk-radar-fine">La red real funciona por comunas elegidas voluntariamente y requiere autorización de adultos; los radios gráficos siguen siendo de demostración.</p>
+      </div>
+    </section>
+
+  <section id="como-funciona" class="how-section page-shell family-public-how">
+    <div class="section-kicker">04 / JUGAR + REUTILIZAR</div>
+    <h2>¿CÓMO <span>FUNCIONA?</span></h2>
+    <div class="steps">
+      <div class="step"><b>01</b><span>🔎</span><h3>Explora el catálogo</h3><p>Busca juguetes, filtra categorías y revisa el estado y las fotos.</p></div>
+      <div class="step"><b>02</b><span>💖</span><h3>Arma tu selección</h3><p>Guarda tus favoritos en «Mi selección» y comparte la lista.</p></div>
+      <div class="step"><b>03</b><span>🤝</span><h3>Coordina con adultos</h3><p>El contacto, las compras y las entregas son responsabilidad de los adultos. Una selección no confirma ninguna reserva.</p></div>
+    </div>
+  </section>
+</main>
+<div id="storeError" class="family-panel family-public-error"><h2>Buscando tienda...</h2><p>Si la tienda todavía no está publicada, su catálogo no estará disponible.</p></div>
+<footer class="site-footer family-public-footer"><div class="page-shell footer-in"><div><strong id="storeFooterTitle">🧸 MI TIENDA</strong><p>Los juguetes cambian de aventura.</p></div><a href="./mi-tienda/">🔑 Acceso de adulto administrador</a></div><p class="footer-note">Piloto de tiendas familiares independientes. Toy Radar por comuna; distancias circulares ficticias.</p></footer>
+<dialog id="basketDialog" class="family-public-dialog" aria-labelledby="basketTitle">
+ <div class="family-public-dialog-header"><h2 id="basketTitle">🎒 Mi selección</h2><button type="button" id="closeBasket" aria-label="Cerrar selección">✕</button></div>
+ <div id="basketContent" class="family-public-dialog-content"></div>
+ <div class="family-public-dialog-footer"><button type="button" class="action action-primary" id="shareBasket">📩 Compartir selección</button><p>Esta lista no envía una reserva a la tienda ni efectúa pagos. Coordina directamente con el adulto responsable.</p></div>
+</dialog>
+<dialog id="toyDialog" class="family-public-dialog" aria-labelledby="toyDialogTitle">
+ <div class="family-public-dialog-header"><h2 id="toyDialogTitle">Juguete</h2><button type="button" id="closeToy" aria-label="Cerrar detalles">✕</button></div>
+ <div id="toyDialogBody" class="family-public-dialog-content"></div>
+</dialog>
+<div id="familyPublicToast" class="family-public-toast" role="status" aria-live="polite"></div>
+</body></html>
