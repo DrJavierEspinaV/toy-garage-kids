@@ -210,7 +210,23 @@ async function main(){
  $('storeFooterTitle').textContent='🧸 '+store.display_name;
  $('publicTagline').textContent=store.tagline||'¡Cada juguete merece una nueva aventura!';
  const logo=safeImageUrl(store.logo_url);
- if(logo){$('publicLogo').src=logo;$('publicLogo').hidden=false;}
+ const headerImg=$('storeHeaderLogo'),headerFallback=$('storeHeaderFallback');
+ const heroImg=$('publicLogo');
+ function showBrandFallback(){
+   headerImg.hidden=true;
+   headerImg.removeAttribute('src');
+   headerFallback.hidden=false;
+ }
+ if(logo){
+   headerImg.onload=()=>{headerImg.hidden=false;headerFallback.hidden=true;};
+   headerImg.onerror=showBrandFallback;
+   headerImg.src=logo;
+   heroImg.src=logo;
+   heroImg.hidden=false;
+ }else{
+   showBrandFallback();
+   heroImg.hidden=true;
+ }
  $('publicTotal').textContent=toys.length;
  $('publicAvailable').textContent=toys.filter(t=>t.status==='available'&&t.sale_mode!=='battle').length;
  $('publicBattles').textContent=toys.filter(t=>t.sale_mode==='battle'&&t.status==='available').length;

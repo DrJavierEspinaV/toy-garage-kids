@@ -102,3 +102,138 @@
 .family-public-dialog .action{width:100%}
 .family-public-cart-item p{margin:4px 0;font-size:13px;color:#686d8d}
 .family-public-card-actions button:focus-visible,.family-public-dialog button:focus-visible{outline:3px solid #33cbeb;outline-offset:3px}
+
+
+/* V2.1 · Cabecera de MARCA PROPIA para cada tienda invitada.
+   La identidad de la tienda fundadora index.html NO está afectada. */
+.family-public-page .site-header.family-public-header{
+  height:108px;
+  min-height:108px;
+  padding-block:8px;
+  gap:16px;
+}
+.family-public-page .family-public-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex:0 1 335px;
+  width:335px;
+  max-width:335px;
+  min-width:0;
+  height:100%;
+  text-decoration:none;
+}
+.family-public-page .family-public-brand-media{
+  display:grid;
+  place-items:center;
+  flex:0 0 98px;
+  width:98px;
+  height:90px;
+  border-radius:15px;
+  background:#fff;
+  border:1px solid #edeaf7;
+  box-shadow:0 4px 14px #21275a10;
+  overflow:hidden;
+}
+.family-public-page .family-public-brand-logo{
+  display:block;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  object-position:center;
+}
+.family-public-page .family-public-brand-logo[hidden],
+.family-public-page .family-public-brand-icon[hidden]{display:none!important}
+.family-public-page .family-public-brand-icon{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  background:#f1eaff;
+  border-radius:0;
+  font-size:49px;
+}
+.family-public-page .family-public-brand-copy{
+  flex:1 1 auto;
+  min-width:0;
+  gap:5px;
+}
+.family-public-page .family-public-brand-copy strong{
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  overflow-wrap:anywhere;
+  white-space:normal;
+  text-overflow:clip;
+  max-width:none;
+  color:#282257;
+  font:700 23px/1.02 Fredoka,sans-serif;
+  letter-spacing:0;
+}
+.family-public-page .family-public-brand-copy small{
+  white-space:normal;
+  font:900 9px/1.4 Nunito,sans-serif;
+  letter-spacing:.035em;
+  color:#74799c;
+}
+.family-public-page .family-public-desktop-nav{
+  gap:11px;
+  min-width:0;
+  justify-content:center;
+  flex:1 1 auto;
+}
+.family-public-page .family-public-desktop-nav a{font-size:12px}
+.family-public-page .family-public-header-actions{flex:0 0 auto}
+@media (min-width:761px) and (max-width:1120px){
+  .family-public-page .family-public-brand{flex-basis:245px;width:245px;max-width:245px;gap:9px}
+  .family-public-page .family-public-brand-media{flex-basis:75px;width:75px;height:76px}
+  .family-public-page .family-public-brand-copy strong{font-size:18px}
+  .family-public-page .family-public-brand-copy small{font-size:8px}
+  .family-public-page .family-public-desktop-nav{gap:7px}
+  .family-public-page .family-public-desktop-nav a{font-size:10.5px}
+  .family-public-page .family-public-header-actions .basket-btn{padding:9px 8px;font-size:11px}
+}
+@media (max-width:760px){
+  .family-public-page .site-header.family-public-header{
+    height:84px!important;
+    min-height:84px!important;
+    top:48px!important;
+    padding:6px 13px!important;
+    gap:9px;
+  }
+  .family-public-page .family-public-brand{
+    flex:1 1 auto;
+    width:auto;
+    max-width:none;
+    min-width:0;
+    gap:9px;
+  }
+  .family-public-page .family-public-brand-media{
+    flex:0 0 64px;
+    width:64px;
+    height:67px;
+    border-radius:12px;
+  }
+  .family-public-page .family-public-brand-icon{font-size:34px}
+  .family-public-page .family-public-brand-copy strong{
+    font-size:clamp(15px,4.35vw,21px);
+    line-height:1.04;
+  }
+  .family-public-page .family-public-brand-copy small{font-size:8px;line-height:1.2}
+  .family-public-page .family-public-header-actions{flex:0 0 auto}
+  .family-public-page .family-public-header-actions .basket-btn{padding:9px 7px}
+  .family-public-page #inicio,
+  .family-public-page #catalogo,
+  .family-public-page #battle,
+  .family-public-page #radar,
+  .family-public-page #como-funciona{scroll-margin-top:143px}
+}
+@media (max-width:390px){
+  .family-public-page .family-public-brand-media{flex-basis:56px;width:56px;height:59px}
+  .family-public-page .family-public-brand-copy strong{font-size:15px}
+  .family-public-page .family-public-brand-copy small{font-size:7px}
+  .family-public-page .site-header.family-public-header{gap:5px;padding-inline:8px!important}
+}
