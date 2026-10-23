@@ -146,7 +146,14 @@ $('redeemForm').addEventListener('submit',async e=>{
  try{
   const {data,error}=await client.rpc('tgk_redeem_family_invite',{p_code:String(v.get('code')).trim(),p_slug:String(v.get('slug')).trim(),p_name:String(v.get('display_name')).trim()});
   if(error)throw error;
-  form.reset();alertMsg('¡Tienda creada! Ya puedes personalizarla y publicar tus juguetes.');
+  // La tienda ya está creada; aplicar el tema elegido solo sobre ella.
+  const chosenTheme=String(v.get('theme_preset')||'galaxia');
+  let themeWarning='';
+  if(chosenTheme!=='galaxia'){
+    const {error:themeError}=await client.from('stores').update({theme_preset:chosenTheme}).eq('id',data);
+    if(themeError)themeWarning=' El tema inicial no se guardó; puedes elegirlo desde Personalizar tienda.';
+  }
+  form.reset();alertMsg('¡Tienda creada! Ya puedes agregar juguetes y compartir tu catálogo.'+themeWarning,!!themeWarning);
   await refreshSession();
  }catch(err){alertMsg('No se pudo activar la tienda: '+errorText(err),true);}
  finally{setBusy(form,false);}
