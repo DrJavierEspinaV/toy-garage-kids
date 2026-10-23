@@ -75,6 +75,7 @@ function renderCatalogue(){
   card.append(imageFor(t));
   const body=node('div','card-body');
   body.append(node('div','type-label',(categories[t.category]||'⭐')+' '+t.category.toUpperCase()),node('h3','',t.title));
+  body.append(node('span','family-product-kind',t.product_kind==='creacion'?'🎨 Creación familiar':'♻️ Juguete reutilizado'));
   body.append(node('p','card-desc',String(t.description||'Juguete en busca de una nueva aventura').slice(0,120)));
   const foot=node('div','card-bottom');
   const price=node('div','card-price');
@@ -130,7 +131,7 @@ function openToy(id){
   }
  } else root.append(node('div','family-public-no-photo',t.emoji||'🧸'));
  root.append(node('p','family-public-detail-info',t.description||'Sin descripción adicional'));
- root.append(node('p','family-public-detail-info','Tipo: '+t.category+' · Conservación: '+(grades[t.grade]||'Sin especificar')));
+ root.append(node('p','family-public-detail-info','Origen: '+(t.product_kind==='creacion'?'Creación familiar':'Juguete reutilizado')+' · Tipo: '+t.category+' · Conservación: '+(grades[t.grade]||'Sin especificar')));
  if(t.condition_note)root.append(node('p','family-public-detail-info','Observaciones: '+t.condition_note));
  root.append(node('p','family-public-detail-info','Estado: '+(statuses[t.status]||t.status)));
  root.append(node('strong','family-public-detail-price',money(t.sale_mode==='battle'?(t.battle_base??t.price):t.price)));
@@ -194,14 +195,15 @@ async function main(){
  if(!isLive())return error('La tienda no está disponible en este momento.');
  const client=await getClient();
  const {data:shop,error:shopError}=await client.from('storefronts')
-  .select('store_id,slug,display_name,logo_url,tagline,contact_whatsapp')
+  .select('store_id,slug,display_name,logo_url,tagline,contact_whatsapp,theme_preset')
   .eq('slug',slug).eq('is_published',true).maybeSingle();
  if(shopError||!shop)return error('Esta tienda no está publicada o no existe.');
  const {data:items,error:itemsError}=await client.from('toys')
-  .select('id,title,description,condition_note,price,status,category,grade,photos,emoji,sale_mode,battle_base,created_at')
+  .select('id,title,description,condition_note,price,status,category,product_kind,grade,photos,emoji,sale_mode,battle_base,created_at')
   .eq('store_id',shop.store_id).neq('status','hidden').order('created_at',{ascending:false});
  if(itemsError)return error('No se pudo cargar el inventario de esta familia.');
  store=shop;toys=items||[];
+ document.body.dataset.theme=['galaxia','caramelo','menta','sol','oceano'].includes(shop.theme_preset)?shop.theme_preset:'galaxia';
  $('shareBasket').textContent=String(store.contact_whatsapp||'').trim()?'📲 Consultar por WhatsApp':'📩 Compartir consulta de compra';
  $('publicStore').hidden=false;$('storeError').hidden=true;
  document.title=store.display_name+' · Mi Tienda';

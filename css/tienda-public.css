@@ -237,3 +237,18 @@
   .family-public-page .family-public-brand-copy small{font-size:7px}
   .family-public-page .site-header.family-public-header{gap:5px;padding-inline:8px!important}
 }
+
+/* V2.3 · Personalización limitada a una estética infantil, exclusivamente en tiendas invitadas.
+   No afecta el diseño V1.4 de la tienda fundadora ni el contraste del texto. */
+.family-public-page{--tgk-hero-start:#191e59;--tgk-hero-end:#57339d;--tgk-accent:#ffdb43;--tgk-soft:#f4eeff;--tgk-highlight:#8561e9}
+.family-public-page[data-theme="caramelo"]{--tgk-hero-start:#753f8f;--tgk-hero-end:#ba5797;--tgk-accent:#fff082;--tgk-soft:#fff0f9;--tgk-highlight:#b954a1}
+.family-public-page[data-theme="menta"]{--tgk-hero-start:#115d69;--tgk-hero-end:#218d7c;--tgk-accent:#ffe47b;--tgk-soft:#ebfff7;--tgk-highlight:#278c76}
+.family-public-page[data-theme="sol"]{--tgk-hero-start:#864219;--tgk-hero-end:#c97326;--tgk-accent:#ffeb73;--tgk-soft:#fff3dc;--tgk-highlight:#bd7625}
+.family-public-page[data-theme="oceano"]{--tgk-hero-start:#143d78;--tgk-hero-end:#288db2;--tgk-accent:#ffe16e;--tgk-soft:#ebfaff;--tgk-highlight:#2282ba}
+.family-public-page .family-store-hero{background:linear-gradient(116deg,var(--tgk-hero-start),var(--tgk-hero-end))}
+.family-public-page .family-public-stats strong{color:var(--tgk-accent)}
+.family-public-page #catalogo .family-add-button{background:var(--tgk-accent)}
+.family-public-page #catalogo .family-detail-button{background:var(--tgk-soft)}
+.family-public-page .family-public-hero-actions .action-primary{background:var(--tgk-accent);color:#2b2459}
+.family-public-page .family-public-trustbar{border-top-color:var(--tgk-soft)}
+.family-public-page .family-product-kind{display:inline-flex;align-items:center;margin:7px 0;padding:5px 9px;border-radius:8px;background:var(--tgk-soft);color:#544276;font:900 11px Nunito,sans-serif}

@@ -71,3 +71,13 @@
 .family-radar-request-description strong{display:block;color:#302c68}
 .family-radar-request-description small{color:#7377a0}
 .family-radar-request-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* V2.3: Temas seguros para tiendas de juguetes (solo paletas aprobadas) */
+.family-theme-preview{border-radius:17px;min-height:110px;padding:18px 21px;display:flex;flex-direction:column;gap:8px;justify-content:center;margin:-3px 0 20px;color:white;background:linear-gradient(125deg,#191f59,#6132a6);border:1px solid #ffffff35}
+.family-theme-preview span{font-size:10px;letter-spacing:.12em;font-weight:900;color:#ffdc48}
+.family-theme-preview strong{font:700 25px/1 Fredoka,Nunito,sans-serif}
+.family-theme-preview small{font-size:11px;color:#e8dfff}
+.family-theme-preview[data-theme="caramelo"]{background:linear-gradient(115deg,#733f90,#b95899)}
+.family-theme-preview[data-theme="menta"]{background:linear-gradient(115deg,#145e62,#248a75)}
+.family-theme-preview[data-theme="sol"]{background:linear-gradient(115deg,#874019,#d67c20)}
+.family-theme-preview[data-theme="oceano"]{background:linear-gradient(115deg,#173f80,#2488b8)}

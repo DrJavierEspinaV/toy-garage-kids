@@ -61,7 +61,7 @@ async function refreshSession(){
  for(const name of ['headerPublicStore','headerManageStore'])if($(name))$(name).hidden=true;
  if(!user){if(location.hash==='#registro')requestAnimationFrame(()=>$('registro')?.scrollIntoView({block:'start'}));return;}
  $('familySignedUser').textContent='Adulto responsable: '+(user.email||'sesión activa');
- const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in').eq('owner_user_id',user.id).maybeSingle();
+ const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in,theme_preset').eq('owner_user_id',user.id).maybeSingle();
  if(storeError){alertMsg('No se pudo comprobar tu tienda: '+storeError.message,true);return;}
  store=owned;
  const {data:admin}=await client.from('admins').select('user_id').eq('user_id',user.id).maybeSingle();
@@ -154,6 +154,8 @@ $('redeemForm').addEventListener('submit',async e=>{
 function fillSettings(){
  const f=$('settingsForm');f.elements.display_name.value=store.display_name;f.elements.tagline.value=store.tagline||'';
  f.elements.is_published.checked=store.is_published;
+ f.elements.theme_preset.value=store.theme_preset||'galaxia';
+ $('familyThemePreview').dataset.theme=store.theme_preset||'galaxia';
  f.elements.contact_whatsapp.value=store.contact_whatsapp||'';
  f.elements.public_whatsapp_opt_in.checked=!!store.public_whatsapp_opt_in;
  const image=$('familyLogoPreview'),safe=safeImageUrl(store.logo_url);
@@ -180,7 +182,8 @@ $('settingsForm').addEventListener('submit',async e=>{
   if(visibleContact && !phone)throw Error('Ingresa el WhatsApp del adulto antes de habilitar las consultas.');
   const upd={display_name:String(v.get('display_name')).trim(),
     tagline:String(v.get('tagline')).trim(),is_published:v.get('is_published')==='on',
-    contact_whatsapp:phone,public_whatsapp_opt_in:visibleContact};
+    contact_whatsapp:phone,public_whatsapp_opt_in:visibleContact,
+    theme_preset:String(v.get('theme_preset')||'galaxia')};
   if(upd.display_name.length<2||upd.display_name.length>90)throw Error('Nombre de tienda inválido.');
   if(upd.tagline.length>220)throw Error('La descripción es demasiado larga (máximo 220 caracteres).');
   const file=form.elements.logo.files[0];
@@ -191,7 +194,7 @@ $('settingsForm').addEventListener('submit',async e=>{
    if(uploadError)throw uploadError;
    upd.logo_url=client.storage.from('family-media').getPublicUrl(path).data.publicUrl;
   }
-  const {data,error}=await client.from('stores').update(upd).eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in').single();
+  const {data,error}=await client.from('stores').update(upd).eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in,theme_preset').single();
   if(error)throw error;
   store=data;form.elements.logo.value='';fillSettings();configureInvitedDashboard();alertMsg('Tu tienda fue actualizada. '+(store.public_whatsapp_opt_in&&store.is_published?'Los visitantes pueden consultar por WhatsApp al adulto responsable.':'Tu WhatsApp no se muestra públicamente.'));
  }catch(err){alertMsg('No se guardó la tienda: '+errorText(err),true);}
@@ -211,17 +214,18 @@ function renderInventory(){
   const row=tag('article','family-toy-row');
   const imageUrl=safeImageUrl(t.photos?.[0]);
   if(imageUrl){const image=tag('img','');image.src=imageUrl;image.alt=t.title;image.loading='lazy';row.append(image);}else row.append(tag('span','family-avatar','🧸'));
-  const info=tag('div','family-toy-info');info.append(tag('strong','',t.title),tag('small','',money(t.price)+' · '+t.status));
+  const info=tag('div','family-toy-info');info.append(tag('strong','',t.title),tag('small','',money(t.price)+' · '+(t.product_kind==='creacion'?'🎨 Creación propia':'♻️ Reutilizado')+' · '+t.status));
   const actions=tag('div','family-toy-actions'),edit=tag('button','family-secondary','Editar'),del=tag('button','family-secondary','Eliminar');
   edit.type='button';del.type='button';edit.addEventListener('click',()=>editToy(t));del.addEventListener('click',()=>removeToy(t));
   actions.append(edit,del);row.append(info,actions);root.append(row);
  }
 }
 function editToy(t){
- const f=$('toyForm');f.elements.id.value=t.id;for(const field of ['title','description','category','grade','price','status'])f.elements[field].value=t[field]??'';
+ const f=$('toyForm');f.elements.id.value=t.id;for(const field of ['title','description','category','product_kind','grade','price','status'])f.elements[field].value=t[field]??'';
  f.elements.photo.value='';$('familySaveToy').textContent='Actualizar juguete';
  f.scrollIntoView({behavior:'smooth',block:'center'});
 }
+$('familyThemePreset').addEventListener('change',event=>{$('familyThemePreview').dataset.theme=event.target.value;});
 $('clearToy').addEventListener('click',()=>{$('toyForm').reset();$('toyForm').elements.id.value='';$('familySaveToy').textContent='Guardar juguete';});
 $('toyForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!store||saving)return;const form=e.currentTarget,v=new FormData(form);
@@ -238,7 +242,7 @@ $('toyForm').addEventListener('submit',async e=>{
    if(uploadErr)throw uploadErr;
    photos.push(client.storage.from('family-media').getPublicUrl(path).data.publicUrl);
   }
-  const payload={...previous,id,store_id:store.id,title:String(v.get('title')).trim(),category:String(v.get('category')),grade:String(v.get('grade')),price,
+  const payload={...previous,id,store_id:store.id,title:String(v.get('title')).trim(),category:String(v.get('category')),product_kind:String(v.get('product_kind')||'reutilizado'),grade:String(v.get('grade')),price,
      status:String(v.get('status')),description:String(v.get('description')||'').trim(),photos,sale_mode:'fixed',emoji:'🧸'};
   const {error}=await client.from('toys').upsert(payload,{onConflict:'id'}).select('id').single();
   if(error)throw error;
@@ -281,7 +285,7 @@ $('radarSettingsForm').addEventListener('submit',async e=>{
   if(optIn&&!store.is_published)throw Error('Primero publica tu catálogo en «Personalizar tienda».');
   if(optIn&&!area)throw Error('Selecciona una comuna para aparecer en Toy Radar.');
   const {data,error}=await client.from('stores').update({radar_opt_in:optIn,radar_area_id:area})
-   .eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in').single();
+   .eq('id',store.id).select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in,theme_preset').single();
   if(error)throw error;
   store=data;
   $('radarAdminState').textContent=optIn?'Participación activada. Tu tienda aparecerá en la comuna elegida.':'Participación desactivada. Tu tienda deja de aparecer en Toy Radar.';
