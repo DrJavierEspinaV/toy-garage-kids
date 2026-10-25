@@ -1,4 +1,4 @@
-import {getClient,isLive,compressImage,money,newId,copyText,safeImageUrl} from './common.js?v=multi16';
+import {getClient,isLive,compressImage,money,newId,copyText,safeImageUrl} from './common.js?v=auth-v27';
 const $=id=>document.getElementById(id);
 const SITE_ROOT=new URL('../',import.meta.url);
 // La confirmación por correo NUNCA debe regresar a localhost, aunque la prueba se abra desde allí.

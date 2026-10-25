@@ -1,16 +1,22 @@
-/* La compra comercial exige enlace real de Google Play + validación de licencia servidor.
-   Solo el piloto permite alta con invitación fundadora. Los catálogos son públicos. */
+/* Un enlace para adquirir la aplicación, otro para gestionar tiendas existentes.
+ * Invitaciones de prueba: solo mediante enlace privado desde el fundador.
+ * Nunca inventar la ficha de Google Play.
+ */
 (()=>{
  const cfg=window.TGK_CONFIG||{};
- const commercial=cfg.acquisitionMode==='commercial';
- const url=String(cfg.playStoreUrl||'').trim();
- const valid=/^https:\/\/play\.google\.com\/store\/apps\/details\?id=[a-zA-Z][a-zA-Z0-9_.]+(?:&[^#]*)?$/.test(url);
+ const realPlay=cfg.acquisitionMode==='commercial' &&
+   /^https:\/\/play\.google\.com\/store\/apps\/details\?id=[a-zA-Z][a-zA-Z0-9_.]+(?:&[^#]*)?$/.test(String(cfg.playStoreUrl||''));
+ const destination=new URL('./proximamente.html',location.href);
+ const slug=new URLSearchParams(location.search).get('slug')||'';
+ if(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)&&slug.length<=80)destination.searchParams.set('desde',slug);
  for(const a of document.querySelectorAll('[data-create-store]')){
-  if(!commercial){a.href=new URL('./mi-tienda/#registro',location.href).href;a.title='Piloto solo por invitación de la familia fundadora';}
-  else if(valid){a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.title='Comprar y descargar la aplicación desde Google Play';}
-  else{a.removeAttribute('href');a.setAttribute('aria-disabled','true');a.textContent='📲 Próximamente en Google Play';a.title='Enlace comercial todavía no configurado';}
+  a.href=realPlay?cfg.playStoreUrl:destination.href;
+  a.title=realPlay?'Comprar en Google Play':'Próximamente en Google Play; todavía no disponible para comprar';
+  a.removeAttribute('aria-disabled');
+  if(realPlay){a.target='_blank';a.rel='noopener noreferrer';}
+  else{a.removeAttribute('target');a.removeAttribute('rel');}
  }
- for(const el of document.querySelectorAll('[data-create-store-note]')){
-   el.textContent=commercial?'Compra única en Google Play, al publicarse la aplicación.':'Piloto por invitación de la tienda fundadora · Solo adultos.';
+ for(const note of document.querySelectorAll('[data-create-store-note]')){
+  note.textContent='Próximamente en Google Play · Pago único, sin suscripciones. Los registros del piloto son solo por invitación privada.';
  }
 })();

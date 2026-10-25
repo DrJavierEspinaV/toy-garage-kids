@@ -12,7 +12,20 @@ export const isLive = () => Boolean(CONFIG.supabaseUrl?.trim() && CONFIG.supabas
 let supabasePromise;
 export async function getClient(){
   if(!isLive())return null;
-  if(!supabasePromise){supabasePromise=import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm').then(({createClient})=>createClient(CONFIG.supabaseUrl,CONFIG.supabasePublishableKey,{auth:{persistSession:true,autoRefreshToken:true,...(document.body?.dataset?.appMode==='standalone'?{storageKey:'tgk-mi-tienda-auth-v1'}:{})}}));}
+  if(!supabasePromise){
+   // Un panel administrativo NO recupera credenciales de otra pestaña o sesión previa.
+   // Se requiere ingresar la contraseña en cada visita y al recargar.
+   const passwordRequired=document.body?.dataset?.requirePassword==='true';
+   supabasePromise=import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm')
+    .then(({createClient})=>createClient(CONFIG.supabaseUrl,CONFIG.supabasePublishableKey,{
+      auth:{
+        persistSession:!passwordRequired,
+        autoRefreshToken:true,
+        detectSessionInUrl:!passwordRequired,
+        ...(document.body?.dataset?.appMode==='standalone'?{storageKey:'tgk-mi-tienda-auth-v1'}:{})
+      }
+    }));
+  }
   return supabasePromise;
 }
 const memoryStore=new Map();
