@@ -14,13 +14,16 @@
  async function clearOldPublicInstallation(){
   // Limpiar el antiguo service worker v19, registrado antes de autenticar.
   try{
-   if(!('serviceWorker' in navigator))return;
+   if(!('serviceWorker' in navigator)||authorized)return;
    const registrations=await navigator.serviceWorker.getRegistrations();
    for(const registration of registrations){
+    // Nunca desregistrar la instalación mientras se autoriza la sesión.
+    if(authorized)return;
     if(registration.scope===scope)await registration.unregister();
    }
-   if('caches' in window){
+   if('caches' in window&&!authorized){
     const keys=await caches.keys();
+    if(authorized)return;
     await Promise.all(keys.filter(k=>k.startsWith('tgk-mi-tienda-shell-')).map(k=>caches.delete(k)));
    }
   }catch(err){console.warn('No se pudo limpiar la instalación anterior',err);}
