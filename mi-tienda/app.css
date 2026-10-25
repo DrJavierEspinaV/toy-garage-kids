@@ -4,7 +4,7 @@ body.family-signed-in .family-hero,
 body.family-signed-in .family-registration-note,
 body.family-signed-in #confirmationTip,
 body.family-signed-in .family-notice{display:none!important}
-body[data-app-mode="standalone"].family-signed-in .mi-install{display:none!important}
+body[data-app-mode="standalone"] .mi-install[hidden]{display:none!important}
 body.family-signed-in .family-shell{padding-top:18px}
 .family-header-links{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:10px}
 .family-header-links>a{font-size:12px;font-weight:1000;color:#5841a1;text-decoration:none;white-space:nowrap}
@@ -44,3 +44,7 @@ body.family-signed-in .family-shell{padding-top:18px}
  .family-dashboard-card small{font-size:10px}
 }
 @media(max-width:360px){.family-dashboard-grid{grid-template-columns:1fr}}
+
+/* Instalación piloto: se presenta solo en una cuenta propietaria autorizada */
+.mi-install[hidden]{display:none!important}
+.mi-install #installFamilyApp[hidden]{display:none!important}

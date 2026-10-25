@@ -3,14 +3,14 @@
 <meta name="theme-color" content="#171a48"><title>Mi Tienda · Tu tienda familiar</title>
 <meta name="description" content="Aplicación familiar independiente: administra tu catálogo de juguetes desde tu celular.">
 <link rel="stylesheet" href="../css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="../css/familias.css?v=24-poster"><link rel="stylesheet" href="./app.css?v=22-founder-panel">
-<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./icon.svg"><script defer src="../config.js"></script><script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<script type="module" src="../js/familias.js?v=login-v27"></script><script defer src="./install.js?v=19"></script></head>
+<link rel="icon" type="image/svg+xml" href="./icon.svg"><script defer src="../config.js"></script><script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script type="module" src="../js/familias.js?v=install-v28"></script><script defer src="./install.js?v=28-authorized"></script></head>
 <body class="family-body" data-app-mode="standalone" data-require-password="true">
 <header class="family-header"><span class="family-brand">🧸 <span>MI TIENDA<small>Un negocio familiar, un espacio propio</small></span></span><nav class="family-header-links" aria-label="Navegación de mi cuenta"><a id="headerPublicStore" href="#" hidden>🏠 Ver tienda</a><a id="headerManageStore" href="#" hidden>🧸 Panel</a><a class="family-back" id="headerMyAccount" href="#acceso">🔑 Ingresar</a></nav></header>
 <main class="family-shell">
 <div class="family-hero"><span class="family-eyebrow">✦ TU PROPIA TIENDA DE JUGUETES ✦</span><h1>Tu tienda. <em>Tus aventuras.</em></h1><p>Crea tu tienda con tu nombre y logo, administra tus juguetes y comparte tu propio catálogo. Cada familia conserva su cuenta y sus productos de manera independiente.</p><div class="family-hero-links"><a href="#registro" class="family-primary">✨ Crear cuenta</a><a href="#acceso" class="family-secondary">🔑 Ingresar</a></div></div>
-<aside class="mi-install" aria-label="Instalación de la aplicación"><div><strong>📲 Mi Tienda en tu celular</strong><p>Instálala para abrirla como una aplicación, sin depender de otra tienda o familia.</p><p id="installHelp">En Chrome, usa el menú ⋮ y elige «Instalar aplicación» o «Añadir a pantalla de inicio».</p></div><button type="button" id="installFamilyApp" class="family-primary" hidden>Instalar aplicación</button></aside><p class="family-notice">🛡️ <strong>Piloto privado por invitación:</strong> registro exclusivo de adultos (18+). El acceso a Toy Radar es voluntario. Esta aplicación no habilita altas comerciales gratuitas.</p>
-<p class="family-help family-registration-note">Usa un correo propio y el código de invitación recibido. No uses la cuenta del administrador de otra familia. Si este enlace se abrió dentro de WhatsApp o ChatGPT, ábrelo directamente en Chrome para instalar la app.</p>
+<p class="family-notice">🛡️ <strong>Piloto privado por invitación:</strong> registro exclusivo de adultos (18+). El acceso a Toy Radar es voluntario. Esta aplicación no habilita altas comerciales gratuitas.</p>
+<p class="family-help family-registration-note">Usa un correo propio y el código de invitación recibido. No uses la cuenta del administrador de otra familia. Si este enlace se abrió dentro de WhatsApp o ChatGPT, ábrelo directamente en Chrome para ingresar. La instalación de prueba se habilita solo tras autenticar una tienda activada.</p>
 <p class="family-help" id="confirmationTip">✅ ¿Confirmaste el correo pero viste «localhost:3000» o «No se puede acceder a este sitio»? La confirmación puede haberse completado de todos modos. Vuelve a esta aplicación e inicia sesión con el mismo correo y contraseña. No necesitas crear otra cuenta.</p>
 <div id="familyAlert" class="family-alert" role="status" aria-live="polite"></div>
 <section id="authPane" class="family-columns">
@@ -19,6 +19,13 @@
 </section>
 <section id="accountPane" hidden>
 <div class="family-account-bar"><span id="familySignedUser">Sesión de adulto</span><button type="button" id="familySignout" class="family-secondary">Cerrar sesión</button></div>
+<aside class="mi-install" id="authorizedInstall" hidden aria-label="Instalación de prueba para propietarios verificados">
+ <div><strong>📲 Instalar Mi Tienda · Piloto autorizado</strong>
+  <p>Disponible únicamente para adultos que ya activaron su tienda con invitación.</p>
+  <p id="installHelp">Estamos comprobando si tu dispositivo permite instalar esta versión de prueba.</p>
+ </div>
+ <button type="button" id="installFamilyApp" class="family-primary" hidden>📲 Instalar versión de prueba</button>
+</aside>
 
 <section id="founderDashboard" class="family-panel family-area family-dashboard family-founder-dashboard" hidden aria-labelledby="founderDashboardTitle">
  <div class="family-dashboard-identity">

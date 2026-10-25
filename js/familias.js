@@ -93,6 +93,10 @@ function configureInvitedDashboard(){
 async function refreshSession(){
  const {data,error}=await client.auth.getUser();
  user=error?null:data.user;
+ if(standalone){
+  document.body.dataset.installAuthorized='false';
+  window.dispatchEvent(new CustomEvent('tgk:install-eligibility',{detail:{allowed:false}}));
+ }
  ui.auth.hidden=!!user;ui.account.hidden=!user;
  ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;ui.radar.hidden=true;ui.poster.hidden=true;
  $('founderDashboard').hidden=true;$('invitedDashboard').hidden=true;store=null;
@@ -107,6 +111,12 @@ async function refreshSession(){
  store=owned;
  const {data:admin}=await client.from('admins').select('user_id').eq('user_id',user.id).maybeSingle();
  const isFounder=!!admin && store?.id===founderId;
+ // Sólo el dueño de una tienda habilitada podrá recibir la oferta de instalación.
+ if(standalone){
+  const allowed=Boolean(store);
+  document.body.dataset.installAuthorized=String(allowed);
+  window.dispatchEvent(new CustomEvent('tgk:install-eligibility',{detail:{allowed}}));
+ }
  ui.founder.hidden=!isFounder||standalone;
  ui.radar.hidden=!store;
  ui.poster.hidden=!store;

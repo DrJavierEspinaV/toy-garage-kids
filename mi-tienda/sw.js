@@ -1,6 +1,6 @@
 /* PWA solo de familias. No controla las páginas de la tienda fundadora. */
-const CACHE='tgk-mi-tienda-shell-v19';
-const SHELL=['./','./index.html','./app.css?v=19','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
+const CACHE='tgk-mi-tienda-shell-v28';
+const SHELL=['./','./index.html','./app.css?v=22-founder-panel','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
 self.addEventListener('install',event=>{
  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()).catch(()=>{}));
 });
