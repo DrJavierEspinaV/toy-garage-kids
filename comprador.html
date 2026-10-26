@@ -6,7 +6,7 @@
 <title>Mi cuenta de comprador · Toy Garage Kids</title>
 <link rel="stylesheet" href="./css/comprador.css?v=33">
 <script defer src="./config.js"></script>
-<script type="module" src="./js/comprador.js?v=33b"></script>
+<script type="module" src="./js/comprador.js?v=34-unique"></script>
 </head><body>
 <header class="buyer-header">
  <a href="./plataforma.html" class="buyer-brand"><img src="./assets/toy-garage-kids-logo.webp" alt="Logo Toy Garage Kids" width="78" height="59">
@@ -18,7 +18,7 @@
  <p>Explora todas las tiendas sin registrarte. Crea tu cuenta <strong>gratuita de adulto</strong> solamente si quieres participar en Battle Arena y consultar tus ofertas y avisos.</p></div>
  <div id="buyerStatus" class="buyer-message" role="status" aria-live="polite">Conectando con Toy Garage Kids…</div>
  <section id="buyerAuth" class="buyer-auth" hidden aria-label="Registro e ingreso gratuitos">
-  <article class="buyer-card"><h2>✨ Crear cuenta gratis</h2><p>No necesitas comprar la aplicación ni tener una tienda.</p>
+  <article class="buyer-card"><h2>✨ Crear cuenta gratis</h2><p>Solo si aún no tienes usuario. Si ya administras una tienda o compraste antes, entra con tu cuenta existente: <a href="#buyerLoginForm" class="buyer-existing-link">Ya tengo una cuenta</a>.</p>
    <form id="buyerSignupForm">
     <label>Correo del adulto<input name="email" type="email" autocomplete="email" required></label>
     <label>Contraseña (mínimo 8 caracteres)<input name="password" type="password" minlength="8" autocomplete="new-password" required></label>
@@ -27,7 +27,7 @@
    </form>
    <p class="buyer-small">Recibirás un mensaje para confirmar tu correo. No pedimos RUT, domicilio ni datos bancarios.</p>
   </article>
-  <article class="buyer-card"><h2>🔑 Ya tengo una cuenta</h2><p>Ingresa con tu cuenta adulta existente, incluso si ya administras una tienda.</p>
+  <article class="buyer-card"><h2>🔑 Ya tengo una cuenta</h2><p>La misma cuenta sirve para comprar y administrar tu tienda. No necesitas registrarte nuevamente.</p>
    <form id="buyerLoginForm">
     <label>Correo electrónico<input name="email" type="email" autocomplete="username" required></label>
     <label>Contraseña<input name="password" type="password" minlength="8" autocomplete="current-password" required></label>
