@@ -45,7 +45,8 @@ async function refresh(){
  $('battleBidForm').elements.amount.value=String(b.highest_bid==null?b.opening_bid:b.highest_bid+b.bid_step);
  report(ongoing?'🟢 Battle activa: solo participan adultos de tiendas invitadas.':
  b.state==='closed'?(b.bid_count?'🏁 Battle finalizada. El ganador recibió un aviso privado.':'🏁 Battle finalizada sin ofertas.'):'⌛ Finalizando Battle. El servidor está comprobando las ofertas.');
- setUser(ongoing);
+ // Tras el cierre también permitimos iniciar sesión para consultar el aviso privado.
+ setUser(true);
  if(!ongoing)$('battleBidPanel').hidden=true;
  tick();if(user)await readMessages();
 }
