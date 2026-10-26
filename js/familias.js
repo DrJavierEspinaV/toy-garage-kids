@@ -1,10 +1,11 @@
 import {getClient,isLive,compressImage,money,newId,copyText,safeImageUrl} from './common.js?v=auth-v27';
+import {getPaymentOptions,savePaymentOptions} from './payment-data.js?v=29';
 const $=id=>document.getElementById(id);
 const SITE_ROOT=new URL('../',import.meta.url);
 // La confirmación por correo NUNCA debe regresar a localhost, aunque la prueba se abra desde allí.
 const AUTH_REDIRECT_URL=window.TGK_CONFIG?.authRedirectUrl || 'https://drjavierespinav.github.io/toy-garage-kids/mi-tienda/';
 const standalone=document.body.dataset.appMode==='standalone';
-const ui={auth:$('authPane'),account:$('accountPane'),redeem:$('redeemPane'),founder:$('founderInvitePane'),work:$('familyWorkspace'),radar:$('radarAdminPane'),poster:$('posterSettingsPane')};
+const ui={auth:$('authPane'),account:$('accountPane'),redeem:$('redeemPane'),founder:$('founderInvitePane'),work:$('familyWorkspace'),radar:$('radarAdminPane'),poster:$('posterSettingsPane'),payment:$('paymentSettingsPane')};
 let client=null,user=null,store=null,toys=[],saving=false;
 const founderId='d4549710-8c53-4901-bbee-f70fdb060f03';
 function alertMsg(text,err=false){const n=$('familyAlert');n.textContent=text;n.dataset.error=String(err);}
@@ -69,6 +70,36 @@ $('posterSettingsForm').addEventListener('submit',async event=>{
  finally{saving=false;setBusy(form,false);}
 });
 
+/* V2.9: Formas de pago aceptadas por cada tienda; sin cuentas ni cobro automático. */
+async function loadFamilyPayment(){
+ const form=$('paymentMethodsForm');
+ const status=$('familyPaymentStatus');
+ try{
+  const options=await getPaymentOptions(client,store.id);
+  for(const key of ['transfer','cash_on_delivery','arrange_with_adult'])form.elements[key].checked=options[key]===true;
+  status.textContent='Elige las formas de pago y guarda. Los datos bancarios nunca se publican aquí.';
+ }catch(err){
+  status.textContent='No fue posible consultar las formas de pago: '+errorText(err);
+ }
+}
+$('paymentMethodsForm').addEventListener('submit',async event=>{
+ event.preventDefault();
+ if(!client||!user||!store||saving)return;
+ const form=event.currentTarget,status=$('familyPaymentStatus');
+ const input=Object.fromEntries(['transfer','cash_on_delivery','arrange_with_adult'].map(key=>[key,form.elements[key].checked]));
+ if(!Object.values(input).some(Boolean)){
+  status.textContent='Selecciona al menos una forma de pago.';
+  return;
+ }
+ try{
+  saving=true;setBusy(form,true);status.textContent='Guardando...';
+  await savePaymentOptions(client,store.id,input);
+  status.textContent='✓ Formas de pago guardadas solo para esta tienda.';
+ }catch(err){
+  status.textContent='No se pudieron guardar las formas de pago: '+errorText(err);
+ }finally{saving=false;setBusy(form,false);}
+});
+
 function configureFounderDashboard(){
  const link=(id,relative)=>{const element=$(id);if(element)element.href=new URL(relative,SITE_ROOT).href;};
  link('founderEditLink','admin.html');
@@ -98,7 +129,7 @@ async function refreshSession(){
   window.dispatchEvent(new CustomEvent('tgk:install-eligibility',{detail:{allowed:false}}));
  }
  ui.auth.hidden=!!user;ui.account.hidden=!user;
- ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;ui.radar.hidden=true;ui.poster.hidden=true;
+ ui.redeem.hidden=true;ui.founder.hidden=true;ui.work.hidden=true;ui.radar.hidden=true;ui.poster.hidden=true;ui.payment.hidden=true;
  $('founderDashboard').hidden=true;$('invitedDashboard').hidden=true;store=null;
  document.body.classList.toggle('family-signed-in',!!user);
  const headerAccount=$('headerMyAccount');
@@ -120,6 +151,8 @@ async function refreshSession(){
  ui.founder.hidden=!isFounder||standalone;
  ui.radar.hidden=!store;
  ui.poster.hidden=!store;
+ ui.payment.hidden=!store;
+ if(store)await loadFamilyPayment();
  if(store)fillPosterSettings();
  if(isFounder){
    configureFounderDashboard();

@@ -92,3 +92,6 @@
 .family-poster-actions a[aria-disabled="true"]{pointer-events:none;opacity:.45}
 .family-poster-form>.family-help{grid-column:1/-1}
 @media(max-width:640px){.family-poster-form{grid-template-columns:1fr}}
+
+/* V2.9: controles de pago compartidos, sin datos bancarios */
+.family-payment-panel .tgk-payment-form{max-width:850px}

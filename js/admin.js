@@ -1,4 +1,5 @@
 import {readToys,readSettings,writeToy,removeToy,writeSettings,getClient,isLive,newId,uploadPhoto,money,escapeHtml,drawToy,grades,statuses,toast,watchUpdates,safeImageUrl} from './common.js?v=auth-v27';
+import {getPaymentOptions,savePaymentOptions} from './payment-data.js?v=29';
 const $=id=>document.getElementById(id);
 let toys=[],settings={},selectedPhotos=[],incomingFiles=[],editingId=null,isSaving=false;
 const formFields=['toyTitle','toyCategory','toyGrade','toyDescription','toyConditionNote','toyPrice','toyStatus','toySaleMode','toyEmoji','battleBase','battleStep','battleEnds'];
@@ -18,7 +19,7 @@ async function start(){
   }else if(['localhost','127.0.0.1',''].includes(location.hostname) || location.protocol==='file:'){showWorkspace();await refresh();}
   else {showLogin(); $('loginForm').hidden=true; authError('Administración deshabilitada: primero conecta Supabase en config.js. Esta página pública nunca habilita el editor de demostración.');}
 }
-async function refresh(){try{[toys,settings]=await Promise.all([readToys(),readSettings()]);renderInventory();fillSettings();}catch(e){console.error(e);toast('Error cargando datos. Revisa conexión y permisos.');}}
+async function refresh(){try{[toys,settings]=await Promise.all([readToys(),readSettings()]);renderInventory();fillSettings();await loadFounderPayment();}catch(e){console.error(e);toast('Error cargando datos. Revisa conexión y permisos.');}}
 function renderInventory(){
   const total=toys.length;
   const parts=[['Juguetes',total],['Disponibles',toys.filter(t=>t.status==='available').length],['Reservados',toys.filter(t=>t.status==='reserved').length],['Vendidos',toys.filter(t=>t.status==='sold').length]];
@@ -106,4 +107,28 @@ $('loginForm').addEventListener('submit',async event=>{
  }catch(e){authError(e.message||'Error de acceso');}
 });
 $('logoutBtn').addEventListener('click',async()=>{try{await (await getClient()).auth.signOut();}finally{showLogin();resetForm();}});
+async function loadFounderPayment(){
+ const form=$('founderPaymentForm'),status=$('founderPaymentStatus');
+ if(!isLive()){status.textContent='Configuración disponible al conectar con Supabase.';return;}
+ try{
+  const client=await getClient();
+  const options=await getPaymentOptions(client,'d4549710-8c53-4901-bbee-f70fdb060f03');
+  for(const key of ['transfer','cash_on_delivery','arrange_with_adult'])form.elements[key].checked=options[key]===true;
+  status.textContent='Configura y guarda las formas de pago que acepta Toy Garage Kids.';
+ }catch(err){status.textContent='No se pudo cargar la configuración: '+err.message;}
+}
+$('founderPaymentForm').addEventListener('submit',async event=>{
+ event.preventDefault();
+ const form=event.currentTarget,status=$('founderPaymentStatus');
+ const options=Object.fromEntries(['transfer','cash_on_delivery','arrange_with_adult'].map(key=>[key,form.elements[key].checked]));
+ if(!Object.values(options).some(Boolean)){status.textContent='Debes elegir al menos una forma de pago.';return;}
+ const button=form.querySelector('button[type=submit]');button.disabled=true;
+ try{
+  const client=await getClient();
+  await savePaymentOptions(client,'d4549710-8c53-4901-bbee-f70fdb060f03',options);
+  status.textContent='✓ Formas de pago guardadas para Toy Garage Kids.';
+ }catch(err){status.textContent='No se pudo guardar: '+(err?.message||'Error');}
+ finally{button.disabled=false;}
+});
+
 resetForm();start();
