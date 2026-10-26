@@ -1,0 +1,25 @@
+/* V2.9: aspectos de pago reutilizados sin rediseñar los centros de control. */
+.tgk-payment-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,265px),1fr));gap:11px;margin-top:16px}
+.tgk-payment-choice{display:flex;align-items:flex-start;gap:10px;padding:15px!important;background:#f8f7ff;border:1px solid #dfdcf1;border-radius:13px;cursor:pointer}
+.tgk-payment-choice input{flex:0 0 auto;width:17px;height:17px;accent-color:#7751c8;margin:3px 0 0}
+.tgk-payment-choice span{display:flex;flex-direction:column;gap:5px;min-width:0}
+.tgk-payment-choice strong{font:800 14px/1.2 Nunito,Arial,sans-serif;color:#30245c}
+.tgk-payment-choice small{font:700 11px/1.4 Nunito,Arial,sans-serif;color:#686583}
+.tgk-payment-footer{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:13px}
+.tgk-payment-footer p{font-size:12px;line-height:1.45;color:#625b87;font-weight:700;margin:0}
+.tgk-public-payment{background:#fff;border-radius:18px;border:1px solid #ddd9f4;padding:21px 25px;display:flex;flex-direction:column;gap:11px;margin-top:34px;margin-bottom:30px;box-shadow:0 5px 25px #19164a0a}
+.tgk-public-payment-title{display:flex;gap:14px;align-items:center}
+.tgk-public-payment-title>span{font-size:28px}
+.tgk-public-payment-title h2{font:700 clamp(21px,3vw,27px)/1.1 Fredoka,Nunito,sans-serif;color:#28215c;margin:0 0 3px}
+.tgk-public-payment-title p{font:700 12px/1.5 Nunito,Arial,sans-serif;color:#656487;margin:0}
+.tgk-public-payment-methods{display:flex;flex-wrap:wrap;gap:9px}
+.tgk-public-pay-method{display:inline-flex;align-items:center;padding:10px 13px;background:#f0ecff;border:1px solid #e2daff;border-radius:999px;font:900 12px/1.3 Nunito,Arial,sans-serif;color:#4b3687}
+.tgk-payment-disclaimer{font:700 11px/1.5 Nunito,Arial,sans-serif;color:#777495;margin:3px 0 0}
+.admin-body .admin-payment{margin-top:22px}
+.admin-body .tgk-payment-choice{font-weight:normal}
+.family-public-page .tgk-public-payment{max-width:1140px}
+@media(max-width:720px){
+ .tgk-payment-form{grid-template-columns:1fr}
+ .tgk-public-payment{margin-left:12px;margin-right:12px;padding:16px}
+ .tgk-public-payment-methods{flex-direction:column;align-items:flex-start}
+}
