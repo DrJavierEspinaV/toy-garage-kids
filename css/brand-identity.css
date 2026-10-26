@@ -48,3 +48,9 @@
 .family-public-page a.tgk-platform-signature:hover{text-decoration:underline;text-underline-offset:3px}
 a.tgk-platform-footer-mark{text-decoration:none;width:fit-content;color:#d9d8f5}
 a.tgk-platform-footer-mark:hover,a.tgk-store-platform-credit a:hover{text-decoration:underline}
+
+/* Acceso gratuito independiente del vendedor. */
+.tgk-buyer-free-link{font-weight:900;color:#6040a3;white-space:nowrap;text-decoration:none}
+.tgk-buyer-free-link:hover,.tgk-buyer-free-link:focus-visible{text-decoration:underline}
+.tgk-buyer-free-promo{margin:13px 0 0!important;font:900 12px Nunito,Arial,sans-serif}
+.tgk-buyer-free-promo a{color:#ffe46d;text-decoration:underline}

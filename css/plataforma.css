@@ -62,3 +62,5 @@ footer>a{margin-left:auto;color:#ffe15c;font-size:12px;font-weight:900}
 .platform-directory-footnote{margin:26px 0 0;padding:14px 16px;background:#eee9ff;border-radius:12px;color:#655a91;font:700 12px/1.6 Nunito,Arial,sans-serif}
 .platform-directory-footnote strong{color:#352477}
 @media(max-width:650px){.platform-search-form{padding:15px}.platform-search-controls{flex-direction:column}.platform-search-controls select{min-width:0;max-width:100%;width:100%}.platform-search-controls button{width:100%}}
+
+.platform-buyer-link{font-weight:900;color:#5c36a9;text-decoration:underline;text-underline-offset:2px}
