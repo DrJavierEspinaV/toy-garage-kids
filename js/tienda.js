@@ -87,8 +87,9 @@ function renderCatalogue(){
    const add=node('button','family-add-button',cart.includes(t.id)?'✓ En selección':'🎒 Agregar');
    add.type='button';add.addEventListener('click',()=>addToy(t.id));actions.append(add);
   }else{
-   const label=node('span','family-public-unavailable',t.sale_mode==='battle'?'⚡ Ofertas no habilitadas':(statuses[t.status]||'No disponible'));
-   actions.append(label);
+   if(t.sale_mode==='battle'){
+    const link=node('a','family-detail-button','⚡ Ver Battle');link.href=new URL('./battle.html?slug='+encodeURIComponent(slug)+'&toy='+encodeURIComponent(t.id),location.href).href;actions.append(link);
+   }else actions.append(node('span','family-public-unavailable',statuses[t.status]||'No disponible'));
   }
   body.append(actions);card.append(body);root.append(card);
  }
@@ -97,14 +98,15 @@ function renderBattle(){
  const root=$('familyBattlePreview');root.replaceChildren();
  const featured=toys.filter(t=>t.sale_mode==='battle'&&t.status==='available').slice(0,3);
  if(!featured.length){
-  root.append(node('div','family-public-battle-empty','🏆 Aún no hay Battle activas. Las ofertas reales están en preparación.'));
+  root.append(node('div','family-public-battle-empty','🏆 Todavía no hay juguetes en Battle. El adulto vendedor puede activar las primeras subastas.'));
   return;
  }
  for(const t of featured){
   const card=node('div','battle-card');
   card.append(node('div','battle-toy',t.emoji||'⚡'));
-  const details=node('div');details.append(node('span','battle-demo-label','⚡ OFERTAS NO HABILITADAS'),node('h3','',t.title),
+  const details=node('div');details.append(node('span','battle-demo-label','⚡ BATTLE ARENA'),node('h3','',t.title),
     node('p','','Precio de salida orientativo · '+(grades[t.grade]||'Usado')),node('strong','',money(t.battle_base??t.price)));
+  const link=node('a','tgk-battle-link','⚡ Entrar a Battle');link.href=new URL('./battle.html?slug='+encodeURIComponent(slug)+'&toy='+encodeURIComponent(t.id),location.href).href;details.append(link);
   card.append(details);root.append(card);
  }
 }
@@ -138,7 +140,12 @@ function openToy(id){
  if(t.status==='available'&&t.sale_mode!=='battle'){
    const action=node('button','action action-primary','🎒 Agregar a mi selección');
    action.type='button';action.addEventListener('click',()=>addToy(t.id));root.append(action);
- }else root.append(node('p','family-public-detail-info',t.sale_mode==='battle'?'⚡ Battle en preparación. No se admiten ofertas reales.':'Este juguete no está disponible para solicitar.'));
+ }else root.append(node('p','family-public-detail-info',t.sale_mode==='battle'?'⚡ Ingresa a Battle Arena para conocer si la subasta está abierta.':'Este juguete no está disponible para solicitar.'));
+ if(t.sale_mode==='battle'){
+  const link=node('a','tgk-battle-link','⚡ Entrar a Battle Arena');
+  link.href=new URL('./battle.html?slug='+encodeURIComponent(slug)+'&toy='+encodeURIComponent(t.id),location.href).href;
+  root.append(link);
+ }
  dialog.showModal();
 }
 function renderCart(){
