@@ -213,7 +213,7 @@ async function main(){
  document.body.dataset.theme=['galaxia','caramelo','menta','sol','oceano'].includes(shop.theme_preset)?shop.theme_preset:'galaxia';
  $('shareBasket').textContent=String(store.contact_whatsapp||'').trim()?'📲 Consultar por WhatsApp':'📩 Compartir consulta de compra';
  $('publicStore').hidden=false;$('storeError').hidden=true;
- document.title=store.display_name+' · Mi Tienda';
+ document.title=store.display_name+' · Toy Garage Kids';
  $('publicTitle').textContent=store.display_name;
  $('storeHeaderTitle').textContent=store.display_name;
  $('storeFooterTitle').textContent='🧸 '+store.display_name;
