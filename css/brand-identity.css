@@ -42,3 +42,9 @@
 .tgk-admin-app-brand small{font-size:9px}
 .tgk-soon-official-brand img{width:66px;height:54px}
 }
+
+/* Accesos a la marca madre (no modifican navegación interna de cada tienda). */
+.family-public-page a.tgk-platform-signature{text-decoration:none;color:inherit;width:fit-content;max-width:100%;margin-inline:auto}
+.family-public-page a.tgk-platform-signature:hover{text-decoration:underline;text-underline-offset:3px}
+a.tgk-platform-footer-mark{text-decoration:none;width:fit-content;color:#d9d8f5}
+a.tgk-platform-footer-mark:hover,a.tgk-store-platform-credit a:hover{text-decoration:underline}
