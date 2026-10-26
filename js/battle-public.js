@@ -93,9 +93,9 @@ $('battleBidForm').addEventListener('submit',async event=>{
  try{
   const {error}=await client.rpc('tgk_place_bid',{p_battle_id:battle.id,p_amount:value});
   if(error)throw error;
-  report('✓ ¡Oferta registrada! Si otra persona ofrece más, podrás volver a participar.');
   await refresh();
- }catch(err){report('No se aceptó la oferta: '+(err?.message||'Error del servidor'));await refresh().catch(()=>{});}
+  report('✓ ¡Oferta registrada! Si otra persona ofrece más, podrás volver a participar.');
+ }catch(err){await refresh().catch(()=>{});report('No se aceptó la oferta: '+(err?.message||'Error del servidor'));}
  finally{button.disabled=false;}
 });
 start().catch(err=>{console.error(err);report('No se pudo cargar la Battle. Intenta nuevamente.');});
