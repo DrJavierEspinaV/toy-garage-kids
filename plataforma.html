@@ -5,9 +5,9 @@
  <meta name="theme-color" content="#171b50">
  <meta name="description" content="Toy Garage Kids: tu tienda familiar de juguetes reutilizados. Explora tiendas de juguetes usados y creaciones familiares.">
  <title>Toy Garage Kids · Tu tienda familiar de juguetes reutilizados</title>
- <link rel="stylesheet" href="./css/plataforma.css?v=31">
+ <link rel="stylesheet" href="./css/plataforma.css?v=32-directorio">
  <script defer src="./config.js"></script>
- <script type="module" src="./js/plataforma-tiendas.js?v=31"></script>
+ <script type="module" src="./js/plataforma-tiendas.js?v=32-directorio"></script>
 </head>
 <body>
 <header class="platform-header">
@@ -27,22 +27,21 @@
  </div>
  <div class="platform-hero-art" aria-hidden="true">🧸 <span>🚀</span> 🏎️</div>
 </section>
-<section class="platform-stores" id="tiendas">
- <span class="eyebrow">NUESTRA COMUNIDAD</span>
- <h2>Una plataforma, muchas tiendas</h2>
- <p class="intro">Cada tienda conserva sus propios juguetes y su identidad. Estas son las primeras dos tiendas de la comunidad.</p>
- <div class="store-grid">
-  <article class="store-card">
-   <img id="platformFounderLogo" src="./assets/el-garage-de-cristobal.svg" width="122" height="122" alt="Logo de El Garage de Cristóbal">
-   <div><span>⭐ TIENDA FUNDADORA</span><h3 id="platformFounderName">El Garage de Cristóbal</h3><p>Mis juguetes buscan nuevas aventuras. ¡Tal vez sus próximas aventuras estén contigo!</p>
-   <a href="./index.html">Visitar la tienda de Cristóbal</a></div>
-  </article>
-  <article class="store-card">
-   <div id="platformIsiFallback" class="store-icon" aria-hidden="true">🎨</div>
-   <div><span>🎨 TIENDA FAMILIAR</span><h3 id="platformIsiName">La Tienda de Isi</h3><p>Juguetes reutilizados y creaciones para disfrutar de nuevas aventuras.</p>
-   <a href="./tienda.html?slug=la-tienda-isi">Visitar La Tienda de Isi</a></div>
-  </article>
- </div>
+<section class="platform-stores" id="tiendas" aria-labelledby="platformStoresTitle">
+ <span class="eyebrow">🏪 DIRECTORIO REAL · TOY RADAR</span>
+ <h2 id="platformStoresTitle">Descubre tiendas familiares por comuna</h2>
+ <p class="intro">Elige una comuna para conocer las tiendas publicadas que participan voluntariamente en Toy Radar. Los logos y nombres se obtienen de nuestra red familiar, sin mostrar domicilios ni ubicaciones exactas.</p>
+ <form id="platformAreaForm" class="platform-search-form">
+  <label for="platformArea">📍 ¿En qué comuna quieres explorar?</label>
+  <div class="platform-search-controls">
+   <select id="platformArea" required disabled><option value="">Cargando comunas…</option></select>
+   <button type="submit" id="platformSearchButton" disabled>🔎 Buscar tiendas</button>
+  </div>
+  <p class="platform-privacy">🛡️ Selección voluntaria por comuna: no pedimos GPS ni dirección. Puedes explorar gratuitamente, sin instalar la aplicación.</p>
+ </form>
+ <p id="platformStoresStatus" class="platform-directory-status" role="status" aria-live="polite">Conectando con tiendas familiares...</p>
+ <div id="platformStoreGrid" class="store-grid" aria-label="Tiendas encontradas"></div>
+ <p class="platform-directory-footnote">Solo aparecen tiendas publicadas y autorizadas para Toy Radar. La compra de la aplicación será necesaria para crear y administrar una tienda, no para visitar catálogos.</p>
 </section>
 <section class="platform-about">
  <h2>¿Cómo funciona?</h2>
