@@ -135,7 +135,7 @@ async function refreshSession(){
  const headerAccount=$('headerMyAccount');
  if(headerAccount){headerAccount.textContent=user?'🔑 Mi cuenta':'🔑 Ingresar';headerAccount.href=user?'#accountPane':'#acceso';}
  for(const name of ['headerPublicStore','headerManageStore'])if($(name))$(name).hidden=true;
- if(!user){if(location.hash==='#registro')requestAnimationFrame(()=>$('registro')?.scrollIntoView({block:'start'}));return;}
+ if(!user){window.dispatchEvent(new CustomEvent('tgk:owner-ready',{detail:null}));if(location.hash==='#registro')requestAnimationFrame(()=>$('registro')?.scrollIntoView({block:'start'}));return;}
  $('familySignedUser').textContent='Adulto responsable: '+(user.email||'sesión activa');
  const {data:owned,error:storeError}=await client.from('stores').select('id,slug,display_name,logo_url,tagline,is_published,radar_opt_in,radar_area_id,contact_whatsapp,public_whatsapp_opt_in,theme_preset,poster_copy').eq('owner_user_id',user.id).maybeSingle();
  if(storeError){alertMsg('No se pudo comprobar tu tienda: '+storeError.message,true);return;}
@@ -163,6 +163,7 @@ async function refreshSession(){
    $('invitedDashboard').hidden=false;
  }
  if(store)await loadRadarPanel();
+ window.dispatchEvent(new CustomEvent('tgk:owner-ready',{detail:store?{storeId:store.id,slug:store.slug,displayName:store.display_name}:null}));
  if(isFounder){
    focusAuthenticatedPanel();
    if(location.hash==='#invitar'&&!standalone)requestAnimationFrame(()=>$('invitar')?.scrollIntoView({block:'start'}));

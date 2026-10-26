@@ -2,9 +2,9 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#171a48"><title>Mi Tienda · Tu tienda familiar</title>
 <meta name="description" content="Aplicación familiar independiente: administra tu catálogo de juguetes desde tu celular.">
-<link rel="stylesheet" href="../css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="../css/familias.css?v=24-poster<link rel="stylesheet" href="../css/payment-options.css?v=29">"><link rel="stylesheet" href="./app.css?v=22-founder-panel">
+<link rel="stylesheet" href="../css/styles.css?v=tgk-layout-20261021-v14"><link rel="stylesheet" href="../css/familias.css?v=24-poster"><link rel="stylesheet" href="../css/payment-options.css?v=29">><link rel="stylesheet" href="./app.css?v=22-founder-panel"><link rel="stylesheet" href="../css/battle-arena.css?v=30">
 <link rel="icon" type="image/svg+xml" href="./icon.svg"><script defer src="../config.js"></script><script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<script type="module" src="../js/familias.js?v=payments-v29"></script><script defer src="./install.js?v=28-authorized"></script></head>
+<script type="module" src="../js/familias.js?v=payments-v29"></script><script type="module" src="../js/battle-owner.js?v=30"></script><script defer src="./install.js?v=28-authorized"></script></head>
 <body class="family-body" data-app-mode="standalone" data-require-password="true">
 <header class="family-header"><span class="family-brand">🧸 <span>MI TIENDA<small>Un negocio familiar, un espacio propio</small></span></span><nav class="family-header-links" aria-label="Navegación de mi cuenta"><a id="headerPublicStore" href="#" hidden>🏠 Ver tienda</a><a id="headerManageStore" href="#" hidden>🧸 Panel</a><a class="family-back" id="headerMyAccount" href="#acceso">🔑 Ingresar</a></nav></header>
 <main class="family-shell">
@@ -42,6 +42,7 @@
   <a id="founderPosterLink" class="family-dashboard-card" href="#"><span>🖨️</span><strong>Imprimir afiche QR</strong><small>Promocionar la tienda fundadora</small></a>
   <a id="founderInviteLink" class="family-dashboard-card" href="#"><span>✉️</span><strong>Invitar familias</strong><small>Códigos exclusivos del piloto fundador</small></a>
   <a class="family-dashboard-card" href="#paymentSettingsPane"><span>💳</span><strong>Formas de pago</strong><small>Transferencia, efectivo y acuerdos entre adultos</small></a>
+  <a class="family-dashboard-card" href="#battleOwnerPane"><span>⚡</span><strong>Mis Battles</strong><small>Activar subastas y ver ganadores</small></a>
   <a class="family-dashboard-card" href="#radarAdminPane"><span>📡</span><strong>Gestionar Toy Radar</strong><small>Comuna, participación y solicitudes</small></a>
  </nav>
 </section>
@@ -60,10 +61,27 @@
   <a class="family-dashboard-card" href="#posterSettingsPane"><span>✏️</span><strong>Editar mi afiche</strong><small>Escribir mis propias frases</small></a>
   <a id="invitedPosterLink" class="family-dashboard-card" href="#" target="_blank" rel="noopener"><span>🖨️</span><strong>Mi afiche y QR</strong><small>Imprimir material para promocionar</small></a>
   <a class="family-dashboard-card" href="#paymentSettingsPane"><span>💳</span><strong>Formas de pago</strong><small>Transferencia, efectivo y acuerdos entre adultos</small></a>
+  <a class="family-dashboard-card" href="#battleOwnerPane"><span>⚡</span><strong>Mis Battles</strong><small>Activar subastas y ver ganadores</small></a>
   <a class="family-dashboard-card" href="#radarAdminPane"><span>📡</span><strong>Mi Toy Radar</strong><small>Participación y conexiones entre adultos</small></a>
  </nav>
 </section>
 
+<section id="battleOwnerPane" class="family-panel family-area tgk-owner-battles" hidden>
+ <h2>⚡ Battle Arena · Mis subastas</h2>
+ <p>Activa una subasta para un juguete disponible. Durante la Battle el precio y el plazo quedan protegidos. Los pagos se coordinan entre adultos.</p>
+ <form id="tgkLaunchBattleForm" class="tgk-battle-launch">
+ <label>Juguete disponible<select name="toy_id" required><option value="">Seleccionar juguete...</option></select></label>
+ <label>Precio de salida (CLP)<input name="opening" type="number" min="100" step="100" value="1000" required></label>
+ <label>Incremento mínimo (CLP)<input name="increment" type="number" min="100" step="100" value="500" required></label>
+ <label>Fecha y hora de cierre<input name="ends_at" type="datetime-local" required></label>
+ <button type="submit" class="action action-primary">⚡ Activar Battle</button>
+ </form>
+ <p id="tgkOwnerBattleStatus" class="tgk-battle-status" role="status">Preparando...</p>
+ <h3>Mis Battles</h3><div id="tgkOwnerBattleList" class="tgk-owner-battle-list"></div>
+ <h3>🔔 Avisos de las subastas</h3>
+ <p class="tgk-battle-hint">El ganador y el vendedor reciben avisos privados aquí. No se envían correos automáticos en esta versión.</p>
+ <div id="tgkOwnerNoticeList" class="tgk-owner-battle-list"></div>
+</section>
 <section id="paymentSettingsPane" class="family-panel family-area family-payment-panel" hidden>
   <div class="family-row-between">
     <div><h2>💳 Formas de pago</h2><p>Elige cómo aceptarás pagos de los juguetes. Las consultas y entregas siguen siendo entre adultos.</p></div>

@@ -8,7 +8,7 @@ let client,owner=null,busy=false;
 const create=(type,cls,value)=>{const n=document.createElement(type);if(cls)n.className=cls;if(value!==undefined)n.textContent=String(value);return n;};
 const label=message=>{$('tgkOwnerBattleStatus').textContent=message};
 function battleHref(slug,toyId){
- const url=new URL('./battle.html',import.meta.url);
+ const url=new URL('../battle.html',import.meta.url);
  url.searchParams.set('slug',slug);url.searchParams.set('toy',toyId);
  return url.href;
 }

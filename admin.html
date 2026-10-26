@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#11173a"><title>Panel · Toy Garage Kids</title><link rel="stylesheet" href="./css/styles.css?v=tgk-logo-big-20261021"><link rel="stylesheet" href="./css/payment-options.css?v=29"><script defer src="./config.js"></script><script type="module" src="./js/admin.js?v=payments-v29"></script></head>
-<body class="admin-body" data-require-password="true"><header class="admin-header page-shell"><a class="brand" href="./index.html"><img class="brand-logo" src="./assets/toy-garage-kids-logo.webp" alt="Logotipo de Toy Garage Kids, proyecto de Cristóbal e Isidora" width="260" height="195"><span class="brand-words">TOY GARAGE <em>KIDS</em><small>CONTROL DE MISIÓN</small><span class="brand-attribution">Cristóbal e Isidora</span></span></a><div class="admin-header-right"><a class="action action-light action-small" href="./index.html" target="_blank" rel="noopener">↗ Ver tienda</a><a class="action action-light action-small" href="./familias.html#invitar">🏪 Invitar familias</a><button id="logoutBtn" class="action action-outline action-small" hidden>Cerrar sesión</button></div></header>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#11173a"><title>Panel · Toy Garage Kids</title><link rel="stylesheet" href="./css/styles.css?v=tgk-logo-big-20261021"><link rel="stylesheet" href="./css/payment-options.css?v=29"><link rel="stylesheet" href="./css/battle-arena.css?v=30"><script defer src="./config.js"></script><script type="module" src="./js/admin.js?v=payments-v29"></script><script type="module" src="./js/battle-owner.js?v=30"></script></head>
+<body class="admin-body" data-require-password="true"><header class="admin-header page-shell"><a class="brand" href="./index.html"><img class="brand-logo" src="./assets/toy-garage-kids-logo.webp" alt="Logotipo de Toy Garage Kids, proyecto de Cristóbal e Isidora" width="260" height="195"><span class="brand-words">TOY GARAGE <em>KIDS</em><small>CONTROL DE MISIÓN</small><span class="brand-attribution">Cristóbal e Isidora</span></span></a><div class="admin-header-right"><a class="action action-light action-small" href="#battleOwnerPane">⚡ Mis Battles</a><a class="action action-light action-small" href="./index.html" target="_blank" rel="noopener">↗ Ver tienda</a><a class="action action-light action-small" href="./familias.html#invitar">🏪 Invitar familias</a><button id="logoutBtn" class="action action-outline action-small" hidden>Cerrar sesión</button></div></header>
 <main class="page-shell admin-main"><div class="admin-intro"><div><span class="section-kicker">PANEL PRIVADO</span><h1>CENTRO DE <span>CONTROL</span></h1><p>Agrega juguetes, sube imágenes y mantén tu catálogo actualizado.</p></div><span id="modeBadge" class="admin-mode">Comprobando...</span></div>
 <section id="loginSection" class="admin-panel login-panel" hidden><h2>🔐 Acceso de adulto administrador</h2><p>Ingresa con la cuenta habilitada en Supabase.</p><form id="loginForm"><label>Correo electrónico<input id="loginEmail" type="email" required autocomplete="username"></label><label>Contraseña<input id="loginPassword" type="password" required autocomplete="current-password"></label><button class="action action-primary" type="submit">Entrar al panel</button><p id="loginError" class="form-error" role="alert"></p></form></section>
 <div id="adminWorkspace" hidden><div class="demo-note" id="demoNote" hidden>🧪 <strong>Modo local de demostración.</strong> Los cambios se guardan solo en ESTE navegador. No se publican en otros teléfonos. Para sincronización real, conecta Supabase como indica el README.</div><div id="adminStats" class="admin-stats"></div>
@@ -13,4 +13,19 @@
   <label class="tgk-payment-choice"><input type="checkbox" name="arrange_with_adult" checked><span><strong>🤝 A convenir</strong><small>Acuerdo directo con el adulto responsable.</small></span></label>
   <div class="tgk-payment-footer"><button type="submit" class="action action-primary action-small">💾 Guardar formas de pago</button><p id="founderPaymentStatus" role="status" aria-live="polite">No se publicarán números de cuenta ni RUT.</p></div>
  </form>
+</section><section id="battleOwnerPane" class="admin-panel tgk-owner-battles" hidden>
+ <h2>⚡ Battle Arena · Mis subastas</h2>
+ <p>Activa una subasta para un juguete disponible. Durante la Battle el precio y el plazo quedan protegidos. Los pagos se coordinan entre adultos.</p>
+ <form id="tgkLaunchBattleForm" class="tgk-battle-launch">
+ <label>Juguete disponible<select name="toy_id" required><option value="">Seleccionar juguete...</option></select></label>
+ <label>Precio de salida (CLP)<input name="opening" type="number" min="100" step="100" value="1000" required></label>
+ <label>Incremento mínimo (CLP)<input name="increment" type="number" min="100" step="100" value="500" required></label>
+ <label>Fecha y hora de cierre<input name="ends_at" type="datetime-local" required></label>
+ <button type="submit" class="action action-primary">⚡ Activar Battle</button>
+ </form>
+ <p id="tgkOwnerBattleStatus" class="tgk-battle-status" role="status">Preparando...</p>
+ <h3>Mis Battles</h3><div id="tgkOwnerBattleList" class="tgk-owner-battle-list"></div>
+ <h3>🔔 Avisos de las subastas</h3>
+ <p class="tgk-battle-hint">El ganador y el vendedor reciben avisos privados aquí. No se envían correos automáticos en esta versión.</p>
+ <div id="tgkOwnerNoticeList" class="tgk-owner-battle-list"></div>
 </section></div></main><div id="toast" role="status" aria-live="polite" class="toast"></div></body></html>

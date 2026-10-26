@@ -6,7 +6,7 @@ const formFields=['toyTitle','toyCategory','toyGrade','toyDescription','toyCondi
 const setMessage=(id,message,error=false)=>{const el=$(id);el.textContent=message;el.style.color=error?'#bb3253':'#337c4c';};
 const authError=message=>setMessage('loginError',message,true);
 function showWorkspace(){ $('loginSection').hidden=true;$('adminWorkspace').hidden=false;$('logoutBtn').hidden=!isLive();$('modeBadge').textContent=isLive()?'● CONECTADO A SUPABASE':'🧪 DEMOSTRACIÓN LOCAL';$('demoNote').hidden=isLive();}
-function showLogin(){ $('loginSection').hidden=false;$('adminWorkspace').hidden=true;$('logoutBtn').hidden=true;$('modeBadge').textContent='🔒 ACCESO RESTRINGIDO';}
+function showLogin(){ window.dispatchEvent(new CustomEvent('tgk:owner-ready',{detail:null}));$('loginSection').hidden=false;$('adminWorkspace').hidden=true;$('logoutBtn').hidden=true;$('modeBadge').textContent='🔒 ACCESO RESTRINGIDO';}
 async function allowedAdmin(client){
   const {data:{user},error:userError}=await client.auth.getUser();if(userError||!user)return false;
   const {data,error}=await client.from('admins').select('user_id').eq('user_id',user.id).maybeSingle();
@@ -19,7 +19,7 @@ async function start(){
   }else if(['localhost','127.0.0.1',''].includes(location.hostname) || location.protocol==='file:'){showWorkspace();await refresh();}
   else {showLogin(); $('loginForm').hidden=true; authError('Administración deshabilitada: primero conecta Supabase en config.js. Esta página pública nunca habilita el editor de demostración.');}
 }
-async function refresh(){try{[toys,settings]=await Promise.all([readToys(),readSettings()]);renderInventory();fillSettings();await loadFounderPayment();}catch(e){console.error(e);toast('Error cargando datos. Revisa conexión y permisos.');}}
+async function refresh(){try{[toys,settings]=await Promise.all([readToys(),readSettings()]);renderInventory();fillSettings();await loadFounderPayment();window.dispatchEvent(new CustomEvent("tgk:owner-ready",{detail:{storeId:"d4549710-8c53-4901-bbee-f70fdb060f03",slug:"cristobal-isidora",displayName:"Toy Garage Kids"}}));}catch(e){console.error(e);toast('Error cargando datos. Revisa conexión y permisos.');}}
 function renderInventory(){
   const total=toys.length;
   const parts=[['Juguetes',total],['Disponibles',toys.filter(t=>t.status==='available').length],['Reservados',toys.filter(t=>t.status==='reserved').length],['Vendidos',toys.filter(t=>t.status==='sold').length]];
