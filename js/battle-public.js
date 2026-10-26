@@ -4,15 +4,31 @@
 import {getClient,isLive,money,safeImageUrl} from './common.js?v=auth-v27';
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
+const returnToThisBattle=new URL('./comprador.html',location.href);
+returnToThisBattle.searchParams.set('volver',new URL('./battle.html'+location.search,location.href).href);
+for(const link of ['battleBuyerAccount','battleBuyerSignup','battleBuyerActivateLink']){
+ const node=document.getElementById(link);if(node)node.href=returnToThisBattle.href;
+}
 const slug=(params.get('slug')||'').trim(),toyId=(params.get('toy')||'').trim();
 const validSlug=/^[a-z0-9]+(?:-[a-z0-9]+)*$/, validUUID=/^[a-f0-9-]{36}$/i;
-let client=null,battle=null,toy=null,store=null,user=null;
+let client=null,battle=null,toy=null,store=null,user=null,eligible=false;
 const node=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=String(value);return n;};
 function report(message){$('battleStatus').textContent=message;}
 function setUser(ready){
  $('battleLoginPanel').hidden=!ready||!!user;
- $('battleBidPanel').hidden=!ready||!user;
+ $('battleActivateBuyer').hidden=!ready||!user||eligible;
+ $('battleBidPanel').hidden=!ready||!user||!eligible;
  if(user)$('battleUserLabel').textContent='Adulto: '+(user.email||'Sesión iniciada');
+}
+async function verifyBidder(){
+ eligible=false;
+ if(!user||!user.email_confirmed_at)return;
+ const [profile,shop]=await Promise.all([
+  client.from('tgk_buyer_profiles').select('user_id').eq('user_id',user.id).maybeSingle(),
+  client.from('stores').select('id').eq('owner_user_id',user.id).limit(1)
+ ]);
+ if(profile.error||shop.error)throw profile.error||shop.error;
+ eligible=Boolean(profile.data||(shop.data||[]).length);
 }
 async function readMessages(){
  if(!user||!battle)return;
@@ -43,7 +59,7 @@ async function refresh(){
  $('battleCount').textContent=b.bid_count;
  $('battleBidForm').elements.amount.min=String(b.highest_bid==null?b.opening_bid:b.highest_bid+b.bid_step);
  $('battleBidForm').elements.amount.value=String(b.highest_bid==null?b.opening_bid:b.highest_bid+b.bid_step);
- report(ongoing?'🟢 Battle activa: solo participan adultos de tiendas invitadas.':
+ report(ongoing?'🟢 Battle activa: participan adultos con cuenta gratuita y correo confirmado.':
  b.state==='closed'?(b.bid_count?'🏁 Battle finalizada. El ganador recibió un aviso privado.':'🏁 Battle finalizada sin ofertas.'):'⌛ Finalizando Battle. El servidor está comprobando las ofertas.');
  // Tras el cierre también permitimos iniciar sesión para consultar el aviso privado.
  setUser(true);
@@ -71,6 +87,7 @@ async function start(){
  if(src){const img=node('img','tgk-battle-photo');img.src=src;img.alt='Fotografía de '+toy.title;$('battlePhoto').append(img);}
  else $('battlePhoto').append(node('div','tgk-battle-no-photo',toy.emoji||'🧸'));
  const {data:{user:u}}=await client.auth.getUser();user=u;
+ await verifyBidder();
  await refresh();
  setInterval(()=>{tick();refresh().catch(e=>console.warn(e));},15000);
 }
@@ -79,15 +96,20 @@ $('battleLoginForm').addEventListener('submit',async e=>{
  try{report('Verificando la cuenta del adulto...');
  const {data,error}=await client.auth.signInWithPassword({email:f.elements.email.value.trim(),password:f.elements.password.value});
  if(error)throw error;user=data.user;f.elements.password.value='';
+ await verifyBidder();
  await refresh();
- report('Cuenta validada. Revisa el mínimo antes de confirmar tu oferta.');
+ report(eligible?'Cuenta adulta validada. Revisa el mínimo antes de ofertar.':
+  'Cuenta validada. Debes activar tu perfil gratuito de comprador para poder ofertar.');
  }catch(err){report('No se pudo ingresar: '+(err?.message||'Error de acceso'));}
 });
-$('battleLogout').addEventListener('click',async()=>{
- await client.auth.signOut();user=null;await refresh();$('battleMessages').hidden=true;
-});
+async function logOut(){
+ await client.auth.signOut();user=null;eligible=false;
+ await refresh();$('battleMessages').hidden=true;
+}
+$('battleLogout').addEventListener('click',logOut);
+$('battleActivateLogout').addEventListener('click',logOut);
 $('battleBidForm').addEventListener('submit',async event=>{
- event.preventDefault();if(!user||!battle)return;
+ event.preventDefault();if(!user||!eligible||!battle)return;
  const f=event.currentTarget;const value=Number(f.elements.amount.value);
  if(!window.confirm('¿Confirmas ofertar '+money(value)+' por este juguete? La oferta quedará registrada.'))return;
  const button=f.querySelector('button');button.disabled=true;

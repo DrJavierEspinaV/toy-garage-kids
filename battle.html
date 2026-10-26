@@ -4,10 +4,10 @@
 <meta name="description" content="Subastas familiares de juguetes usados, coordinadas por adultos.">
 <link rel="stylesheet" href="./css/battle-arena.css?v=30">
 <script defer src="./config.js"></script>
-<script type="module" src="./js/battle-public.js?v=30b"></script>
+<script type="module" src="./js/battle-public.js?v=33-buyers"></script>
 </head>
-<body data-require-password="true">
-<header class="tgk-battle-top"><a id="battleBack" href="./index.html">← Volver a la tienda</a><span>⚡ BATTLE ARENA · PILOTO</span></header>
+<body>
+<header class="tgk-battle-top"><a id="battleBack" href="./index.html">← Volver a la tienda</a><a id="battleBuyerAccount" href="./comprador.html">🛍️ Mi cuenta compradora · Gratis</a><span>⚡ BATTLE ARENA · PILOTO</span></header>
 <main class="tgk-battle-shell">
  <div class="tgk-battle-intro"><span>✦ JUGUETES CON HISTORIA ✦</span><h1 id="battleTitle">¡Una nueva Battle!</h1>
  <p id="battleDescription">Consulta el precio actual, el cierre y las reglas antes de ofertar.</p></div>
@@ -21,11 +21,17 @@
   </div>
   <p id="battleStatus" role="status" aria-live="polite">Cargando subasta...</p>
   <section id="battleLoginPanel" class="tgk-battle-private" hidden>
-   <h2>🔒 Oferta exclusiva para adultos invitados</h2>
-   <p>Para participar necesitas una cuenta adulta confirmada y una tienda activada en el piloto. Esta página no registra cuentas nuevas.</p>
+   <h2>🔒 Ofertas para adultos registrados</h2>
+   <p>Para ofertar necesitas una cuenta adulta con correo confirmado. <strong>No necesitas tener una tienda ni comprar la aplicación.</strong></p><p><a id="battleBuyerSignup" class="tgk-battle-link" href="./comprador.html">✨ Crear cuenta gratuita de comprador</a></p>
    <form id="battleLoginForm"><label>Correo del adulto<input name="email" type="email" autocomplete="username" required></label>
     <label>Contraseña<input name="password" type="password" minlength="8" autocomplete="current-password" required></label>
     <button type="submit">Ingresar para ofertar</button></form>
+  </section>
+  <section id="battleActivateBuyer" class="tgk-battle-private" hidden>
+   <h2>✨ Activa tu perfil gratis</h2>
+   <p>Tu sesión es válida, pero todavía no has activado el perfil comprador adulto. Es gratuito y no te crea una tienda.</p>
+   <a id="battleBuyerActivateLink" class="tgk-battle-link" href="./comprador.html">🛍️ Activar mi perfil comprador</a>
+   <button id="battleActivateLogout" type="button" class="tgk-battle-link">Cerrar sesión</button>
   </section>
   <section id="battleBidPanel" class="tgk-battle-private" hidden>
    <div class="tgk-battle-signed-in"><strong id="battleUserLabel"></strong><button type="button" id="battleLogout">Cerrar sesión</button></div>
