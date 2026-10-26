@@ -48,3 +48,17 @@ footer span small{font:700 10px Nunito,sans-serif;color:#dbd9f3}
 footer>a{margin-left:auto;color:#ffe15c;font-size:12px;font-weight:900}
 @media(max-width:850px){.platform-hero{grid-template-columns:1fr;padding:39px 23px}.platform-hero-art{font-size:70px}.store-grid{grid-template-columns:1fr}.platform-about>div{grid-template-columns:1fr}.platform-header{flex-wrap:wrap}.platform-header nav{justify-content:space-between;width:100%}.platform-brand img{width:75px;height:57px;flex-basis:75px}.platform-brand strong{font-size:20px}.store-card{padding:16px}.store-card>img,.store-icon{width:90px;height:90px;flex-basis:90px}.store-card h3{font-size:22px}}
 @media(max-width:430px){.store-card{align-items:flex-start;gap:12px}.store-card>img,.store-icon{width:66px;height:66px;flex-basis:66px}.store-icon{font-size:37px}.store-card a{font-size:11px}}
+
+/* Directorio público real por comuna: sin ubicación precisa. */
+.platform-search-form{margin:24px 0 16px;padding:20px;background:#fff;border:1px solid #e2dcf7;border-radius:18px;box-shadow:0 6px 23px #27215c0d}
+.platform-search-form>label{display:block;color:#2f266b;font-size:15px;font-weight:900;margin-bottom:12px}
+.platform-search-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.platform-search-controls select{flex:1;min-width:240px;max-width:540px;border:1px solid #cfc6ee;background:#fff;color:#2b245b;border-radius:12px;font:800 15px Nunito,Arial,sans-serif;padding:13px 15px;min-height:49px}
+.platform-search-controls button{border:0;background:#ffdb50;color:#2b245b;border-radius:12px;font:900 13px Nunito,Arial,sans-serif;padding:13px 20px;min-height:49px;cursor:pointer}
+.platform-search-controls button:disabled{opacity:.55;cursor:wait}
+.platform-search-controls :focus-visible,.store-card a:focus-visible{outline:3px solid #8863ff;outline-offset:3px}
+.platform-privacy{font:700 12px/1.5 Nunito,Arial,sans-serif;color:#655e85;margin:12px 0 0}
+.platform-directory-status{font:900 14px/1.5 Nunito,Arial,sans-serif;color:#6247ad;margin:20px 0 12px}
+.platform-directory-footnote{margin:26px 0 0;padding:14px 16px;background:#eee9ff;border-radius:12px;color:#655a91;font:700 12px/1.6 Nunito,Arial,sans-serif}
+.platform-directory-footnote strong{color:#352477}
+@media(max-width:650px){.platform-search-form{padding:15px}.platform-search-controls{flex-direction:column}.platform-search-controls select{min-width:0;max-width:100%;width:100%}.platform-search-controls button{width:100%}}
