@@ -106,7 +106,7 @@ function configureFounderDashboard(){
  link('founderCatalogLink','index.html');
  link('founderPosterLink','afiche-tienda.html?slug=cristobal-isidora');
  link('founderInviteLink','familias.html#invitar');
- const brandLogo=$('founderLogo');brandLogo.src=new URL('assets/toy-garage-kids-logo.webp',SITE_ROOT).href;
+ const brandLogo=$('founderLogo');brandLogo.src=new URL('assets/el-garage-de-cristobal.svg',SITE_ROOT).href;
  if($('headerPublicStore')){$('headerPublicStore').href=new URL('index.html',SITE_ROOT).href;$('headerPublicStore').hidden=false;}
  if($('headerManageStore')){$('headerManageStore').href=new URL('admin.html',SITE_ROOT).href;$('headerManageStore').hidden=false;}
 }

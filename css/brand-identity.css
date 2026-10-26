@@ -1,0 +1,44 @@
+/* Marca madre Toy Garage Kids separada de cada tienda familiar; no reestructura V1.4. */
+.tgk-founder-shop-identity{display:inline-flex;align-items:center;gap:13px;max-width:100%;margin:0 0 15px;padding:7px 14px 7px 8px;border:1px solid #d8c3ff55;border-radius:17px;background:#ffffff0b;box-shadow:0 4px 20px #00000014}
+.tgk-founder-shop-identity img{display:block;flex:0 0 auto;width:66px;height:66px;object-fit:contain;border-radius:13px}
+.tgk-founder-shop-identity>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tgk-founder-shop-identity span{font:900 10px/1.3 Nunito,Arial,sans-serif;letter-spacing:.12em;color:#ffe361}
+.tgk-founder-shop-identity strong{font:700 clamp(19px,2vw,26px)/1.15 Fredoka,Nunito,sans-serif;color:#fff}
+.tgk-founder-shop-identity small{font:800 11px/1.35 Nunito,sans-serif;color:#e0d9fd;letter-spacing:0}
+.tgk-platform-footer-mark{display:flex;align-items:center;gap:9px;margin-top:10px;color:#d9d8f5;line-height:1.3}
+.tgk-platform-footer-mark img{display:block;width:45px;height:34px;object-fit:contain;background:#fff;border-radius:7px}
+.tgk-platform-footer-mark span{display:flex;flex-direction:column;font-size:10px;font-weight:800}
+.tgk-platform-footer-mark small{font-size:10px;font-weight:700}
+.family-public-page .top-strip-message.tgk-platform-signature{display:flex;align-items:center;justify-content:center;gap:9px;font-size:10px;letter-spacing:.06em}
+.tgk-platform-signature img{display:block;flex:0 0 auto;width:46px;height:34px;object-fit:contain}
+.tgk-platform-signature>span{display:flex;align-items:flex-start;flex-direction:column;line-height:1.3;text-align:left}
+.tgk-platform-signature strong{font-size:12px;letter-spacing:.065em;font-weight:1000}
+.tgk-platform-signature small{font-size:10px;font-weight:800;letter-spacing:0}
+.tgk-store-platform-credit{max-width:1190px;margin:0 auto;padding:0 25px 18px}
+.tgk-store-platform-credit a{display:inline-flex;align-items:center;gap:10px;color:#e7e4ff}
+.tgk-store-platform-credit img{object-fit:contain;width:46px;height:35px;background:#fff;border-radius:7px}
+.tgk-store-platform-credit a>span{display:flex;flex-direction:column;gap:2px;font-size:11px}
+.tgk-store-platform-credit a>span small{font-size:10px;color:#cec9e8}
+.tgk-admin-app-brand{display:inline-flex;align-items:center;gap:7px}
+.tgk-admin-app-brand img{width:48px;height:42px;object-fit:contain;flex:0 0 auto}
+.tgk-soon-official-brand{display:flex;gap:13px;align-items:center;justify-content:center;margin-bottom:15px}
+.tgk-soon-official-brand img{width:96px;height:72px;object-fit:contain}
+.tgk-soon-official-brand div{display:flex;flex-direction:column;text-align:left;gap:3px}
+.tgk-soon-official-brand strong{font:700 clamp(19px,4vw,27px)/1 Fredoka,Nunito,sans-serif;color:#211f58}
+.tgk-soon-official-brand small{font:800 11px/1.3 Nunito,sans-serif;color:#685b96}
+@media(max-width:760px){
+.tgk-founder-shop-identity{margin:0 0 8px;padding:5px 9px 5px 5px;gap:8px}
+.tgk-founder-shop-identity img{width:52px;height:52px}
+.tgk-founder-shop-identity span{font-size:8px}
+.tgk-founder-shop-identity strong{font-size:clamp(17px,4.5vw,22px)}
+.tgk-founder-shop-identity small{font-size:9px}
+.family-public-page .top-strip-message.tgk-platform-signature{margin:auto}
+.tgk-platform-signature img{width:37px;height:29px}
+.tgk-platform-signature strong{font-size:11px}
+.tgk-platform-signature small{font-size:9px}
+.tgk-store-platform-credit{padding-inline:16px}
+.tgk-admin-app-brand img{width:38px;height:34px}
+.tgk-admin-app-brand>span{font-size:14px}
+.tgk-admin-app-brand small{font-size:9px}
+.tgk-soon-official-brand img{width:66px;height:54px}
+}

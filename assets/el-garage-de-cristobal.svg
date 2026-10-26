@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="title desc">
+<title id="title">El Garage de Cristóbal</title><desc id="desc">Emblema infantil con puerta de garage, auto de juguete, oso y estrellas.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#20245e"/><stop offset="1" stop-color="#6b39ad"/></linearGradient>
+ <linearGradient id="door" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#f9de61"/><stop offset="1" stop-color="#ff9e52"/></linearGradient>
+</defs>
+<rect x="15" y="15" width="370" height="370" rx="69" fill="url(#bg)" stroke="#ffda4a" stroke-width="12"/>
+<circle cx="307" cy="93" r="28" fill="#ffda4a" opacity=".15"/>
+<path d="m78 146 20-49 102-54 102 54 20 49" fill="none" stroke="#ffda4a" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="88" y="138" width="224" height="139" rx="18" fill="url(#door)" stroke="#fff" stroke-width="8"/>
+<path d="M104 175h192M104 211h192M104 247h192" stroke="#744698" stroke-width="6" opacity=".25"/>
+<path d="M125 223h150l-13-37h-43l-22-30h-39l-25 30Z" fill="#e65f99" stroke="#24245c" stroke-width="6" stroke-linejoin="round"/>
+<path d="M160 178h37l16 25h-59Z" fill="#99e8ff" stroke="#24245c" stroke-width="4"/>
+<circle cx="160" cy="226" r="17" fill="#232458" stroke="#fff" stroke-width="5"/><circle cx="248" cy="226" r="17" fill="#232458" stroke="#fff" stroke-width="5"/>
+<g fill="#ffda4a"><path d="m70 73 7 14 16 2-12 11 3 15-14-8-14 8 3-15-12-11 16-2Z"/><path d="m330 156 5 11 12 1-9 9 2 12-10-6-11 6 3-12-9-9 12-1Z"/></g>
+<rect x="35" y="289" width="330" height="85" rx="24" fill="#fff" stroke="#ffda4a" stroke-width="7"/>
+<text x="200" y="325" text-anchor="middle" font-family="Nunito,Arial,sans-serif" font-size="27" font-weight="1000" fill="#29265d" letter-spacing="2">EL GARAGE</text>
+<text x="200" y="357" text-anchor="middle" font-family="Nunito,Arial,sans-serif" font-size="28" font-weight="1000" fill="#6836ab">DE CRISTÓBAL</text>
+</svg>

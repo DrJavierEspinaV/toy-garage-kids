@@ -1,7 +1,7 @@
 {
-  "name": "Mi Tienda · Toy Garage",
-  "short_name": "Mi Tienda",
-  "description": "Tu tienda familiar independiente de juguetes.",
+  "name": "Toy Garage Kids · Mi Tienda",
+  "short_name": "Toy Garage Kids",
+  "description": "Tu tienda familiar de juguetes reutilizados. Administra tus juguetes y comparte aventuras.",
   "id": "./",
   "start_url": "./",
   "scope": "./",
