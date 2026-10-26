@@ -95,7 +95,7 @@ $('buyerSignupForm').addEventListener('submit',async event=>{
   if(error)throw error;
   form.elements.password.value='';
   if(data.session){await render();notice('Cuenta creada. Confirma tu mayoría de edad para activar el perfil comprador.');}
-  else notice('Revisa tu correo, confirma la dirección y luego inicia sesión en esta misma página. No necesitas comprar la app.');
+  else notice('Si el correo es nuevo, revisa el mensaje de confirmación. Si ya tienes una cuenta de Toy Garage Kids, inicia sesión con tu contraseña habitual. No necesitas registrar otra cuenta.');
  }catch(err){notice('No se pudo registrar: '+errorMsg(err));}
  finally{busy=false;formBusy(form,false);}
 });
