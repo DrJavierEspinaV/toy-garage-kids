@@ -90,7 +90,7 @@ $('buyerSignupForm').addEventListener('submit',async event=>{
   const {data,error}=await client.auth.signUp({
    email:form.elements.email.value.trim().toLowerCase(),
    password:form.elements.password.value,
-   options:{emailRedirectTo:new URL('./comprador.html',location.href).href}
+   options:{emailRedirectTo:window.TGK_CONFIG?.authBuyerRedirectUrl || 'https://drjavierespinav.github.io/toy-garage-kids/comprador.html'}
   });
   if(error)throw error;
   form.elements.password.value='';
