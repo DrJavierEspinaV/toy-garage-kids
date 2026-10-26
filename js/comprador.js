@@ -87,6 +87,16 @@ $('buyerSignupForm').addEventListener('submit',async event=>{
  busy=true;formBusy(form,true);
  try{
   notice('Solicitando registro gratuito...');
+  // Nunca consultar ni revelar públicamente si un correo ajeno existe.
+  // Solo reconocemos una cuenta si ya existe una sesión autenticada del mismo usuario.
+  const enteredEmail=form.elements.email.value.trim().toLowerCase();
+  const {data:authState}=await client.auth.getUser();
+  if(authState?.user?.email?.trim().toLowerCase()===enteredEmail){
+   user=authState.user;
+   await render();
+   notice('Ya tienes una cuenta con este correo y has iniciado sesión. No necesitas crear otra: puedes comprar y vender con la misma identidad.');
+   return;
+  }
   const {data,error}=await client.auth.signUp({
    email:form.elements.email.value.trim().toLowerCase(),
    password:form.elements.password.value,
@@ -95,7 +105,11 @@ $('buyerSignupForm').addEventListener('submit',async event=>{
   if(error)throw error;
   form.elements.password.value='';
   if(data.session){await render();notice('Cuenta creada. Confirma tu mayoría de edad para activar el perfil comprador.');}
-  else notice('Si el correo es nuevo, revisa el mensaje de confirmación. Si ya tienes una cuenta de Toy Garage Kids, inicia sesión con tu contraseña habitual. No necesitas registrar otra cuenta.');
+  else {
+   const signIn=$('buyerLoginForm');
+   signIn.elements.email.value=enteredEmail;
+   notice('Si este correo corresponde a una cuenta ya existente, utiliza «Ya tengo una cuenta → Ingresar» con tu contraseña habitual. Si es tu primer registro, confirma el correo recibido. Por seguridad no mostramos públicamente qué correos están registrados.');
+  }
  }catch(err){notice('No se pudo registrar: '+errorMsg(err));}
  finally{busy=false;formBusy(form,false);}
 });
