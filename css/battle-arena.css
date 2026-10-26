@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap');
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:#f0f2fe;color:#282351;font-family:Nunito,Arial,sans-serif}
+.tgk-battle-top{background:white;border-bottom:1px solid #dbdafa;padding:19px clamp(18px,5vw,55px);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center;font:900 12px Nunito;color:#6c44b5}
+.tgk-battle-top a{color:#45358f;text-decoration:none}
+.tgk-battle-shell{max-width:990px;margin:0 auto;padding:32px 16px 50px}
+.tgk-battle-intro{text-align:center;padding:29px 18px;border-radius:23px;background:linear-gradient(118deg,#1b245a,#5630a4);color:white}
+.tgk-battle-intro>span{font-size:11px;color:#ffe253;font-weight:900;letter-spacing:.12em}
+.tgk-battle-intro h1{font:700 clamp(30px,6vw,51px)/1.04 Fredoka;margin:12px 0;overflow-wrap:anywhere}
+.tgk-battle-intro p{color:#e6e4ff;font-size:14px;line-height:1.5;margin:0}
+.tgk-battle-panel{padding:25px;border-radius:19px;background:#fff;border:1px solid #ded9f5;margin-top:17px;box-shadow:0 7px 27px #25285e0b}
+.tgk-battle-photo{max-height:300px;max-width:100%;object-fit:contain;display:block;margin:0 auto 23px;border-radius:13px}
+.tgk-battle-no-photo{font-size:90px;text-align:center;margin:10px 0 21px}
+.tgk-battle-numbers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.tgk-battle-numbers>div{display:flex;flex-direction:column;gap:6px;border-radius:14px;background:#f4f1ff;padding:18px 13px;text-align:center;min-width:0}
+.tgk-battle-numbers small{font-size:11px;font-weight:900;color:#6c648a}
+.tgk-battle-numbers strong{font:700 clamp(21px,4.8vw,32px)/1.2 Fredoka;color:#432c93}
+#battleStatus{color:#4d3c95;font-weight:900;line-height:1.5;margin:20px 0}
+.tgk-battle-private{border:1px solid #e2ddf2;border-radius:15px;padding:21px;background:#faf9ff}
+.tgk-battle-private h2{font:700 24px Fredoka;margin:0 0 8px}
+.tgk-battle-private p,.tgk-battle-caution{font-size:12px;line-height:1.55;color:#686383}
+.tgk-battle-private form{display:grid;gap:10px}
+.tgk-battle-private label,.tgk-battle-launch label{display:grid;gap:6px;font-size:12px;font-weight:900;color:#51447c}
+.tgk-battle-private input,.tgk-battle-launch select,.tgk-battle-launch input{width:100%;min-width:0;border-radius:10px;border:1px solid #d7cfee;padding:13px;background:white;font:700 15px Nunito;color:#2f285d}
+.tgk-battle-private button,.tgk-battle-launch button{background:#ffdd4d;border:0;border-radius:10px;padding:12px 14px;font:900 13px Nunito;color:#2e2355;cursor:pointer}
+.tgk-battle-private button:disabled,.tgk-battle-launch button:disabled{opacity:.55}
+.tgk-battle-signed-in{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.tgk-battle-signed-in button{background:#ece7ff}
+.tgk-battle-caution{max-width:800px;margin:24px auto;text-align:center}
+.tgk-battle-alert{padding:12px;border:1px solid #eee5bb;border-radius:10px;background:#fff9e8;margin:10px 0}
+.tgk-battle-alert p{font-size:12px;line-height:1.5;margin-bottom:0}
+.tgk-owner-battles{scroll-margin-top:110px}
+.tgk-owner-battles h2,.tgk-owner-battles h3{font-family:Fredoka,Nunito,sans-serif}
+.tgk-owner-battles>p{font-size:12px;line-height:1.5}
+.tgk-battle-launch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.tgk-battle-launch button{grid-column:1/-1;justify-self:start}
+.tgk-battle-status,.tgk-battle-hint{font-size:12px;color:#736c8e;line-height:1.5}
+.tgk-owner-battle-row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px;border-radius:13px;background:#f5f1ff;border:1px solid #e0d7fc;margin:9px 0}
+.tgk-owner-battle-row>div{display:grid;gap:7px;min-width:0}
+.tgk-owner-battle-row strong{font-size:15px;color:#2d2357}
+.tgk-owner-battle-row small{font-size:11px;line-height:1.45;overflow-wrap:anywhere}
+.tgk-owner-battle-row p{font-size:12px;line-height:1.5}
+.tgk-battle-link{background:#eee8ff;border:0;border-radius:10px;color:#45328b;font:900 12px Nunito,sans-serif;padding:10px;text-decoration:none;white-space:nowrap;cursor:pointer}
+@media(max-width:650px){.tgk-battle-panel{padding:17px}.tgk-battle-launch{grid-template-columns:1fr}.tgk-owner-battle-row{align-items:flex-start;flex-direction:column}}

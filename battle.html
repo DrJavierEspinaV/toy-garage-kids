@@ -1,0 +1,39 @@
+<!doctype html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>⚡ Battle Arena · Juguetes con nuevas aventuras</title>
+<meta name="description" content="Subastas familiares de juguetes usados, coordinadas por adultos.">
+<link rel="stylesheet" href="./css/battle-arena.css?v=30">
+<script defer src="./config.js"></script>
+<script type="module" src="./js/battle-public.js?v=30"></script>
+</head>
+<body data-require-password="true">
+<header class="tgk-battle-top"><a id="battleBack" href="./index.html">← Volver a la tienda</a><span>⚡ BATTLE ARENA · PILOTO</span></header>
+<main class="tgk-battle-shell">
+ <div class="tgk-battle-intro"><span>✦ JUGUETES CON HISTORIA ✦</span><h1 id="battleTitle">¡Una nueva Battle!</h1>
+ <p id="battleDescription">Consulta el precio actual, el cierre y las reglas antes de ofertar.</p></div>
+ <section class="tgk-battle-panel" aria-labelledby="battleTitle">
+  <div id="battlePhoto"></div>
+  <div class="tgk-battle-numbers">
+   <div><small>Oferta actual</small><strong id="battleHighest">—</strong></div>
+   <div><small>Próxima oferta mínima</small><strong id="battleMinimum">—</strong></div>
+   <div><small>Tiempo restante</small><strong id="battleClock">—</strong></div>
+   <div><small>Ofertas recibidas</small><strong id="battleCount">0</strong></div>
+  </div>
+  <p id="battleStatus" role="status" aria-live="polite">Cargando subasta...</p>
+  <section id="battleLoginPanel" class="tgk-battle-private" hidden>
+   <h2>🔒 Oferta exclusiva para adultos invitados</h2>
+   <p>Para participar necesitas una cuenta adulta confirmada y una tienda activada en el piloto. Esta página no registra cuentas nuevas.</p>
+   <form id="battleLoginForm"><label>Correo del adulto<input name="email" type="email" autocomplete="username" required></label>
+    <label>Contraseña<input name="password" type="password" minlength="8" autocomplete="current-password" required></label>
+    <button type="submit">Ingresar para ofertar</button></form>
+  </section>
+  <section id="battleBidPanel" class="tgk-battle-private" hidden>
+   <div class="tgk-battle-signed-in"><strong id="battleUserLabel"></strong><button type="button" id="battleLogout">Cerrar sesión</button></div>
+   <form id="battleBidForm"><label>Mi oferta en pesos chilenos<input type="number" name="amount" min="100" step="100" required inputmode="numeric"></label>
+    <button type="submit">⚡ Confirmar oferta</button></form>
+   <p>La oferta es un compromiso de compra supervisado por un adulto. No se realiza un cargo ni reserva inmediata.</p>
+  </section>
+ </section>
+ <section id="battleMessages" class="tgk-battle-panel" hidden><h2>🔔 Mis mensajes de Battle</h2><div id="battleMessageList"></div></section>
+ <p class="tgk-battle-caution">🛡️ El vendedor y el ganador coordinarán el pago y la entrega entre adultos. Nunca transfieras dinero sin verificar los datos del vendedor. No hay chat entre menores.</p>
+</main></body></html>
