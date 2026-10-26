@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#20225b">
+<meta name="description" content="Cuenta gratuita de comprador adulto de Toy Garage Kids. Explora y participa en subastas familiares de juguetes reutilizados.">
+<title>Mi cuenta de comprador · Toy Garage Kids</title>
+<link rel="stylesheet" href="./css/comprador.css?v=33">
+<script defer src="./config.js"></script>
+<script type="module" src="./js/comprador.js?v=33"></script>
+</head><body>
+<header class="buyer-header">
+ <a href="./plataforma.html" class="buyer-brand"><img src="./assets/toy-garage-kids-logo.webp" alt="Logo Toy Garage Kids" width="78" height="59">
+ <span><strong>TOY GARAGE KIDS</strong><small>Tu tienda familiar de juguetes reutilizados</small></span></a>
+ <a href="./plataforma.html#tiendas" class="buyer-explore">🧸 Explorar tiendas</a>
+</header>
+<main class="buyer-main">
+ <div class="buyer-lead"><span>🛍️ CUENTA DE COMPRADOR</span><h1>¡Tu próxima aventura <em>es gratis!</em></h1>
+ <p>Explora todas las tiendas sin registrarte. Crea tu cuenta <strong>gratuita de adulto</strong> solamente si quieres participar en Battle Arena y consultar tus ofertas y avisos.</p></div>
+ <div id="buyerStatus" class="buyer-message" role="status" aria-live="polite">Conectando con Toy Garage Kids…</div>
+ <section id="buyerAuth" class="buyer-auth" hidden aria-label="Registro e ingreso gratuitos">
+  <article class="buyer-card"><h2>✨ Crear cuenta gratis</h2><p>No necesitas comprar la aplicación ni tener una tienda.</p>
+   <form id="buyerSignupForm">
+    <label>Correo del adulto<input name="email" type="email" autocomplete="email" required></label>
+    <label>Contraseña (mínimo 8 caracteres)<input name="password" type="password" minlength="8" autocomplete="new-password" required></label>
+    <label class="buyer-check"><input type="checkbox" name="adult" required><span>Declaro tener <strong>18 años o más</strong> y participar como adulto responsable. Acepto que las ofertas son compromisos de compra, no pagos automáticos.</span></label>
+    <button type="submit">🛍️ Crear cuenta de comprador</button>
+   </form>
+   <p class="buyer-small">Recibirás un mensaje para confirmar tu correo. No pedimos RUT, domicilio ni datos bancarios.</p>
+  </article>
+  <article class="buyer-card"><h2>🔑 Ya tengo una cuenta</h2><p>Ingresa con tu cuenta adulta existente, incluso si ya administras una tienda.</p>
+   <form id="buyerLoginForm">
+    <label>Correo electrónico<input name="email" type="email" autocomplete="username" required></label>
+    <label>Contraseña<input name="password" type="password" minlength="8" autocomplete="current-password" required></label>
+    <button type="submit">Ingresar</button>
+   </form>
+  </article>
+ </section>
+ <section id="buyerActivate" class="buyer-card buyer-center" hidden>
+  <h2>✅ Activar mi perfil comprador</h2>
+  <p>Tu correo ya está confirmado. Para ofertar, confirma que participas como persona adulta. Este perfil <strong>no crea una tienda</strong>.</p>
+  <form id="buyerActivationForm"><label class="buyer-check"><input name="adult" type="checkbox" required><span>Declaro tener 18 años o más y participar bajo responsabilidad adulta.</span></label>
+   <button type="submit">Activar perfil gratis</button></form>
+ </section>
+ <section id="buyerAccount" class="buyer-card buyer-account" hidden>
+  <div class="buyer-account-head"><div><h2>🛍️ Mi cuenta compradora</h2><p id="buyerEmail"></p></div><button id="buyerSignout" type="button" class="buyer-light">Cerrar sesión</button></div>
+  <div class="buyer-actions"><a id="buyerReturnBattle" href="./plataforma.html#tiendas" class="buyer-action-primary">⚡ Volver a Battle Arena</a><a href="./plataforma.html#tiendas" class="buyer-light buyer-link">🧸 Descubrir juguetes</a></div>
+  <h3>🏆 Mis ofertas</h3><div id="buyerBidsList" class="buyer-list"><p>Aún no registras ofertas.</p></div>
+  <h3>🔔 Mis avisos de Battle</h3><div id="buyerNoticesList" class="buyer-list"><p>Aún no tienes avisos.</p></div>
+  <button id="buyerRefresh" type="button" class="buyer-light">↻ Actualizar ofertas y mensajes</button>
+ </section>
+ <p class="buyer-safety">🛡️ Los pagos y las entregas se coordinan entre adultos. El correo se confirma antes de ofertar. El registro incluye una <strong>declaración de mayoría de edad</strong>, no una verificación documental.</p>
+</main>
+</body></html>

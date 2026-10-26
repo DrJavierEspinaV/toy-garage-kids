@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap');
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:#f1f2fc;color:#29275b;font-family:Nunito,Arial,sans-serif}
+a{text-decoration:none;color:inherit}
+.buyer-header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px max(15px,calc((100vw - 1100px)/2));background:#fff;border-bottom:1px solid #e3dcfa}
+.buyer-brand{display:flex;align-items:center;gap:8px;min-width:0}.buyer-brand img{object-fit:contain;flex:none}.buyer-brand span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.buyer-brand strong{font:700 23px Fredoka,sans-serif}.buyer-brand small{font-size:10px;font-weight:800;color:#797191}.buyer-explore{font-size:12px;font-weight:900;color:#5840a4}
+.buyer-main{max-width:1010px;margin:auto;padding:24px 17px 45px}
+.buyer-lead{text-align:center;padding:35px 20px;background:linear-gradient(135deg,#1d265b,#5b2eaa);border-radius:23px;color:#fff}
+.buyer-lead>span{color:#ffe45d;font-size:12px;letter-spacing:.1em;font-weight:900}
+.buyer-lead h1{font:700 clamp(32px,6vw,56px)/1.05 Fredoka,sans-serif;margin:12px 0}
+.buyer-lead em{color:#ffe05a;font-style:normal}
+.buyer-lead p{line-height:1.55;max-width:720px;margin:0 auto;color:#e5e3fa}
+.buyer-message{background:#fff7d9;border:1px solid #eaddaa;color:#624982;margin:17px auto;padding:14px 17px;border-radius:14px;font:800 13px/1.5 Nunito}
+.buyer-auth{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+.buyer-card{background:white;border:1px solid #e0daf6;border-radius:20px;padding:24px;box-shadow:0 7px 24px #2024600e;margin:18px 0}
+.buyer-auth>.buyer-card{margin:0}
+.buyer-card h2{font:700 27px Fredoka,sans-serif;color:#272359;margin:0 0 10px}
+.buyer-card h3{font:700 23px Fredoka,sans-serif;margin:28px 0 11px}
+.buyer-card>p,.buyer-card form+ p{font-size:13px;line-height:1.55;color:#696383}
+.buyer-card form{display:grid;gap:14px;margin-top:21px}
+.buyer-card label{display:grid;gap:6px;font-size:12px;font-weight:900;color:#4d457b}
+.buyer-card input:not([type=checkbox]){display:block;width:100%;padding:13px;border:1px solid #d7cef1;border-radius:10px;background:#fff;color:#272359;font:700 15px Nunito,sans-serif}
+.buyer-check{display:flex!important;align-items:flex-start;gap:10px!important;line-height:1.5;font-weight:700!important}
+.buyer-check input{width:19px;height:19px;flex:none;accent-color:#7650cb;margin:2px 0 0}
+.buyer-card button,.buyer-action-primary{display:inline-flex;justify-content:center;align-items:center;gap:6px;border:0;border-radius:12px;background:#ffdb4a;color:#332451;padding:13px 17px;min-height:44px;font:900 13px Nunito,sans-serif;cursor:pointer}
+.buyer-card button:disabled{opacity:.55;cursor:wait}
+.buyer-small{font-size:11px!important}
+.buyer-center{max-width:760px;margin:20px auto}
+.buyer-account-head{display:flex;gap:15px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.buyer-account-head p{font-size:12px;color:#6c6486}
+.buyer-card .buyer-light,.buyer-link{display:inline-flex;align-items:center;justify-content:center;border:1px solid #dfd6f4;background:#f4f0ff;color:#4d3997;padding:11px 15px;border-radius:10px;font:900 12px Nunito,sans-serif;cursor:pointer}
+.buyer-actions{display:flex;gap:10px;flex-wrap:wrap;margin:17px 0}
+.buyer-list{display:grid;gap:11px}.buyer-item{border:1px solid #e0daf5;background:#faf9ff;padding:13px 15px;border-radius:12px;display:flex;flex-direction:column;gap:5px}
+.buyer-item strong{font-size:14px}.buyer-item p{font-size:12px;line-height:1.5;margin:0;color:#625b82}.buyer-item small{font-size:11px;color:#6d648e}
+.buyer-item button{align-self:flex-start;padding:9px 12px;font-size:11px}
+.buyer-safety{font-size:12px;line-height:1.6;color:#676184;text-align:center;margin:28px auto;max-width:800px}
+@media(max-width:720px){.buyer-auth{grid-template-columns:1fr}.buyer-card{padding:18px}.buyer-header{flex-wrap:wrap}.buyer-brand strong{font-size:19px}.buyer-brand img{width:62px;height:46px}}
